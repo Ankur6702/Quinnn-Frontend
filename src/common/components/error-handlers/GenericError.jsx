@@ -4,6 +4,8 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
+import { neutral } from "../../config/colors";
+
 const GenericError = ({
   imageUrl,
   heading,

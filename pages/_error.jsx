@@ -27,7 +27,7 @@ const ErrorPage = (props) => {
   return (
     <>
       {/* {children ?? <NextErrorComponent statusCode={statusCode} />} */}
-      <Box width="100vw" height="100vh" bgcolor={neutral["A100"]}>
+      <Box width="100vw" height="100vh" bgcolor={neutral["A500"]}>
         <Box
           display="flex"
           justifyContent="center"

@@ -1,2 +1,2 @@
-export const sliceString = (text: string, length: number) =>
+export const sliceString = (text, length) =>
   text.length > length ? `${text.slice(0, length)}...` : text;
