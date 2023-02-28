@@ -5,40 +5,12 @@ import { useMediaQuery, useTheme } from "@mui/material";
 
 import CustomInput from "@/src/common/components/forms/CustomInput";
 import SelectField from "@/src/common/components/forms/SelectField";
+import { gender } from "../utils/helper";
 
 const SignUpFormFields = () => {
   const { values } = useFormikContext();
   const theme = useTheme();
   const isDownSm = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const gender = [
-    {
-      label: "Male",
-      value: "Male",
-    },
-    {
-      label: "Female",
-      value: "Female",
-    },
-    {
-      label: "Gay",
-      value: "Gay",
-    },
-    {
-      label: "Lesbian",
-      value: "Lesbian",
-    },
-  ];
-  const role = [
-    {
-      label: "Professor",
-      value: "Professor",
-    },
-    {
-      label: "Assistant Professor",
-      value: "Assistant Professor",
-    },
-  ];
 
   return (
     <Box

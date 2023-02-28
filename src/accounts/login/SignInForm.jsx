@@ -5,24 +5,21 @@ import { Form, Formik } from "formik";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import SignUpFormFields from "./SignUpFormFields";
+import SignInFormFields from "./SignInFormFields";
 import SubmitButton from "@/src/common/components/forms/SubmitButton";
 import { Blues } from "@/src/common/config/colors";
-import { SignUpFormValidationSchema } from "../utils/helper";
+import { SignInFormValidationSchema } from "../utils/helper";
 
-const SignUpForm = () => {
+const SignInForm = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const initialState = {
-    name: "",
     mail: "",
     password: "",
-    gender: "",
-    username: "",
   };
 
   const handleSubmit = async (data, actions) => {
-    const { name, mail, password, gender, username } = data;
+    const { mail, password } = data;
     actions.setSubmitting(false);
     // actions.resetForm();
   };
@@ -31,12 +28,12 @@ const SignUpForm = () => {
     <>
       <Formik
         initialValues={initialState}
-        validationSchema={SignUpFormValidationSchema}
+        validationSchema={SignInFormValidationSchema}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
           <Form>
-            <SignUpFormFields />
+            <SignInFormFields />
 
             <Box
               display="flex"
@@ -50,7 +47,7 @@ const SignUpForm = () => {
                 disabled={isSubmitting}
                 variant="contained"
               >
-                Explore
+                Login
               </SubmitButton>
               <Typography
                 variant="h6"
@@ -60,9 +57,9 @@ const SignUpForm = () => {
                   fontWeight: 400,
                 }}
               >
-                Already have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link
-                  href="/accounts/signin"
+                  href="/accounts/signup"
                   style={{ textDecoration: "none" }}
                 >
                   <Typography
@@ -74,7 +71,7 @@ const SignUpForm = () => {
                       fontWeight: 700,
                     }}
                   >
-                    Login
+                    Sign Up
                   </Typography>
                 </Link>
               </Typography>
@@ -86,4 +83,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

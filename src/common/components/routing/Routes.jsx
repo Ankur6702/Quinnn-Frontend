@@ -10,9 +10,14 @@ const Routes = ({ Component, pageProps }) => {
   return (
     <>
       <Route path="/accounts">
-        <AccountsLayout>
+        {router.asPath == "/accounts/signup" ||
+        router.asPath == "/accounts/signin" ? (
+          <AccountsLayout>
+            <Component {...pageProps} />
+          </AccountsLayout>
+        ) : (
           <Component {...pageProps} />
-        </AccountsLayout>
+        )}
       </Route>
       {!["accounts"].includes(router.asPath.split("/")[1]) && (
         <Route path="/" isBaseRoute>
