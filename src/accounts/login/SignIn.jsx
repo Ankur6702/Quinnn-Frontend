@@ -50,7 +50,7 @@ const SignUp = () => {
           <Box display="flex" flexDirection="column" rowGap={0.5}>
             {isDownSm && (
               <Box mb={2}>
-                <Image src={LOGO} alt="404" width={55} height={55} priority />
+                <Image src={LOGO} alt="logo" width={55} height={55} />
               </Box>
             )}
             <Typography

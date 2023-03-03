@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import Route from "./Route";
 import AccountsLayout from "@/src/accounts/AccountsLayout";
+import Layout from "../Layout/components/Layout";
 
 const Routes = ({ Component, pageProps }) => {
   const router = useRouter();
@@ -21,9 +22,9 @@ const Routes = ({ Component, pageProps }) => {
       </Route>
       {!["accounts"].includes(router.asPath.split("/")[1]) && (
         <Route path="/" isBaseRoute>
-          {/* <Layout> */}
-          <Component {...pageProps} />
-          {/* </Layout> */}
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </Route>
       )}
     </>
