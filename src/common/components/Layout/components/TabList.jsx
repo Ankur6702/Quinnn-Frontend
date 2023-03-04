@@ -5,8 +5,6 @@ import { useRouter } from "next/router";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import HomeIcon from "@mui/icons-material/Home";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -17,6 +15,7 @@ import FeedSharpIcon from "@mui/icons-material/FeedSharp";
 import TabListItem from "./TabListItem";
 import SearchBar from "../../others/SearchBar";
 import { Blues, neutral } from "@/src/common/config/colors";
+
 import {
   FRONTEND_HOME_PAGE_URL,
   FRONTEND_FEED_PAGE_URL,
@@ -25,6 +24,7 @@ import {
   FRONTEND_RESOURCES_PAGE_URL,
 } from "@/src/common/utils/constants";
 import { LOGO } from "@/src/accounts/utils/constants";
+import Events from "./Events";
 
 const TabList = ({ handleClick }) => {
   const router = useRouter();
@@ -141,6 +141,7 @@ const TabList = ({ handleClick }) => {
         </List>
 
         <Divider sx={{ bgcolor: neutral["A500"], opacity: 1, my: 4 }} />
+        <Events />
       </Box>
     </Box>
   );

@@ -25,7 +25,7 @@ const Layout = ({ children }) => {
         bgcolor={neutral["A700"]}
         pl={{ xs: 6, lg: 16 }}
         pr={{ xs: 6, lg: 16 }}
-        py={{ xs: 12, lg: 6 }}
+        py={{ xs: 12, lg: 8 }}
       >
         {children}
       </Box>

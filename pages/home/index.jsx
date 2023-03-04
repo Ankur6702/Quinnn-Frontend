@@ -1,7 +1,9 @@
 import React from "react";
 
+import PostSection from "@/src/home/create/PostSection";
+
 const index = () => {
-  return <div></div>;
+  return <PostSection />;
 };
 
 export default index;
