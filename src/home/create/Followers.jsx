@@ -1,12 +1,13 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
-
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+
 import { Blues, neutral } from "@/src/common/config/colors";
 import CreatePost from "./CreatePost";
+
 const Followers = () => {
   const friends = [
     {

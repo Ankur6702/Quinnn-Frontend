@@ -1,11 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import HomeIcon from "@mui/icons-material/Home";
 import GroupsIcon from "@mui/icons-material/Groups";
 import EventIcon from "@mui/icons-material/Event";
@@ -13,9 +9,9 @@ import IconButton from "@mui/material/IconButton";
 import ChatIcon from "@mui/icons-material/Chat";
 import FeedSharpIcon from "@mui/icons-material/FeedSharp";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
-import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 
 import { neutral } from "@/src/common/config/colors";
+import ProfileIcon from "./ProfileIcon";
 
 const Navbar = () => {
   const router = useRouter();
@@ -84,18 +80,7 @@ const Navbar = () => {
           >
             Rajat
           </Typography>
-          <Avatar
-            alt="profile"
-            sx={{
-              width: 35,
-              height: 35,
-              fontSize: 20,
-              cursor: "pointer",
-              position: "relative",
-            }}
-          >
-            R
-          </Avatar>
+          <ProfileIcon />
         </Box>
       </Box>
     </Box>
