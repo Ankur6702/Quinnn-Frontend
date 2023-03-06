@@ -7,8 +7,6 @@ import Avatar from "@mui/material/Avatar";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import IconButton from "@mui/material/IconButton";
 import CameraAltRoundedIcon from "@mui/icons-material/CameraAltRounded";
-import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
-import EmojiEmotionsRoundedIcon from "@mui/icons-material/EmojiEmotionsRounded";
 import EventRoundedIcon from "@mui/icons-material/EventRounded";
 
 import CreatePostModal from "@/src/common/components/modals/CreatePost/CreatePostModal";
@@ -99,13 +97,7 @@ const CreatePost = () => {
               />
             </IconButton>
           </Tooltip> */}
-          <Tooltip title="Add a emoji">
-            <IconButton size="small">
-              <EmojiEmotionsRoundedIcon
-                sx={{ color: neutral["700"], fontSize: 20 }}
-              />
-            </IconButton>
-          </Tooltip>
+
           <Tooltip title="Add a event">
             <IconButton size="small">
               <EventRoundedIcon sx={{ color: neutral["700"], fontSize: 20 }} />

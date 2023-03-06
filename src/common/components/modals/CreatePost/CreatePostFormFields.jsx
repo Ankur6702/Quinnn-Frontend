@@ -1,25 +1,13 @@
-import React, { useEffect, useRef } from "react";
-import ImageIcon from "@mui/icons-material/Image";
-import {
-  Grid,
-  Box,
-  TextField,
-  Card,
-  Typography,
-  IconButton,
-  CardActions,
-  Input,
-  Button,
-  CardMedia,
-  OutlinedInput,
-  CardContent,
-  InputAdornment,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import AttachmentIcon from "@mui/icons-material/Attachment";
-import TagFacesIcon from "@mui/icons-material/TagFaces";
+import React, { useEffect, useRef, useState } from "react";
 import { useFormikContext } from "formik";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Input from "@mui/material/Input";
+import Button from "@mui/material/Button";
+import CardMedia from "@mui/material/CardMedia";
+import CloseIcon from "@mui/icons-material/Close";
+import PublishIcon from "@mui/icons-material/Publish";
+
 import InputWithoutLabel from "../../forms/InputWithoutLabel";
 import { neutral } from "@/src/common/config/colors";
 
@@ -29,8 +17,9 @@ const CreatePostFormFields = ({
   handleRemoveImage,
   handleImageChange,
 }) => {
-  const { values } = useFormikContext();
+  const { values, setValues } = useFormikContext();
   const inputRef = useRef();
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       inputRef.current?.focus();
@@ -125,15 +114,26 @@ const CreatePostFormFields = ({
               onChange={handleImageChange}
               sx={{ display: "none" }}
             />
-            <label htmlFor="image-upload">
-              <IconButton component="span">
-                <CameraAltIcon sx={{ color: neutral["A200"], fontSize: 24 }} />
-              </IconButton>
-            </label>
-
-            <IconButton>
-              <TagFacesIcon sx={{ color: neutral["A200"], fontSize: 24 }} />
-            </IconButton>
+            <Box>
+              <label htmlFor="image-upload">
+                <Button
+                  component="span"
+                  sx={{
+                    color: neutral["A200"],
+                    // textTransform:"none"
+                    fontSize: 14,
+                    fontWeight: 600,
+                  }}
+                  endIcon={
+                    <PublishIcon
+                      sx={{ color: neutral["A200"], fontSize: 22 }}
+                    />
+                  }
+                >
+                  Upload
+                </Button>
+              </label>
+            </Box>
           </Box>
           <Box>
             <Button

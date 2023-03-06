@@ -47,9 +47,7 @@ const CreatePostModal = ({ isOpen, handleClose, handleModalSubmit }) => {
     setStatus(e);
   };
 
-  const handleTextChange = (event) => {
-    setText(event.target.value);
-  };
+  // Handle posted image
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files.length > 0) {
       setImage(event.target.files[0]);
@@ -61,6 +59,7 @@ const CreatePostModal = ({ isOpen, handleClose, handleModalSubmit }) => {
     setImageUrl(null);
   };
 
+  // Handle form submit
   const handlePostSubmit = (data, actions) => {
     const { postText } = data;
     setImage(null);
@@ -109,7 +108,11 @@ const CreatePostModal = ({ isOpen, handleClose, handleModalSubmit }) => {
           >
             Create a Post
           </Typography>
-          <IconButton aria-label="close" size="medium" onClick={handleClose}>
+          <IconButton
+            aria-label="close"
+            size="medium"
+            onClick={handleModalClose}
+          >
             <CloseIcon
               fontSize="medium"
               sx={{ color: neutral["800"], opacity: 0.8 }}
