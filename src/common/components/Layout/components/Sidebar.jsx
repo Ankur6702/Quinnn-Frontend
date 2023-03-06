@@ -37,8 +37,6 @@ const Sidebar = ({ tabs }) => {
             "&::-webkit-scrollbar": {
               display: "none", // Hide the scrollbar in Chrome, Safari, and Opera
             },
-            "-ms-overflow-style": "none", // Hide the scrollbar in IE and Edge
-            "scrollbar-width": "none", // Hide the scrollbar in Firefox
           },
         }}
         variant="permanent"

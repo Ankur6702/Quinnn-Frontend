@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
@@ -11,9 +11,19 @@ import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import EmojiEmotionsRoundedIcon from "@mui/icons-material/EmojiEmotionsRounded";
 import EventRoundedIcon from "@mui/icons-material/EventRounded";
 
+import CreatePostModal from "@/src/common/components/modals/CreatePost/CreatePostModal";
 import { neutral } from "@/src/common/config/colors";
 
 const CreatePost = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Box
       display="flex"
@@ -45,11 +55,15 @@ const CreatePost = () => {
         </Avatar>
         <Box
           display="flex"
+          component="button"
           p={3}
           width="100%"
+          border="none"
           alignItems="center"
           bgcolor={neutral["A700"]}
           borderRadius={10}
+          sx={{ cursor: "text" }}
+          onClick={handleClick}
         >
           <Typography
             variant="h4"
@@ -63,6 +77,11 @@ const CreatePost = () => {
             {`What's on your mind?`}
           </Typography>
         </Box>
+        <CreatePostModal
+          isOpen={open}
+          handleClose={handleClose}
+          handleModalSubmit={() => {}}
+        />
       </Box>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Box display="flex" columnGap={3} alignItems="center">
@@ -73,13 +92,13 @@ const CreatePost = () => {
               />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Add a Video">
+          {/* <Tooltip title="Add a Video">
             <IconButton size="small">
               <VideocamRoundedIcon
                 sx={{ color: neutral["700"], fontSize: 20 }}
               />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
           <Tooltip title="Add a emoji">
             <IconButton size="small">
               <EmojiEmotionsRoundedIcon
