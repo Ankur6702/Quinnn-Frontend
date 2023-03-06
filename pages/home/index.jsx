@@ -1,6 +1,6 @@
 import React from "react";
 
-import PostSection from "@/src/home/create/PostSection";
+import PostSection from "@/src/home/components/create/PostSection";
 
 const index = () => {
   return <PostSection />;

@@ -121,7 +121,7 @@ const TabList = ({ handleClick }) => {
                 fontSize: { xs: 24, lg: 24 },
               }}
             >
-              LGBTQ+
+              NetScape
             </Typography>
           </Box>
           <SearchBar />

@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import IconButton from "@mui/material/IconButton";
-import CameraAltRoundedIcon from "@mui/icons-material/CameraAltRounded";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import EventRoundedIcon from "@mui/icons-material/EventRounded";
 
 import CreatePostModal from "@/src/common/components/modals/CreatePost/CreatePostModal";
@@ -27,10 +27,10 @@ const CreatePost = () => {
       display="flex"
       flexDirection="column"
       rowGap={4}
-      boxSizing="content-box"
+      boxSizing="border-box"
       p={4}
       sx={{
-        maxWidth: 600,
+        maxWidth: 630,
         width: "100%",
         bgcolor: neutral["A500"],
         borderRadius: 2,
@@ -82,11 +82,11 @@ const CreatePost = () => {
         />
       </Box>
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Box display="flex" columnGap={3} alignItems="center">
+        <Box display="flex" columnGap={2} alignItems="center">
           <Tooltip title="Add a Image">
-            <IconButton size="small">
-              <CameraAltRoundedIcon
-                sx={{ color: neutral["700"], fontSize: 20 }}
+            <IconButton size="small" onClick={handleClick}>
+              <AddPhotoAlternateIcon
+                sx={{ color: neutral["700"], fontSize: 22 }}
               />
             </IconButton>
           </Tooltip>

@@ -163,6 +163,7 @@ const CreatePostModal = ({ isOpen, handleClose, handleModalSubmit }) => {
                   px: 2,
                   py: 0,
                   borderRadius: 4,
+                  cursor: "pointer",
                   border: 1,
                 }}
               >

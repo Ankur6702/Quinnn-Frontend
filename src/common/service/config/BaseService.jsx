@@ -1,7 +1,5 @@
 import Axios from "axios";
 
-// import authService from "./authService";
-
 export default class BaseService {
   baseUrl;
 
@@ -11,9 +9,7 @@ export default class BaseService {
 
   getAxiosConfig() {
     return {
-      headers: {
-        authorization: `Bearer`,
-      },
+      headers: {},
     };
   }
 

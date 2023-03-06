@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Route from "./Route";
 import AccountsLayout from "@/src/accounts/AccountsLayout";
 import Layout from "../Layout/components/Layout";
-import HomePageLayout from "@/src/home/HomePageLayout";
+import HomePage from "@/src/home/HomePage";
 
 const Routes = ({ Component, pageProps }) => {
   const router = useRouter();
@@ -23,9 +23,9 @@ const Routes = ({ Component, pageProps }) => {
       </Route>
       <Route path="/home">
         <Layout>
-          <HomePageLayout>
+          <HomePage>
             <Component {...pageProps} />
-          </HomePageLayout>
+          </HomePage>
         </Layout>
       </Route>
       {!["accounts", "home"].includes(router.asPath.split("/")[1]) && (
