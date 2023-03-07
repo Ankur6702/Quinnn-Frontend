@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
@@ -57,16 +58,17 @@ const Followers = () => {
         >
           My Friends
         </Typography>
-        <Typography
-          variant="h6"
+        <Button
+          component="span"
           sx={{
             color: Blues["A100"],
+            textTransform: "none",
+            fontSize: 12,
             fontWeight: 400,
-            fontSize: { xs: 12, lg: 12 },
           }}
         >
           View All
-        </Typography>
+        </Button>
       </Box>
 
       <Box display="flex" flexDirection="column" rowGap={3}>

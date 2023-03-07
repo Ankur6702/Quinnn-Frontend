@@ -31,7 +31,7 @@ const HomePageLayout = ({ children }) => {
       display="flex"
       justifyContent="space-between"
       columnGap={12}
-      sx={{ maxWidth: 1024, width: "100%" }}
+      sx={{ maxWidth: 1024, width: "100%", position: "relative" }}
     >
       {children}
     </Box>

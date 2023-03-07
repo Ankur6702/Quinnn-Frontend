@@ -37,11 +37,16 @@ const PostSection = () => {
       </Box>
 
       {!isDownXl && (
-        <Box sx={{ maxWidth: 320, width: "100%" }}>
+        <Box sx={{ maxWidth: 320, width: "100%", position: "relative" }}>
           <Box
             display="flex"
             flexDirection="column"
-            sx={{ maxWidth: 320, width: "100%", bgcolor: neutral["A500"] }}
+            sx={{
+              maxWidth: 320,
+              width: "100%",
+              bgcolor: neutral["A500"],
+              position: "fixed",
+            }}
           >
             <Followers />
           </Box>
