@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 
 import TabList from "./TabList";
-import DownLgSidebar from "./DownLgSidebar";
+import DownSidebar from "./DownSidebar";
 import { neutral } from "@/src/common/config/colors";
 import { LOGO } from "@/src/accounts/utils/constants";
 
@@ -68,7 +68,7 @@ const DownLgNavbar = () => {
                 </Box>
               </Link>
             </Box>
-            <DownLgSidebar
+            <DownSidebar
               drawer={drawer}
               toggleDrawer={toggleDrawer}
               tabs={<TabList handleClick={toggleDrawer(false)} />}

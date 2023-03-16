@@ -6,6 +6,7 @@ import { neutral } from "@/src/common/config/colors";
 
 const DownLgSidebar = ({ drawer, toggleDrawer, tabs }) => {
   const drawerWidth = 250;
+
   return (
     <SwipeableDrawer
       anchor="left"
@@ -19,12 +20,9 @@ const DownLgSidebar = ({ drawer, toggleDrawer, tabs }) => {
         "& .MuiDrawer-paper": {
           width: drawerWidth,
           boxSizing: "border-box",
-        },
-        "&::-webkit-scrollbar": {
-          display: "none",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          display: "none",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
         },
       }}
     >
