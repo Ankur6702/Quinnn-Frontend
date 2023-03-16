@@ -21,11 +21,11 @@ const Layout = ({ children }) => {
         alignItems="flex-start"
         width={{ xs: "100%", lg: `calc(100% - ${250}px)` }}
         ml={{ xs: 0, lg: `${250}px` }}
-        mt={{ xs: 8, lg: 16 }}
+        mt={{ xs: 14, lg: 16 }}
         bgcolor={neutral["A700"]}
-        pl={{ xs: 6, lg: 16 }}
-        pr={{ xs: 6, lg: 16 }}
-        py={{ xs: 12, lg: 8 }}
+        pl={{ xs: 3, lg: 16 }}
+        pr={{ xs: 3, lg: 16 }}
+        py={{ xs: 6, lg: 8 }}
       >
         {children}
       </Box>

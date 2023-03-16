@@ -83,15 +83,15 @@ const CreatePostModal = ({ isOpen, handleClose, handleModalSubmit }) => {
       aria-labelledby="form-dialog-title"
       sx={{
         "& .MuiDialog-container": {
-          alignItems: "flex-start",
+          alignItems: { xs: "center", md: "flex-start" },
         },
         "& .MuiPaper-root": {
           borderRadius: 3,
           px: 1,
           pb: 1,
-          minWidth: { md: 580 },
-          maxHeight: { md: 400 },
-          height: "100%",
+          minWidth: { xs: "90%", md: 580 },
+          maxHeight: { xs: 400, md: 450 },
+          height: { xs: "100%", md: "100%" },
         },
       }}
     >

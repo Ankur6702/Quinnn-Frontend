@@ -43,6 +43,7 @@ const CreatePostFormFields = ({
         display="flex"
         flexDirection="column"
         justifyContent="space-between"
+        rowGap={3}
         sx={{ position: "relative" }}
       >
         <Box
@@ -93,7 +94,7 @@ const CreatePostFormFields = ({
                   width: "100% !important",
                   border: 0.5,
                   borderColor: neutral["A200"],
-                  borderRadius: 4,
+                  borderRadius: { xs: 2, md: 4 },
                   p: 2,
                 }}
               />

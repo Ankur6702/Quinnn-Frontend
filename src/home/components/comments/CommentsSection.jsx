@@ -34,7 +34,7 @@ const CommentsSection = () => {
         border="none"
         alignItems="center"
         bgcolor={neutral["A700"]}
-        borderRadius={10}
+        borderRadius={{ xs: 2, lg: 10 }}
         sx={{ cursor: "text" }}
       >
         <Typography

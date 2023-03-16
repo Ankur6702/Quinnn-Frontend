@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { styled } from "@mui/material";
 
 import { Blues, neutral } from "@/src/common/config/colors";
@@ -15,7 +16,6 @@ const openedMixin = (theme) => ({
   borderRadius: 4,
   "& .MuiTypography-h6": {
     color: Blues["A100"],
-    fontSize: 16,
     fontWeight: 500,
     lineHeight: "21px",
   },
@@ -26,7 +26,6 @@ const closedMixin = (theme) => ({
   width: "100%",
   "& .MuiTypography-h6": {
     color: neutral["600"],
-    fontSize: 16,
     fontWeight: 400,
     lineHeight: "21px",
   },
@@ -59,7 +58,12 @@ const TabListItem = ({ Icon, route, name, id, handleClick }) => {
             onClick={handleClick}
           >
             <ListItemIcon style={{ minWidth: "20px" }}>{Icon}</ListItemIcon>
-            <ListItemText primaryTypographyProps={{ variant: "h6" }}>
+            <ListItemText
+              primaryTypographyProps={{
+                variant: "h6",
+                fontSize: { xs: 14, lg: 16 },
+              }}
+            >
               {name}
             </ListItemText>
           </MuiListItem>

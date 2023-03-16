@@ -70,7 +70,7 @@ const Events = () => {
                   sx={{
                     color: neutral["700"],
                     fontWeight: 400,
-                    fontSize: { xs: 12, lg: 12 },
+                    fontSize: 12,
                   }}
                 >
                   {event?.month}
@@ -92,7 +92,7 @@ const Events = () => {
                   sx={{
                     color: neutral["700"],
                     fontWeight: 400,
-                    fontSize: { xs: 12, lg: 12 },
+                    fontSize: 12,
                   }}
                 >
                   {event?.time}

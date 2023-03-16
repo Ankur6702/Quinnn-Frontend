@@ -7,6 +7,7 @@ import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -14,6 +15,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
 import AddIcon from "@mui/icons-material/Add";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 import usePosts from "../../context/usePosts";
 import CommentsSection from "../comments/CommentsSection";
@@ -24,8 +26,9 @@ import { Blues, neutral } from "@/src/common/config/colors";
 const PostItem = () => {
   const [showMore, setShowMore] = useState(false);
   const [showComments, setShowComments] = useState(false);
-  const postText = `
-  Love this meme! It really hits hard, as doing my job sometimes causes me impostor syndrome. There are days when I get up from my desk, being tired as hell and having nothing to show for it... Or do I?
+  const theme = useTheme();
+  const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
+  const postText = `Love this meme! It really hits hard, as doing my job sometimes causes me impostor syndrome. There are days when I get up from my desk, being tired as hell and having nothing to show for it... Or do I?
 
   I really envy my colleagues. By the end of the day:
   code developers will have a lot of code to present at the end of the day,
@@ -77,7 +80,7 @@ const PostItem = () => {
           " rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
       }}
     >
-      <Box display="flex" flexDirection="column" rowGap={3}>
+      <Box display="flex" flexDirection="column" rowGap={3} width="100%">
         <Box
           display="flex"
           justifyContent="space-between"
@@ -106,7 +109,7 @@ const PostItem = () => {
               <Typography
                 variant="h4"
                 sx={{
-                  fontSize: { xs: 12, lg: 16 },
+                  fontSize: { xs: 14, lg: 16 },
                   color: neutral["900"],
                   fontWeight: 500,
                   opacity: 0.9,
@@ -139,7 +142,7 @@ const PostItem = () => {
             sx={{
               color: Blues["A200"],
               textTransform: "none",
-              fontSize: 16,
+              fontSize: { xs: 14, lg: 16 },
               fontWeight: 500,
             }}
             startIcon={<AddIcon sx={{ color: Blues["Aa00"], fontSize: 22 }} />}
@@ -147,7 +150,7 @@ const PostItem = () => {
             Follow
           </Button>
         </Box>
-        <Box px={4} pb={4} sx={{ position: "relative" }}>
+        <Box px={4} pb={{ xs: 8, md: 6 }} sx={{ position: "relative" }}>
           <Typography
             variant="h4"
             sx={{
@@ -165,11 +168,12 @@ const PostItem = () => {
             sx={{
               color: neutral["A200"],
               textTransform: "none",
-              fontSize: 14,
+              fontSize: { xs: 12, md: 14 },
               fontWeight: 400,
               position: "absolute",
               right: 0,
               bottom: 0,
+
               "&:hover": {
                 backgroundColor: "transparent !important",
               },
@@ -194,25 +198,36 @@ const PostItem = () => {
         {/* <Divider sx={{ opacity: 0.75, mx: 2 }} /> */}
         <Box display="flex" px={4} width="100%" justifyContent="space-between">
           <Box display="flex" columnGap={1} alignItems="center">
-            <Button
-              sx={{
-                color: neutral["A200"],
-                textTransform: "none",
-                fontSize: 16,
-                fontWeight: 500,
-                borderRadius: 2,
-              }}
-              startIcon={
+            {isDownMd ? (
+              <IconButton aria-label="comments" size="medium">
                 <ThumbUpIcon
                   sx={{
                     color: neutral["A200"],
                     fontSize: 22,
                   }}
                 />
-              }
-            >
-              Upvote
-            </Button>
+              </IconButton>
+            ) : (
+              <Button
+                sx={{
+                  color: neutral["A200"],
+                  textTransform: "none",
+                  fontSize: 16,
+                  fontWeight: 500,
+                  borderRadius: 2,
+                }}
+                startIcon={
+                  <ThumbUpIcon
+                    sx={{
+                      color: neutral["A200"],
+                      fontSize: 22,
+                    }}
+                  />
+                }
+              >
+                Like
+              </Button>
+            )}
             <Typography
               variant="h4"
               sx={{
@@ -229,26 +244,42 @@ const PostItem = () => {
             </Typography>
           </Box>
           <Box display="flex" columnGap={1} alignItems="center">
-            <Button
-              onClick={() => setShowComments((prev) => !prev)}
-              sx={{
-                color: showComments ? Blues["A100"] : neutral["A200"],
-                textTransform: "none",
-                fontSize: 16,
-                fontWeight: 500,
-                borderRadius: 2,
-              }}
-              startIcon={
+            {isDownMd ? (
+              <IconButton
+                aria-label="comments"
+                size="medium"
+                onClick={() => setShowComments((prev) => !prev)}
+              >
                 <CommentIcon
                   sx={{
                     color: showComments ? Blues["A100"] : neutral["A200"],
                     fontSize: 22,
                   }}
                 />
-              }
-            >
-              Comment
-            </Button>
+              </IconButton>
+            ) : (
+              <Button
+                onClick={() => setShowComments((prev) => !prev)}
+                sx={{
+                  color: showComments ? Blues["A100"] : neutral["A200"],
+                  textTransform: "none",
+                  fontSize: 16,
+                  fontWeight: 500,
+                  borderRadius: 2,
+                }}
+                startIcon={
+                  <CommentIcon
+                    sx={{
+                      color: showComments ? Blues["A100"] : neutral["A200"],
+                      fontSize: 22,
+                    }}
+                  />
+                }
+              >
+                Comment
+              </Button>
+            )}
+
             <Typography
               variant="h4"
               sx={{
@@ -264,20 +295,26 @@ const PostItem = () => {
               32
             </Typography>
           </Box>
-          <Button
-            sx={{
-              color: neutral["A200"],
-              textTransform: "none",
-              fontSize: 16,
-              fontWeight: 500,
-              borderRadius: 2,
-            }}
-            startIcon={
+          {isDownMd ? (
+            <IconButton aria-label="comments" size="medium">
               <ShareIcon sx={{ color: neutral["A200"], fontSize: 22 }} />
-            }
-          >
-            Share
-          </Button>
+            </IconButton>
+          ) : (
+            <Button
+              sx={{
+                color: neutral["A200"],
+                textTransform: "none",
+                fontSize: 16,
+                fontWeight: 500,
+                borderRadius: 2,
+              }}
+              startIcon={
+                <ShareIcon sx={{ color: neutral["A200"], fontSize: 22 }} />
+              }
+            >
+              Share
+            </Button>
+          )}
         </Box>
         {showComments && (
           <Box display="flex" flexDirection="column" rowGap={3}>
