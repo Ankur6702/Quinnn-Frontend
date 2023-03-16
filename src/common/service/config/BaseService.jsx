@@ -4,7 +4,7 @@ export default class BaseService {
   baseUrl;
 
   constructor() {
-    this.baseUrl = process.env.REACT_APP_BASE_SERVICE;
+    this.baseUrl = process.env.BASE_SERVICE;
   }
 
   getAxiosConfig() {
