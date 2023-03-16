@@ -4,7 +4,7 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 
 import { neutral } from "@/src/common/config/colors";
 
-const DownLgSidebar = ({ drawer, toggleDrawer, tabs }) => {
+const DownSideBar = ({ drawer, toggleDrawer, tabs }) => {
   const drawerWidth = 250;
 
   return (
@@ -31,4 +31,4 @@ const DownLgSidebar = ({ drawer, toggleDrawer, tabs }) => {
   );
 };
 
-export default DownLgSidebar;
+export default DownSideBar;
