@@ -18,7 +18,9 @@ const CreatePostFormFields = ({
   handleImageChange,
 }) => {
   const { values, setValues } = useFormikContext();
+  const [key, setKey] = useState(Date.now());
   const inputRef = useRef();
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -27,7 +29,12 @@ const CreatePostFormFields = ({
     return () => {
       clearTimeout(timeout);
     };
-  }, [image, imageUrl]);
+  }, []);
+
+  const handleDeleteImage = () => {
+    fileInputRef.current.value = null;
+    handleRemoveImage();
+  };
 
   return (
     <Box
@@ -82,11 +89,13 @@ const CreatePostFormFields = ({
             <Box sx={{ position: "relative" }}>
               <IconButton
                 sx={{ position: "absolute", right: 10, top: 5 }}
-                onClick={handleRemoveImage}
+                onClick={handleDeleteImage}
               >
                 <CloseIcon />
               </IconButton>
               <CardMedia
+                name="postImage"
+                key={Date.now()}
                 component="img"
                 image={imageUrl}
                 alt="Preview"
@@ -109,10 +118,15 @@ const CreatePostFormFields = ({
           <Box display="flex" alignItems="center" columnGap={1}>
             <Input
               id="image-upload"
+              ref={fileInputRef}
+              key={key}
               name="postImage"
               type="file"
               inputProps={{ accept: "image/*" }}
-              onChange={handleImageChange}
+              onChange={() => {
+                handleImageChange(event);
+                setKey(Date.now());
+              }}
               sx={{ display: "none" }}
             />
             <Box>

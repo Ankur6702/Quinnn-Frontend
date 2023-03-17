@@ -8,7 +8,7 @@ const index = () => {
   return (
     <>
       <Head>
-        <title>Home | ${SITE_NAME}</title>
+        <title>{`Home | ${SITE_NAME}`}</title>
         <meta
           name="description"
           content="Join our inclusive social media platform for the LGBTQ+ community. Connect with like-minded individuals, celebrate diversity, and express yourself freely in a safe and welcoming space. Join us today and be part of a vibrant community that supports and uplifts each other."
