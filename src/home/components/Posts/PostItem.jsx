@@ -22,9 +22,11 @@ import CommentsSection from "../comments/CommentsSection";
 import { sliceString } from "@/src/common/utils/utils";
 import { POST_IMAGE_1, POST_IMAGE_2 } from "../../utils/constants";
 import { Blues, neutral } from "@/src/common/config/colors";
+import ShareModal from "@/src/common/components/share/ShareModal";
 
 const PostItem = () => {
   const [showMore, setShowMore] = useState(false);
+  const [share, setShare] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const theme = useTheme();
   const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
@@ -36,33 +38,6 @@ const PostItem = () => {
   data analysts will progress in their data discoveries,
   QA engineers will find new bugs,
   etc...
-  
-  Me?
-  
-  I can often only recall 6 hours of meetings (half of them could have been an email, and most of the rest I was there just in case they needed to ask me a question...) with 2 hours spent on lunch and chit-chat by the office kitchen (at least when I'm in the office. At home it's probably putting the laundry in or out while listening to a boring meeting).
-  It still needs to be done - you never know when a PM will be a key voice in a meeting!
-  
-  If there are no meetings, I can find myself looking through users' feedback for hours without finding anything that is both unknown and actionable.
-  It still needs to be done - inspiration can come from anywhere!
-  
-  Sometimes it's spending hours on research that yields no results. Often, it feels like blindly looking for gold in mountains with a pickaxe rather than being a scientist: There is blood, and sweat, but no gold.
-  It still needs to be done - strategic thinking requires understanding the market and it's possible future!
-  
-  I might get stuck for hours in the backlog, looking at the bugs my team will never fix because they are inconsequential. However, someone has to look at them before they are closed, right?
-  It still needs to be done - a clean backlog shows the PM's grip on the product and provides transparency about things to come!
-  
-  I also spend a lot of time writing documentation and communication I know well that probably no one will read.
-  It still needs to be done - someone may need to read it! That someone might be you in a few weeks!
-  
-  Not to mention the depressing amount of time spent trying to find an answer to a data question in an analytical suite just to find a metric needed is not tracked or has some bug that obscures the results, making it inconsequential. Well, I guess it is better than drawing false data conclusions and acting on them!
-  It still needs to be done - only the data suite, regardless of how messy, holds the answers to your data questions!
-  
-  Did you also have a lot of brainstorming or backlog refinement sessions that provided no substance in the end?
-  It still needs to be done - without a creative environment to grow, revolutionary ideas my not blossom!
-  
-  Thus, I end the day being super tired of all the work done and having no idea what to enter into the timesheet system so it doesn't look like the day failed to produce any results :)
-  
-  Anyway, good luck doing something meaningful today!
   
   Thank you Vishal Chaudhary 👋 for the meme :)`;
   return (
@@ -295,26 +270,44 @@ const PostItem = () => {
               32
             </Typography>
           </Box>
-          {isDownMd ? (
-            <IconButton aria-label="comments" size="medium">
-              <ShareIcon sx={{ color: neutral["A200"], fontSize: 22 }} />
-            </IconButton>
-          ) : (
-            <Button
-              sx={{
-                color: neutral["A200"],
-                textTransform: "none",
-                fontSize: 16,
-                fontWeight: 500,
-                borderRadius: 2,
-              }}
-              startIcon={
+          <Box>
+            {isDownMd ? (
+              <IconButton
+                aria-label="comments"
+                size="medium"
+                onClick={() => setShare(true)}
+              >
                 <ShareIcon sx={{ color: neutral["A200"], fontSize: 22 }} />
-              }
-            >
-              Share
-            </Button>
-          )}
+              </IconButton>
+            ) : (
+              <Button
+                onClick={() => setShare(true)}
+                sx={{
+                  color: neutral["A200"],
+                  textTransform: "none",
+                  fontSize: 16,
+                  fontWeight: 500,
+                  borderRadius: 2,
+                }}
+                startIcon={
+                  <ShareIcon sx={{ color: neutral["A200"], fontSize: 22 }} />
+                }
+              >
+                Share
+              </Button>
+            )}
+            {share && (
+              <ShareModal
+                copyLink={window.location.href}
+                closeModal={() => setShare(false)}
+                facebook="https://lgbtq-social-media-frontend-ankur6702.vercel.app"
+                linkedin="https://lgbtq-social-media-frontend-ankur6702.vercel.app"
+                twitter="https://lgbtq-social-media-frontend-ankur6702.vercel.app"
+                title="Share this Post"
+                instagram="https://lgbtq-social-media-frontend-ankur6702.vercel.app"
+              />
+            )}
+          </Box>
         </Box>
         {showComments && (
           <Box display="flex" flexDirection="column" rowGap={3}>
