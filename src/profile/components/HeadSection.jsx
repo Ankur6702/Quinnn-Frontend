@@ -61,9 +61,9 @@ const HeadSection = () => {
           image={imageUrl || BANNER_IMAGE}
           alt="baner-image"
           sx={{
-            width: { xs: "auto", sm: "100% !important" },
-            height: { xs: "100% !important", sm: "auto" },
-            objectFit: { xs: "unset", md: "cover" },
+            width: "100% !important",
+            objectFit: { xs: "cover", md: "cover" },
+            objectPosition: "center center",
           }}
         />
         <IconButton
