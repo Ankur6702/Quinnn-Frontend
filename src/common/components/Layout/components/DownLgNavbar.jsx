@@ -10,6 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 import TabList from "./TabList";
 import DownSideBar from "./DownSideBar";
+import ProfileIcon from "./ProfileIcon";
 import { neutral } from "@/src/common/config/colors";
 import { LOGO } from "@/src/accounts/utils/constants";
 
@@ -56,17 +57,7 @@ const DownLgNavbar = () => {
               >
                 <MenuIcon sx={{ color: neutral["900"] }} />
               </IconButton>
-              <Link href={"/home"}>
-                <Box display="flex">
-                  <Image
-                    src={LOGO}
-                    alt="logo"
-                    width={35}
-                    height={35}
-                    priority
-                  />
-                </Box>
-              </Link>
+              <ProfileIcon />
             </Box>
             <DownSideBar
               drawer={drawer}

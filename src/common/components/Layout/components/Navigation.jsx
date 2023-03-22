@@ -4,7 +4,6 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import TabList from "./TabList";
 import Sidebar from "./Sidebar";
 import DownLgNavbar from "./DownLgNavbar";
-// import DownLgNavbar from "./DownLgNavbar";
 
 const Navigation = () => {
   const theme = useTheme();
