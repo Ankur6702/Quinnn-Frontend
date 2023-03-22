@@ -10,19 +10,13 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import EditIcon from "@mui/icons-material/Edit";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CardMedia from "@mui/material/CardMedia";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import ShareIcon from "@mui/icons-material/Share";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import CommentIcon from "@mui/icons-material/Comment";
-import AddIcon from "@mui/icons-material/Add";
 import { useMediaQuery, useTheme } from "@mui/material";
 
 import { BANNER_IMAGE, FEMALE_AVATAR, MALE_AVATAR } from "../utils/constants";
 import { Blues, neutral } from "@/src/common/config/colors";
-import UpdateImageModal from "@/src/common/components/modals/EditProfile/UpdateImageModal";
+import UpdateBannerModal from "@/src/common/components/modals/EditProfile/UpdateBannerModal";
 
 const HeadSection = () => {
   const [imageUrl, setImageUrl] = useState(null);
@@ -46,7 +40,6 @@ const HeadSection = () => {
         width: "100%",
         display: "flex",
         flexDirection: "column",
-        rowGap: 2,
       }}
     >
       <Box
@@ -68,7 +61,8 @@ const HeadSection = () => {
           image={imageUrl || BANNER_IMAGE}
           alt="baner-image"
           sx={{
-            width: "100% !important",
+            width: { xs: "auto", sm: "100% !important" },
+            height: { xs: "100% !important", sm: "auto" },
             objectFit: { xs: "unset", md: "cover" },
           }}
         />
@@ -83,9 +77,11 @@ const HeadSection = () => {
             p: 1,
           }}
         >
-          <EditIcon sx={{ fontSize: 20, color: Blues["A100"] }} />
+          <EditIcon
+            sx={{ fontSize: { xs: 14, md: 20 }, color: Blues["A100"] }}
+          />
         </IconButton>
-        <UpdateImageModal
+        <UpdateBannerModal
           isOpen={open}
           handleClose={handleClose}
           url={imageUrl}
@@ -93,7 +89,7 @@ const HeadSection = () => {
           handleModalSubmit={() => {}}
         />
       </Box>
-      <Box display="flex">
+      <Box display="flex" sx={{ bgcolor: neutral["A500"] }}>
         <Box
           sx={{
             position: "relative",

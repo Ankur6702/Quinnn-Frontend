@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useFormikContext } from "formik";
+import { useFormikContext, useFormik } from "formik";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
@@ -9,9 +10,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import PublishIcon from "@mui/icons-material/Publish";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import InputWithoutLabel from "../../forms/InputWithoutLabel";
 import { neutral } from "@/src/common/config/colors";
 import { BANNER_IMAGE } from "@/src/profile/utils/constants";
+import Image from "next/image";
 
 const UpdateImageFormFields = ({
   image,
@@ -20,9 +21,17 @@ const UpdateImageFormFields = ({
   handleImageChange,
 }) => {
   const [key, setKey] = useState(Date.now());
+  const { values, setFieldValue, errors, touched } = useFormikContext();
   const inputRef = useRef();
   const fileInputRef = useRef(null);
-  console.log(imageUrl);
+  console.log(values);
+
+  const handleSubmit = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setFieldValue("image", event.target.files[0]);
+    }
+    handleImageChange(event);
+  };
 
   const handleDeleteImage = () => {
     fileInputRef.current.value = null;
@@ -60,7 +69,6 @@ const UpdateImageFormFields = ({
         >
           <Box sx={{ position: "relative" }}>
             <CardMedia
-              name="image"
               key={Date.now()}
               component="img"
               image={imageUrl || BANNER_IMAGE}
@@ -74,6 +82,19 @@ const UpdateImageFormFields = ({
                 p: 1,
               }}
             />
+            {errors.image && touched.image && (
+              <Typography
+                variant="h6"
+                sx={{
+                  width: "auto",
+                  color: "red",
+                  fontWeight: 300,
+                  fontSize: { xs: 12, lg: 14 },
+                }}
+              >
+                {errors.image}
+              </Typography>
+            )}
           </Box>
         </Box>
         <Box
@@ -88,21 +109,23 @@ const UpdateImageFormFields = ({
             justifyContent="space-between"
             columnGap={2}
           >
-            <Input
-              id="image-upload"
+            <input
+              id="banner-image"
               ref={fileInputRef}
               key={key}
-              name="postImage"
+              name="image"
               type="file"
-              inputProps={{ accept: "image/*" }}
-              onChange={() => {
-                handleImageChange(event);
+              accept="image/*"
+              onChange={(event) => {
+                handleSubmit(event);
+                console.log(values);
                 setKey(Date.now());
               }}
-              sx={{ display: "none" }}
+              style={{ display: "none" }}
             />
+
             <Box>
-              <label htmlFor="image-upload">
+              <label htmlFor="banner-image">
                 <Button
                   component="span"
                   sx={{

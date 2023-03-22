@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Form, Formik } from "formik";
+import React, { useRef, useState } from "react";
+import { Form, Formik, useFormikContext } from "formik";
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Dialog from "@mui/material/Dialog";
@@ -15,13 +13,13 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import UpdateImageFormFields from "./UpdateImageFormFields";
 import { UpdateImageFormValidationSchema } from "../utils/helper";
-import { Blues, Green, neutral } from "../../../config/colors";
+import { neutral } from "../../../config/colors";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const UpdateImageModal = ({
+const UpdateBannerModal = ({
   isOpen,
   handleClose,
   handleModalSubmit,
@@ -32,13 +30,13 @@ const UpdateImageModal = ({
   const [imageUrl, setImageUrl] = useState(url);
   const formikRef = useRef();
 
-  const initialState = { image: null };
-  console.log(url, imageUrl);
+  const initialState = { image: "" };
 
   // Handle updated image
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files.length > 0) {
       setImage(event.target.files[0]);
+
       setImageUrl(URL.createObjectURL(event.target.files[0]));
     }
   };
@@ -134,4 +132,4 @@ const UpdateImageModal = ({
     </Dialog>
   );
 };
-export default UpdateImageModal;
+export default UpdateBannerModal;
