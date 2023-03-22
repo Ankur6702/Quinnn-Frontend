@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Form, Formik } from "formik";
 
 import Box from "@mui/material/Box";
@@ -11,8 +11,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import CloseIcon from "@mui/icons-material/Close";
 
-import UpdateImageFormFields from "./UpdateImageFormFields";
-import { UpdateImageFormValidationSchema } from "../utils/helper";
+import UpdateAvatarFormFields from "./UpdateAvatarFormFields";
+import { AvatarValidationSchema } from "../utils/helper";
 import { neutral } from "../../../config/colors";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -24,13 +24,13 @@ const UpdateAvatarModal = ({
   handleClose,
   handleModalSubmit,
   url,
-  handleUpdateAvatar,
+  handleUpdateImage,
 }) => {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(url);
   const formikRef = useRef();
 
-  const initialState = { image: null };
+  const initialState = { image: "" };
 
   // Handle updated image
   const handleImageChange = (event) => {
@@ -92,7 +92,7 @@ const UpdateAvatarModal = ({
               opacity: 0.9,
             }}
           >
-            Background Image
+            Avatar Image
           </Typography>
           <IconButton
             aria-label="close"
@@ -111,13 +111,13 @@ const UpdateAvatarModal = ({
         <Box height="100%">
           <Formik
             initialValues={initialState}
-            validationSchema={UpdateImageFormValidationSchema}
+            validationSchema={AvatarValidationSchema}
             onSubmit={handleSubmit}
             innerRef={formikRef}
           >
             {({ isSubmitting }) => (
               <Form style={{ height: "100%" }}>
-                <UpdateImageFormFields
+                <UpdateAvatarFormFields
                   image={image}
                   imageUrl={imageUrl || url}
                   handleImageChange={handleImageChange}

@@ -1,20 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useFormikContext, useFormik } from "formik";
+import React, { useRef, useState } from "react";
+import { useFormikContext } from "formik";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
-import CloseIcon from "@mui/icons-material/Close";
 import PublishIcon from "@mui/icons-material/Publish";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { neutral } from "@/src/common/config/colors";
 import { BANNER_IMAGE } from "@/src/profile/utils/constants";
-import Image from "next/image";
 
-const UpdateImageFormFields = ({
+const UpdateBannerFormFields = ({
   image,
   imageUrl,
   handleRemoveImage,
@@ -22,9 +18,7 @@ const UpdateImageFormFields = ({
 }) => {
   const [key, setKey] = useState(Date.now());
   const { values, setFieldValue, errors, touched } = useFormikContext();
-  const inputRef = useRef();
   const fileInputRef = useRef(null);
-  console.log(values);
 
   const handleSubmit = (event) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -118,7 +112,6 @@ const UpdateImageFormFields = ({
               accept="image/*"
               onChange={(event) => {
                 handleSubmit(event);
-                console.log(values);
                 setKey(Date.now());
               }}
               style={{ display: "none" }}
@@ -173,4 +166,4 @@ const UpdateImageFormFields = ({
   );
 };
 
-export default UpdateImageFormFields;
+export default UpdateBannerFormFields;

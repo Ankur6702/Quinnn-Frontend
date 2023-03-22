@@ -17,20 +17,33 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import { BANNER_IMAGE, FEMALE_AVATAR, MALE_AVATAR } from "../utils/constants";
 import { Blues, neutral } from "@/src/common/config/colors";
 import UpdateBannerModal from "@/src/common/components/modals/EditProfile/UpdateBannerModal";
+import UpdateAvatarModal from "@/src/common/components/modals/EditProfile/UpdateAvatarModal";
 
 const HeadSection = () => {
-  const [imageUrl, setImageUrl] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [bannerImageUrl, setBannerImageUrl] = useState(null);
+  const [avatarImageUrl, setAvatarImageUrl] = useState(null);
+  const [bannerOpen, setBannerOpen] = useState(false);
+  const [avatarOpen, setAvatarOpen] = useState(false);
 
-  const handleClick = () => {
-    setOpen(true);
+  const handleBannerClick = () => {
+    setBannerOpen(true);
   };
-  const handleClose = () => {
-    setOpen(false);
+  const handleBannerClose = () => {
+    setBannerOpen(false);
+  };
+  const handleAvatarClick = () => {
+    setAvatarOpen(true);
+  };
+  const handleAvatarClose = () => {
+    setAvatarOpen(false);
   };
 
-  const handleUpdateImage = (image) => {
-    setImageUrl(image);
+  const handleUpdateBannerImage = (image) => {
+    setBannerImageUrl(image);
+  };
+
+  const handleUpdateAvatarImage = (image) => {
+    setAvatarImageUrl(image);
   };
 
   return (
@@ -55,10 +68,10 @@ const HeadSection = () => {
         }}
       >
         <CardMedia
-          name="image"
+          name="banner-image"
           key={Date.now()}
           component="img"
-          image={imageUrl || BANNER_IMAGE}
+          image={bannerImageUrl || BANNER_IMAGE}
           alt="baner-image"
           sx={{
             width: "100% !important",
@@ -68,7 +81,7 @@ const HeadSection = () => {
         />
         <IconButton
           component="span"
-          onClick={handleClick}
+          onClick={handleBannerClick}
           sx={{
             position: "absolute",
             right: 10,
@@ -82,10 +95,10 @@ const HeadSection = () => {
           />
         </IconButton>
         <UpdateBannerModal
-          isOpen={open}
-          handleClose={handleClose}
-          url={imageUrl}
-          handleUpdateImage={handleUpdateImage}
+          isOpen={bannerOpen}
+          handleClose={handleBannerClose}
+          url={bannerImageUrl}
+          handleUpdateImage={handleUpdateBannerImage}
           handleModalSubmit={() => {}}
         />
       </Box>
@@ -112,10 +125,11 @@ const HeadSection = () => {
               height: { xs: 100, md: 150 },
               cursor: "pointer",
             }}
-            src={MALE_AVATAR}
+            src={avatarImageUrl || MALE_AVATAR}
           />
           <IconButton
             component="span"
+            onClick={handleAvatarClick}
             sx={{
               position: "absolute",
               top: "50%",
@@ -130,6 +144,13 @@ const HeadSection = () => {
               }}
             />
           </IconButton>
+          <UpdateAvatarModal
+            isOpen={avatarOpen}
+            handleClose={handleAvatarClose}
+            url={avatarImageUrl}
+            handleUpdateImage={handleUpdateAvatarImage}
+            handleModalSubmit={() => {}}
+          />
         </Box>
       </Box>
     </Box>

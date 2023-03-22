@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Form, Formik, useFormikContext } from "formik";
+import { Form, Formik } from "formik";
 
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -11,8 +11,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import CloseIcon from "@mui/icons-material/Close";
 
-import UpdateImageFormFields from "./UpdateImageFormFields";
-import { UpdateImageFormValidationSchema } from "../utils/helper";
+import UpdateBannerFormFields from "./UpdateBannerFormFields";
+import { BannerValidationSchema } from "../utils/helper";
 import { neutral } from "../../../config/colors";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -36,7 +36,6 @@ const UpdateBannerModal = ({
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files.length > 0) {
       setImage(event.target.files[0]);
-
       setImageUrl(URL.createObjectURL(event.target.files[0]));
     }
   };
@@ -112,13 +111,13 @@ const UpdateBannerModal = ({
         <Box height="100%">
           <Formik
             initialValues={initialState}
-            validationSchema={UpdateImageFormValidationSchema}
+            validationSchema={BannerValidationSchema}
             onSubmit={handleSubmit}
             innerRef={formikRef}
           >
             {({ isSubmitting }) => (
               <Form style={{ height: "100%" }}>
-                <UpdateImageFormFields
+                <UpdateBannerFormFields
                   image={image}
                   imageUrl={imageUrl || url}
                   handleImageChange={handleImageChange}

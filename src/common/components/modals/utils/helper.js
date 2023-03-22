@@ -8,7 +8,7 @@ export const CreatePostFormValidationSchema = Yup.object(
 
 const MAX_FILE_SIZE = 5000000; // 5MB in bytes
 
-const UpdateImageFormValidation = {
+const BannerValidation = {
   image: Yup.mixed().test(
     "fileSize",
     "File size too large. Maximum size is 5MB",
@@ -19,6 +19,16 @@ const UpdateImageFormValidation = {
   ),
 };
 
-export const UpdateImageFormValidationSchema = Yup.object(
-  UpdateImageFormValidation
-);
+export const BannerValidationSchema = Yup.object(BannerValidation);
+const AvatarValidation = {
+  image: Yup.mixed().test(
+    "fileSize",
+    "File size too large. Maximum size is 5MB",
+    (value) => {
+      if (!value) return true;
+      return value.size <= MAX_FILE_SIZE;
+    }
+  ),
+};
+
+export const AvatarValidationSchema = Yup.object(AvatarValidation);
