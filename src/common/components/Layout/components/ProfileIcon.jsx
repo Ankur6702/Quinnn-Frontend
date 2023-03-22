@@ -105,33 +105,37 @@ const ProfileIcon = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem sx={{ display: "flex", columnGap: 2, alignItems: "center" }}>
-          <ListItemIcon>
-            <Avatar fontSize="small" />
-          </ListItemIcon>
-          <Box display="flex" flexDirection="column" rowGap={0.5}>
-            <Typography
-              variant="h5"
-              sx={{
-                color: neutral["900"],
-                fontWeight: 500,
-                fontSize: { xs: 14, lg: 16 },
-              }}
-            >
-              Rajat Singh
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{
-                color: neutral["700"],
-                fontWeight: 400,
-                fontSize: { xs: 10, lg: 12 },
-              }}
-            >
-              View my Profile
-            </Typography>
-          </Box>
-        </MenuItem>
+        <Link href={"/profile"}>
+          <MenuItem
+            sx={{ display: "flex", columnGap: 2, alignItems: "center" }}
+          >
+            <ListItemIcon>
+              <Avatar fontSize="small" />
+            </ListItemIcon>
+            <Box display="flex" flexDirection="column" rowGap={0.5}>
+              <Typography
+                variant="h5"
+                sx={{
+                  color: neutral["900"],
+                  fontWeight: 500,
+                  fontSize: { xs: 14, lg: 16 },
+                }}
+              >
+                Rajat Singh
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{
+                  color: neutral["700"],
+                  fontWeight: 400,
+                  fontSize: { xs: 10, lg: 12 },
+                }}
+              >
+                View my Profile
+              </Typography>
+            </Box>
+          </MenuItem>
+        </Link>
         <Divider sx={{ opacity: 0.75, mx: 2 }} />
         <Box py={1}>
           <MenuItem>

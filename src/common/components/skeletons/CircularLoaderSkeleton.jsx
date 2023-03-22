@@ -6,7 +6,7 @@ const CircularLoaderSkeleton = () => {
     <Box
       sx={{
         width: "100%",
-        height: "100vh",
+        height: { xs: `calc(100vh - 112px)`, md: `calc(100vh - 128px)` },
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

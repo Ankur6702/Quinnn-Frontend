@@ -7,29 +7,22 @@ import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
 import CloseIcon from "@mui/icons-material/Close";
 import PublishIcon from "@mui/icons-material/Publish";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import InputWithoutLabel from "../../forms/InputWithoutLabel";
 import { neutral } from "@/src/common/config/colors";
+import { BANNER_IMAGE } from "@/src/profile/utils/constants";
 
-const CreatePostFormFields = ({
+const UpdateImageFormFields = ({
   image,
   imageUrl,
   handleRemoveImage,
   handleImageChange,
 }) => {
-  const { values, setValues } = useFormikContext();
   const [key, setKey] = useState(Date.now());
   const inputRef = useRef();
   const fileInputRef = useRef(null);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      inputRef.current?.focus();
-    }, 100);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
+  console.log(imageUrl);
 
   const handleDeleteImage = () => {
     fileInputRef.current.value = null;
@@ -65,64 +58,36 @@ const CreatePostFormFields = ({
             },
           }}
         >
-          <InputWithoutLabel
-            name="postText"
-            type="text"
-            placeholder="What's on your mind?"
-            textFieldProps={{
-              multiline: true,
-              minRows: 2,
-              inputRef: inputRef,
-              sx: {
-                "& .MuiOutlinedInput-input": {
-                  boxSizing: "border-box",
-                  padding: "0px !important",
-                  color: "#000000",
-                  "&::-webkit-scrollbar": {
-                    display: "none", // Hide the scrollbar in Chrome, Safari, and Opera
-                  },
-                },
-              },
-            }}
-          />
-          {image && (
-            <Box sx={{ position: "relative" }}>
-              <IconButton
-                sx={{
-                  position: "absolute",
-                  right: 10,
-                  top: 10,
-                  // bgcolor: "white",
-                  border: "1px solid black",
-                  p: 0,
-                }}
-                onClick={handleDeleteImage}
-              >
-                <CloseIcon />
-              </IconButton>
-              <CardMedia
-                name="postImage"
-                key={Date.now()}
-                component="img"
-                image={imageUrl}
-                alt="Preview"
-                sx={{
-                  width: "100% !important",
-                  border: 0.5,
-                  borderColor: neutral["A200"],
-                  borderRadius: { xs: 2, md: 4 },
-                  p: 2,
-                }}
-              />
-            </Box>
-          )}
+          <Box sx={{ position: "relative" }}>
+            <CardMedia
+              name="image"
+              key={Date.now()}
+              component="img"
+              image={imageUrl || BANNER_IMAGE}
+              alt="Preview"
+              sx={{
+                width: 524,
+                height: 150,
+                border: 0.5,
+                borderColor: neutral["A200"],
+                borderRadius: { xs: 2, md: 2 },
+                p: 1,
+              }}
+            />
+          </Box>
         </Box>
         <Box
           display="flex"
           justifyContent="space-between"
+          columnGap={3}
           sx={{ position: "relative", bottom: 0 }}
         >
-          <Box display="flex" alignItems="center" columnGap={1}>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            columnGap={2}
+          >
             <Input
               id="image-upload"
               ref={fileInputRef}
@@ -156,15 +121,27 @@ const CreatePostFormFields = ({
                 </Button>
               </label>
             </Box>
+            <Box>
+              <Button
+                component="span"
+                onClick={handleDeleteImage}
+                sx={{
+                  color: neutral["A200"],
+                  // textTransform:"none"
+                  fontSize: 14,
+                  fontWeight: 600,
+                }}
+                endIcon={
+                  <DeleteIcon sx={{ color: neutral["A200"], fontSize: 22 }} />
+                }
+              >
+                Delete
+              </Button>
+            </Box>
           </Box>
           <Box>
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={!values["postText"] && !image}
-              sx={{ py: 1 }}
-            >
-              Post
+            <Button type="submit" variant="contained" sx={{ py: 1 }}>
+              Save
             </Button>
           </Box>
         </Box>
@@ -173,4 +150,4 @@ const CreatePostFormFields = ({
   );
 };
 
-export default CreatePostFormFields;
+export default UpdateImageFormFields;

@@ -5,6 +5,7 @@ import Route from "./Route";
 import AccountsLayout from "@/src/accounts/AccountsLayout";
 import Layout from "../Layout/components/Layout";
 import HomePage from "@/src/home/HomePage";
+import ProfilePage from "@/src/profile/ProfilePage";
 
 const Routes = ({ Component, pageProps }) => {
   const router = useRouter();
@@ -28,7 +29,14 @@ const Routes = ({ Component, pageProps }) => {
           </HomePage>
         </Layout>
       </Route>
-      {!["accounts", "home"].includes(router.asPath.split("/")[1]) && (
+      <Route path="/profile">
+        <Layout>
+          <ProfilePage Component={Component} pageProps={pageProps} />
+        </Layout>
+      </Route>
+      {!["accounts", "home", "profile"].includes(
+        router.asPath.split("/")[1]
+      ) && (
         <Route path="/" isBaseRoute>
           <Layout>
             <Component {...pageProps} />
