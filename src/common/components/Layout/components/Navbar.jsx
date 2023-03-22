@@ -3,15 +3,16 @@ import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
-import GroupsIcon from "@mui/icons-material/Groups";
+import PersonIcon from "@mui/icons-material/Person";
 import EventIcon from "@mui/icons-material/Event";
 import IconButton from "@mui/material/IconButton";
-import ChatIcon from "@mui/icons-material/Chat";
+import ArticleIcon from "@mui/icons-material/Article";
 import FeedSharpIcon from "@mui/icons-material/FeedSharp";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 
-import { neutral } from "@/src/common/config/colors";
 import ProfileIcon from "./ProfileIcon";
+import SearchBar from "../../others/SearchBar";
+import { neutral } from "@/src/common/config/colors";
 
 const Navbar = () => {
   const router = useRouter();
@@ -22,19 +23,19 @@ const Navbar = () => {
       Icon: <HomeIcon sx={{ color: neutral["900"], fontSize: 22 }} />,
     },
     {
-      id: "community",
-      name: "Community",
-      Icon: <GroupsIcon sx={{ color: neutral["900"], fontSize: 24 }} />,
+      id: "profile",
+      name: "Profile",
+      Icon: <PersonIcon sx={{ color: neutral["900"], fontSize: 24 }} />,
+    },
+    {
+      id: "blog",
+      name: "Blog",
+      Icon: <ArticleIcon sx={{ color: neutral["900"], fontSize: 24 }} />,
     },
     {
       id: "events",
       name: "Events",
       Icon: <EventIcon sx={{ color: neutral["900"], fontSize: 22 }} />,
-    },
-    {
-      id: "feed",
-      name: "Feed",
-      Icon: <ChatIcon sx={{ color: neutral["900"], fontSize: 22 }} />,
     },
     {
       id: "resources",
@@ -49,19 +50,24 @@ const Navbar = () => {
 
   return (
     <Box display="flex" justifyContent="space-between" width="100%">
-      <Box display="flex" columnGap={2} alignItems="center">
-        {currTab[0]?.Icon}
-        <Typography
-          variant="h4"
-          component="span"
-          sx={{
-            color: neutral["900"],
-            fontWeight: 500,
-            fontSize: { xs: 24, lg: 16 },
-          }}
-        >
-          {currTab[0]?.name}
-        </Typography>
+      <Box display="flex" columnGap={4} alignItems="center">
+        <Box display="flex" columnGap={2} alignItems="center">
+          {currTab[0]?.Icon}
+          <Typography
+            variant="h4"
+            component="span"
+            sx={{
+              color: neutral["900"],
+              fontWeight: 500,
+              fontSize: { xs: 24, lg: 16 },
+            }}
+          >
+            {currTab[0]?.name}
+          </Typography>
+        </Box>
+        <Box width={350}>
+          <SearchBar />
+        </Box>
       </Box>
       <Box display="flex" columnGap={4} alignItems="center">
         <IconButton aria-label="notifications" size="medium">

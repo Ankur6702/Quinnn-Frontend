@@ -11,8 +11,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import TabList from "./TabList";
 import DownSideBar from "./DownSideBar";
 import ProfileIcon from "./ProfileIcon";
+import SearchBar from "../../others/SearchBar";
 import { neutral } from "@/src/common/config/colors";
-import { LOGO } from "@/src/accounts/utils/constants";
 
 const DownLgNavbar = () => {
   const [drawer, setDrawer] = useState(false);
@@ -48,15 +48,19 @@ const DownLgNavbar = () => {
               alignItems="center"
               justifyContent="space-between"
               width="100%"
+              columnGap={2}
             >
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={toggleDrawer(true)}
-                edge="start"
-              >
-                <MenuIcon sx={{ color: neutral["900"] }} />
-              </IconButton>
+              <Box display="flex" alignItems="center" columnGap={1}>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={toggleDrawer(true)}
+                  edge="start"
+                >
+                  <MenuIcon sx={{ color: neutral["900"] }} />
+                </IconButton>
+                <SearchBar />
+              </Box>
               <ProfileIcon />
             </Box>
             <DownSideBar

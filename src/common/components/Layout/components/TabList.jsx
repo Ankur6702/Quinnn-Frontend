@@ -9,17 +9,14 @@ import Divider from "@mui/material/Divider";
 import HomeIcon from "@mui/icons-material/Home";
 import GroupsIcon from "@mui/icons-material/Groups";
 import EventIcon from "@mui/icons-material/Event";
-import ChatIcon from "@mui/icons-material/Chat";
 import FeedSharpIcon from "@mui/icons-material/FeedSharp";
 
 import TabListItem from "./TabListItem";
-import SearchBar from "../../others/SearchBar";
 import { Blues, neutral } from "@/src/common/config/colors";
 
 import {
   FRONTEND_HOME_PAGE_URL,
-  FRONTEND_FEED_PAGE_URL,
-  FRONTEND_COMMUNITY_PAGE_URL,
+  FRONTEND_BLOGS_PAGE_URL,
   FRONTEND_EVENTS_PAGE_URL,
   FRONTEND_RESOURCES_PAGE_URL,
 } from "@/src/common/utils/constants";
@@ -53,12 +50,12 @@ const TabList = ({ handleClick }) => {
         ),
       },
       {
-        id: "community",
-        name: "Community",
-        route: `${FRONTEND_COMMUNITY_PAGE_URL}`,
+        id: "blogs",
+        name: "Blogs",
+        route: `${FRONTEND_BLOGS_PAGE_URL}`,
         Icon: (
           <GroupsIcon
-            sx={{ color: iconColor(FRONTEND_COMMUNITY_PAGE_URL), fontSize: 24 }}
+            sx={{ color: iconColor(FRONTEND_BLOGS_PAGE_URL), fontSize: 24 }}
           />
         ),
       },
@@ -69,16 +66,6 @@ const TabList = ({ handleClick }) => {
         Icon: (
           <EventIcon
             sx={{ color: iconColor(FRONTEND_EVENTS_PAGE_URL), fontSize: 22 }}
-          />
-        ),
-      },
-      {
-        id: "feed",
-        name: "Feed",
-        route: `${FRONTEND_FEED_PAGE_URL}`,
-        Icon: (
-          <ChatIcon
-            sx={{ color: iconColor(FRONTEND_FEED_PAGE_URL), fontSize: 22 }}
           />
         ),
       },
@@ -124,7 +111,6 @@ const TabList = ({ handleClick }) => {
               NetScape
             </Typography>
           </Box>
-          <SearchBar />
         </Box>
 
         <List sx={{ my: 4 }}>
