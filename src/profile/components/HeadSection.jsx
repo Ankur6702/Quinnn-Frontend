@@ -1,23 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Input from "@mui/material/Input";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import EditIcon from "@mui/icons-material/Edit";
 import CardMedia from "@mui/material/CardMedia";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import { useMediaQuery, useTheme } from "@mui/material";
 
 import { BANNER_IMAGE, FEMALE_AVATAR, MALE_AVATAR } from "../utils/constants";
 import { Blues, neutral } from "@/src/common/config/colors";
 import UpdateBannerModal from "@/src/common/components/modals/EditProfile/UpdateBannerModal";
 import UpdateAvatarModal from "@/src/common/components/modals/EditProfile/UpdateAvatarModal";
+import EditProfileData from "./EditProfileData";
+import ShowUserData from "./ShowUserData";
 
 const HeadSection = () => {
   const [bannerImageUrl, setBannerImageUrl] = useState(null);
@@ -86,7 +80,7 @@ const HeadSection = () => {
             position: "absolute",
             right: 10,
             top: 10,
-            bgcolor: "white",
+            bgcolor: neutral["A500"],
             p: 1,
           }}
         >
@@ -102,14 +96,19 @@ const HeadSection = () => {
           handleModalSubmit={() => {}}
         />
       </Box>
-      <Box display="flex" sx={{ bgcolor: neutral["A500"] }}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        px={{ xs: 2.5, md: 3 }}
+        sx={{ bgcolor: neutral["A500"] }}
+        height={50}
+      >
         <Box
           sx={{
             position: "relative",
             zIndex: 2,
             cursor: "pointer",
             bottom: { xs: 60, md: 100 },
-            left: { xs: 10, md: 20 },
             "&:hover": {
               filter: "brightness(0.7)",
               "& .MuiSvgIcon-root ": {
@@ -152,6 +151,17 @@ const HeadSection = () => {
             handleModalSubmit={() => {}}
           />
         </Box>
+        <Box display="flex">
+          <EditProfileData />
+        </Box>
+      </Box>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        px={{ xs: 2.5, md: 3 }}
+        sx={{ bgcolor: neutral["A500"] }}
+      >
+        <ShowUserData />
       </Box>
     </Box>
   );
