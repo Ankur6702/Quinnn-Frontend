@@ -16,6 +16,18 @@ export const gender = [
     label: "Lesbian",
     value: "Lesbian",
   },
+  {
+    label: "Bisexual",
+    value: "Bisexual",
+  },
+  {
+    label: "Transgender",
+    value: "Transgender",
+  },
+  {
+    label: "Queer",
+    value: "Queer",
+  },
 ];
 
 const SignUpFormValidation = {
@@ -30,12 +42,17 @@ const SignUpFormValidation = {
     .required("Email is required")
     .typeError("Please add valid Email"),
   password: Yup.string()
-    .min(8, "Password length should be 8 or more characters")
-    .required("Password is required"),
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters long")
+    .max(16, "Password must be less than 16 characters")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/,
+      "Password should contain at least one uppercase letter, one lowercase letter, and one number"
+    ),
   gender: Yup.string()
     .required("Gender is required")
     .oneOf(
-      ["Male", "Female", "Gay", "Lesbian"],
+      ["Male", "Female", "Gay", "Lesbian", "Bisexual", "Transgender", "Queer"],
       "This is not the valid choice."
     ),
 };

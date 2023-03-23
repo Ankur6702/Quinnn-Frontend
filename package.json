@@ -28,5 +28,8 @@
     "react-easy-crop": "^4.7.4",
     "styled-components": "^5.3.6",
     "yup": "^1.0.0"
+  },
+  "devDependencies": {
+    "dotenv-webpack": "^8.0.1"
   }
 }

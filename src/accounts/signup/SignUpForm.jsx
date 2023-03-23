@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { Form, Formik } from "formik";
 import Box from "@mui/material/Box";
@@ -7,11 +8,15 @@ import Typography from "@mui/material/Typography";
 
 import SignUpFormFields from "./SignUpFormFields";
 import SubmitButton from "@/src/common/components/forms/SubmitButton";
+import AccountsService from "../service/AccountsService";
 import { Blues } from "@/src/common/config/colors";
 import { SignUpFormValidationSchema } from "../utils/helper";
+import { FRONTEND_LOGIN_PAGE_URL } from "@/src/common/utils/constants";
 
+const accountsService = new AccountsService();
 const SignUpForm = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
 
   const initialState = {
     name: "",
@@ -23,7 +28,35 @@ const SignUpForm = () => {
 
   const handleSubmit = async (data, actions) => {
     const { name, mail, password, gender, username } = data;
-    actions.setSubmitting(false);
+    const requestData = {
+      name,
+      email: mail,
+      password,
+      gender,
+      username,
+    };
+
+    accountsService
+      .userSignUp(requestData)
+      .then((res) => {
+        console.log(res);
+        actions.setSubmitting(false);
+        enqueueSnackbar("User successfully signed up", {
+          variant: "info",
+          autoHideDuration: 2000,
+          anchorOrigin: { horizontal: "right", vertical: "top" },
+        });
+      })
+      .catch((error) => {
+        actions.setSubmitting(false);
+        console.log(error);
+        enqueueSnackbar("Something went wrong, Please try again", {
+          variant: "error",
+          autoHideDuration: 2000,
+          anchorOrigin: { horizontal: "right", vertical: "top" },
+        });
+      });
+    // router.push(FRONTEND_LOGIN_PAGE_URL);
     // actions.resetForm();
   };
 

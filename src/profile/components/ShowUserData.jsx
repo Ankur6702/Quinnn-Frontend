@@ -10,28 +10,48 @@ import UserStats from "./UserStats";
 const ShowUserData = () => {
   return (
     <Box display="flex" flexDirection="column" rowGap={1} my={4}>
-      <Typography
-        variant="h4"
-        sx={{
-          color: neutral["A100"],
-          opacity: 0.8,
-          fontWeight: 600,
-          fontSize: { xs: 16, lg: 20 },
-        }}
-      >
-        Harry Potter
-      </Typography>
-      <Typography
-        variant="h4"
-        sx={{
-          color: neutral["700"],
-          opacity: 0.8,
-          fontWeight: 500,
-          fontSize: { xs: 14, lg: 16 },
-        }}
-      >
-        @LoneWolf
-      </Typography>
+      <Box display="flex" justifyContent="space-between">
+        <Box display="flex" flexDirection="column" rowGap={1}>
+          <Typography
+            variant="h4"
+            sx={{
+              color: neutral["A100"],
+              opacity: 0.8,
+              fontWeight: 600,
+              fontSize: { xs: 16, lg: 20 },
+            }}
+          >
+            Harry Potter
+          </Typography>
+          <Typography
+            variant="h4"
+            sx={{
+              color: neutral["700"],
+              opacity: 0.8,
+              fontWeight: 500,
+              fontSize: { xs: 14, lg: 16 },
+            }}
+          >
+            @LoneWolf
+          </Typography>
+        </Box>
+        <Box display="flex" columnGap={1} alignItems="center" my={1}>
+          <Box
+            sx={{ borderRadius: "50%", width: 10, height: 10, bgcolor: "red" }}
+          ></Box>
+          <Typography
+            variant="h5"
+            sx={{
+              width: "90%",
+              color: neutral["700"],
+              fontWeight: 400,
+              fontSize: { xs: 14, lg: 16 },
+            }}
+          >
+            Private
+          </Typography>
+        </Box>
+      </Box>
       <Box display="flex" flexDirection="column" my={2}>
         <Typography
           variant="h5"

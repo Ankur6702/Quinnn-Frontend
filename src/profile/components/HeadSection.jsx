@@ -107,6 +107,7 @@ const HeadSection = () => {
           sx={{
             position: "relative",
             zIndex: 2,
+            height: { xs: 100, md: 150 },
             cursor: "pointer",
             bottom: { xs: 60, md: 100 },
             "&:hover": {

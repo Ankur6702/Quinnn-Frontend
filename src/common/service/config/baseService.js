@@ -4,12 +4,12 @@ export default class BaseService {
   baseUrl;
 
   constructor() {
-    this.baseUrl = process.env.BASE_SERVICE;
+    this.baseUrl = process.env.API_BASE_SERVICE;
   }
 
   getAxiosConfig() {
     return {
-      headers: {},
+      headers: { token: `${localStorage.getItem("token")}` },
     };
   }
 
