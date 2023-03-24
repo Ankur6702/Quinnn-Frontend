@@ -9,9 +9,12 @@ import Typography from "@mui/material/Typography";
 import SignUpFormFields from "./SignUpFormFields";
 import SubmitButton from "@/src/common/components/forms/SubmitButton";
 import AccountsService from "../service/AccountsService";
-import { Blues } from "@/src/common/config/colors";
+import { Blues, neutral } from "@/src/common/config/colors";
 import { SignUpFormValidationSchema } from "../utils/helper";
-import { FRONTEND_LOGIN_PAGE_URL } from "@/src/common/utils/constants";
+import {
+  FRONTEND_LOGIN_PAGE_URL,
+  FRONTEND_VERIFY_EMAIL_URL,
+} from "@/src/common/utils/constants";
 
 const accountsService = new AccountsService();
 const SignUpForm = () => {
@@ -46,6 +49,7 @@ const SignUpForm = () => {
           autoHideDuration: 2000,
           anchorOrigin: { horizontal: "right", vertical: "top" },
         });
+        router.push(FRONTEND_VERIFY_EMAIL_URL);
       })
       .catch((error) => {
         actions.setSubmitting(false);
@@ -55,9 +59,8 @@ const SignUpForm = () => {
           autoHideDuration: 2000,
           anchorOrigin: { horizontal: "right", vertical: "top" },
         });
+        actions.resetForm();
       });
-    // router.push(FRONTEND_LOGIN_PAGE_URL);
-    // actions.resetForm();
   };
 
   return (
@@ -89,13 +92,13 @@ const SignUpForm = () => {
                 variant="h6"
                 sx={{
                   fontSize: { xs: 12, lg: 12 },
-                  color: "#000000",
+                  color: neutral["900"],
                   fontWeight: 400,
                 }}
               >
                 Already have an account?{" "}
                 <Link
-                  href="/accounts/signin"
+                  href={FRONTEND_LOGIN_PAGE_URL}
                   style={{ textDecoration: "none" }}
                 >
                   <Typography

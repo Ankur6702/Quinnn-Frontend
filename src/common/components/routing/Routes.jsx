@@ -14,7 +14,8 @@ const Routes = ({ Component, pageProps }) => {
     <>
       <Route path="/accounts">
         {router.asPath == "/accounts/signup" ||
-        router.asPath == "/accounts/signin" ? (
+        router.asPath == "/accounts/signin" ||
+        router.asPath == "/accounts/verify-email" ? (
           <AccountsLayout>
             <Component {...pageProps} />
           </AccountsLayout>
