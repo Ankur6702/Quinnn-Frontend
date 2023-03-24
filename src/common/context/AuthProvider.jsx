@@ -3,9 +3,11 @@ import AuthContext from "./AuthContext";
 import authService from "../service/config/AuthService";
 
 const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    authService.isAuthenticated
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState({});
+
+  useEffect(() => {
+    setIsAuthenticated(authService.isAuthenticated);
+  }, []);
   return (
     <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
       {children}

@@ -13,7 +13,7 @@ const AccountsLayout = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && !router.asPath == "/accounts/verify-email") {
       router.push(`${FRONTEND_HOME_PAGE_URL}`);
       return;
     }
@@ -21,21 +21,25 @@ const AccountsLayout = ({ children }) => {
 
   return (
     <>
-      <Section
-        boxProps={{
-          bgcolor: neutral["A700"],
-          py: { xs: 6, md: 12 },
-          minHeight: "100vh",
-          width: "100vw",
-          display: "flex",
-          alignItems: "center",
-        }}
-        containerProps={{
-          px: { xs: 3, lg: 6 },
-        }}
-      >
-        {children}
-      </Section>
+      {isAuthenticated && !router.asPath == "/accounts/verify-email" ? (
+        <></>
+      ) : (
+        <Section
+          boxProps={{
+            bgcolor: neutral["A700"],
+            py: { xs: 6, md: 12 },
+            minHeight: "100vh",
+            width: "100vw",
+            display: "flex",
+            alignItems: "center",
+          }}
+          containerProps={{
+            px: { xs: 3, lg: 6 },
+          }}
+        >
+          {children}
+        </Section>
+      )}
     </>
   );
 };
