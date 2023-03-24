@@ -2,7 +2,6 @@ import BaseService from "@/src/common/service/config/BaseService";
 
 export default class AccountsService extends BaseService {
   async userSignUp(data) {
-    console.log(this.buildUrl("/auth/signup"));
     return await this.post(`${this.buildUrl("/auth/signup")}`, data);
   }
   async userLogin(data) {

@@ -12,10 +12,12 @@ import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 
 import ProfileIcon from "./ProfileIcon";
 import SearchBar from "../../others/SearchBar";
+import useUserContext from "@/src/profile/context/useUserContext";
 import { neutral } from "@/src/common/config/colors";
 
 const Navbar = () => {
   const router = useRouter();
+  const { user } = useUserContext();
   const activeTab = [
     {
       id: "home",
@@ -84,7 +86,7 @@ const Navbar = () => {
               fontSize: { xs: 24, lg: 16 },
             }}
           >
-            Rajat
+            {user?.name.split(" ")[0]}
           </Typography>
           <ProfileIcon />
         </Box>

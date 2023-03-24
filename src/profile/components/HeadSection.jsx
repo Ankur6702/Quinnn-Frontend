@@ -12,12 +12,14 @@ import UpdateBannerModal from "@/src/common/components/modals/EditProfile/Update
 import UpdateAvatarModal from "@/src/common/components/modals/EditProfile/UpdateAvatarModal";
 import EditProfileData from "./EditProfileData";
 import ShowUserData from "./ShowUserData";
+import useUserContext from "../context/useUserContext";
 
 const HeadSection = () => {
   const [bannerImageUrl, setBannerImageUrl] = useState(null);
   const [avatarImageUrl, setAvatarImageUrl] = useState(null);
   const [bannerOpen, setBannerOpen] = useState(false);
   const [avatarOpen, setAvatarOpen] = useState(false);
+  const { user } = useUserContext();
 
   const handleBannerClick = () => {
     setBannerOpen(true);
@@ -125,7 +127,11 @@ const HeadSection = () => {
               height: { xs: 100, md: 150 },
               cursor: "pointer",
             }}
-            src={avatarImageUrl || MALE_AVATAR}
+            src={
+              avatarImageUrl || user?.gender === "Male"
+                ? MALE_AVATAR
+                : FEMALE_AVATAR
+            }
           />
           <IconButton
             component="span"
@@ -162,7 +168,7 @@ const HeadSection = () => {
         px={{ xs: 2.5, md: 3 }}
         sx={{ bgcolor: neutral["A500"] }}
       >
-        <ShowUserData />
+        <ShowUserData user={user} />
       </Box>
     </Box>
   );

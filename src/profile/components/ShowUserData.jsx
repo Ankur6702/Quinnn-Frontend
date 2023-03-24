@@ -7,10 +7,10 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import { neutral } from "@/src/common/config/colors";
 import UserStats from "./UserStats";
 
-const ShowUserData = () => {
+const ShowUserData = ({ user }) => {
   return (
-    <Box display="flex" flexDirection="column" rowGap={1} my={4}>
-      <Box display="flex" justifyContent="space-between">
+    <Box display="flex" flexDirection="column" rowGap={1} my={4} width="100%">
+      <Box display="flex" justifyContent="space-between" width="100%">
         <Box display="flex" flexDirection="column" rowGap={1}>
           <Typography
             variant="h4"
@@ -21,7 +21,7 @@ const ShowUserData = () => {
               fontSize: { xs: 16, lg: 20 },
             }}
           >
-            Harry Potter
+            {user?.name}
           </Typography>
           <Typography
             variant="h4"
@@ -32,13 +32,20 @@ const ShowUserData = () => {
               fontSize: { xs: 14, lg: 16 },
             }}
           >
-            @LoneWolf
+            {`@${user?.username}`}
           </Typography>
         </Box>
         <Box display="flex" columnGap={1} alignItems="center" my={1}>
-          <Box
-            sx={{ borderRadius: "50%", width: 10, height: 10, bgcolor: "red" }}
-          ></Box>
+          <Box>
+            <Box
+              sx={{
+                borderRadius: "50%",
+                width: "10px !important",
+                height: "10px !important",
+                bgcolor: user?.isPrivate ? "red" : "green",
+              }}
+            ></Box>
+          </Box>
           <Typography
             variant="h5"
             sx={{
@@ -48,26 +55,27 @@ const ShowUserData = () => {
               fontSize: { xs: 14, lg: 16 },
             }}
           >
-            Private
+            {user?.isPrivate ? "Private" : "Public"}
           </Typography>
         </Box>
       </Box>
-      <Box display="flex" flexDirection="column" my={2}>
-        <Typography
-          variant="h5"
-          sx={{
-            width: { xs: "100%", md: "90%" },
-            color: neutral["700"],
-            fontWeight: 400,
-            fontSize: { xs: 14, lg: 16 },
-          }}
-        >
-          World traveler and amateur photographer. Lover of all things coffee
-          and adventure. Currently trying to learn a new language and perfect my
-          baking skills.
-        </Typography>
-      </Box>
-      <Box display="flex" my={1}>
+
+      {user?.bio && (
+        <Box display="flex" flexDirection="column" my={2}>
+          <Typography
+            variant="h5"
+            sx={{
+              width: { xs: "100%", md: "90%" },
+              color: neutral["700"],
+              fontWeight: 400,
+              fontSize: { xs: 14, lg: 16 },
+            }}
+          >
+            {user?.bio}
+          </Typography>
+        </Box>
+      )}
+      <Box display="flex" my={user?.bio ? 1 : 3}>
         <Box px={2} py={1} bgcolor={neutral["A400"]} sx={{ borderRadius: 1.5 }}>
           <Typography
             variant="h5"
@@ -78,7 +86,7 @@ const ShowUserData = () => {
               fontSize: { xs: 14, lg: 16 },
             }}
           >
-            Male
+            {user?.gender}
           </Typography>
         </Box>
       </Box>
@@ -123,7 +131,7 @@ const ShowUserData = () => {
         </Box>
       </Box>
       <Box display="flex" columnGap={4} alignItems="center" my={1} width="100%">
-        <UserStats />
+        <UserStats user={user} />
       </Box>
     </Box>
   );

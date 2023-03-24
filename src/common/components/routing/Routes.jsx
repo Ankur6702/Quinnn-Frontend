@@ -6,6 +6,7 @@ import AccountsLayout from "@/src/accounts/AccountsLayout";
 import Layout from "../Layout/components/Layout";
 import HomePage from "@/src/home/HomePage";
 import ProfilePage from "@/src/profile/ProfilePage";
+import UserProvider from "@/src/profile/context/UserProvider";
 
 const Routes = ({ Component, pageProps }) => {
   const router = useRouter();
@@ -17,27 +18,29 @@ const Routes = ({ Component, pageProps }) => {
           <Component {...pageProps} />
         </AccountsLayout>
       </Route>
-      <Route path="/home">
-        <Layout>
-          <HomePage>
-            <Component {...pageProps} />
-          </HomePage>
-        </Layout>
-      </Route>
-      <Route path="/profile">
-        <Layout>
-          <ProfilePage Component={Component} pageProps={pageProps} />
-        </Layout>
-      </Route>
-      {!["accounts", "home", "profile"].includes(
-        router.asPath.split("/")[1]
-      ) && (
-        <Route path="/" isBaseRoute>
+      <UserProvider>
+        <Route path="/home">
           <Layout>
-            <Component {...pageProps} />
+            <HomePage>
+              <Component {...pageProps} />
+            </HomePage>
           </Layout>
         </Route>
-      )}
+        <Route path="/profile">
+          <Layout>
+            <ProfilePage Component={Component} pageProps={pageProps} />
+          </Layout>
+        </Route>
+        {!["accounts", "home", "profile"].includes(
+          router.asPath.split("/")[1]
+        ) && (
+          <Route path="/" isBaseRoute>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </Route>
+        )}
+      </UserProvider>
     </>
   );
 };

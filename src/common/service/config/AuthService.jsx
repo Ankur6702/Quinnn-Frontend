@@ -26,6 +26,10 @@ class AuthService extends BaseService {
       return localStorage.removeItem("token");
     }
   }
+
+  async user() {
+    return await this.get(this.buildUrl("/user/profile"));
+  }
 }
 
 const authService = new AuthService();

@@ -13,7 +13,6 @@ const Layout = ({ children }) => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   useEffect(() => {
-    console.log(isAuthenticated);
     if (!isAuthenticated) {
       router.push(`${FRONTEND_LOGIN_PAGE_URL}?next=${router.asPath}`);
     }

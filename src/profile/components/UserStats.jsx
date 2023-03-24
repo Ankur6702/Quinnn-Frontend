@@ -11,7 +11,7 @@ import { useTheme } from "@mui/material";
 
 import { Blues, neutral } from "@/src/common/config/colors";
 
-const UserStats = () => {
+const UserStats = ({ user }) => {
   const theme = useTheme();
   return (
     <Box
@@ -53,7 +53,7 @@ const UserStats = () => {
           fontSize={{ xs: 14, lg: 16 }}
           borderRadius={1}
         >
-          24
+          {user?.posts?.length}
         </Box>
       </Box>
       <Divider
@@ -90,7 +90,7 @@ const UserStats = () => {
           fontSize={{ xs: 14, lg: 16 }}
           borderRadius={1}
         >
-          10
+          {user?.followers?.length}
         </Box>
       </Box>
       <Divider
@@ -127,7 +127,7 @@ const UserStats = () => {
           fontSize={{ xs: 14, lg: 16 }}
           borderRadius={1}
         >
-          210
+          {user?.following?.length}
         </Box>
       </Box>
     </Box>

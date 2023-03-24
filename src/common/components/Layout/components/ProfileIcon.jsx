@@ -20,11 +20,13 @@ import useAuth from "@/src/common/context/useAuth";
 
 import { neutral } from "@/src/common/config/colors";
 import authService from "@/src/common/service/config/AuthService";
+import useUserContext from "@/src/profile/context/useUserContext";
 import { FRONTEND_LOGIN_PAGE_URL } from "@/src/common/utils/constants";
 
 const ProfileIcon = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const { user } = useUserContext();
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const open = Boolean(anchorEl);
@@ -68,7 +70,7 @@ const ProfileIcon = () => {
                 position: "relative",
               }}
             >
-              R
+              {user?.name.charAt(0).toUpperCase()}
             </Avatar>
           </IconButton>
         </Tooltip>
@@ -127,7 +129,7 @@ const ProfileIcon = () => {
                   fontSize: { xs: 14, lg: 16 },
                 }}
               >
-                Rajat Singh
+                {user?.name}
               </Typography>
               <Typography
                 variant="h6"
