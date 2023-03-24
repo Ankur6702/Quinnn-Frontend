@@ -14,6 +14,7 @@ export default class BaseService {
   }
 
   buildUrl(path) {
+    console.log(this.baseUrl);
     return `${this.baseUrl}/api${path}`;
   }
 

@@ -13,7 +13,7 @@ const SignUp = () => {
   const isDownLg = useMediaQuery(theme.breakpoints.down("lg"));
   const isDownSm = useMediaQuery(theme.breakpoints.down("sm"));
   console.log(process.env.API_BASE_SERVICE);
-  console.log(process.env.ENVIRONMENT);
+  console.log(process.env.NODE_ENV);
   return (
     <Box
       display="flex"

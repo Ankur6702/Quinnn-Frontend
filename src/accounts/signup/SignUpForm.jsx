@@ -59,7 +59,7 @@ const SignUpForm = () => {
           autoHideDuration: 2000,
           anchorOrigin: { horizontal: "right", vertical: "top" },
         });
-        actions.resetForm();
+        // actions.resetForm();
       });
   };
 
