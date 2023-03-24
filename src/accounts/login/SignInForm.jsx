@@ -46,6 +46,11 @@ const SignInForm = () => {
       authService.setToken(Response.data.token);
       setIsAuthenticated(true);
       router.push(FRONTEND_HOME_PAGE_URL);
+      if (router.query?.next) {
+        window.location.href = router.query?.next;
+      } else {
+        window.location.href = FRONTEND_HOME_PAGE_URL;
+      }
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error.response.data.message, {

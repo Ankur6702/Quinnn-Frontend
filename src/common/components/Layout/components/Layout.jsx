@@ -16,7 +16,6 @@ const Layout = ({ children }) => {
     console.log(isAuthenticated);
     if (!isAuthenticated) {
       router.push(`${FRONTEND_LOGIN_PAGE_URL}?next=${router.asPath}`);
-      return;
     }
   }, [isAuthenticated, router]);
 
