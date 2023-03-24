@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
@@ -15,12 +16,17 @@ import Logout from "@mui/icons-material/Logout";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import CommentIcon from "@mui/icons-material/Comment";
 import EventIcon from "@mui/icons-material/Event";
+import useAuth from "@/src/common/context/useAuth";
 
 import { neutral } from "@/src/common/config/colors";
+import authService from "@/src/common/service/config/AuthService";
+import { FRONTEND_LOGIN_PAGE_URL } from "@/src/common/utils/constants";
 
 const ProfileIcon = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,14 +36,15 @@ const ProfileIcon = () => {
   };
 
   const handleLogout = () => {
-    // authService.removeToken();
-    // setAnchorEl(null);
-    // navigate("/signin");
-    // enqueueSnackbar(`Successfully signed out`, {
-    //   variant: "info",
-    //   autoHideDuration: 1000,
-    //   anchorOrigin: { horizontal: "right", vertical: "top" },
-    // });
+    authService.removeToken();
+    setIsAuthenticated(false);
+    setAnchorEl(null);
+    router.push(FRONTEND_LOGIN_PAGE_URL);
+    enqueueSnackbar(`Successfully signed out`, {
+      variant: "info",
+      autoHideDuration: 1000,
+      anchorOrigin: { horizontal: "right", vertical: "top" },
+    });
   };
 
   return (

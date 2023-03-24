@@ -1,4 +1,4 @@
-import BaseService from "@/src/common/service/config/baseService";
+import BaseService from "@/src/common/service/config/BaseService";
 
 export default class AccountsService extends BaseService {
   async userSignUp(data) {

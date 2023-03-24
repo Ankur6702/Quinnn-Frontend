@@ -9,7 +9,8 @@ import Typography from "@mui/material/Typography";
 import SignInFormFields from "./SignInFormFields";
 import SubmitButton from "@/src/common/components/forms/SubmitButton";
 import AccountsService from "../service/AccountsService";
-import authService from "@/src/common/service/config/authService";
+import authService from "@/src/common/service/config/AuthService";
+import useAuth from "@/src/common/context/useAuth";
 import { Blues } from "@/src/common/config/colors";
 import { SignInFormValidationSchema } from "../utils/helper";
 import { FRONTEND_HOME_PAGE_URL } from "@/src/common/utils/constants";
@@ -17,6 +18,7 @@ import { FRONTEND_HOME_PAGE_URL } from "@/src/common/utils/constants";
 const accountsService = new AccountsService();
 const SignInForm = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const { setIsAuthenticated } = useAuth();
   const router = useRouter();
 
   const initialState = {
@@ -25,34 +27,36 @@ const SignInForm = () => {
   };
 
   const handleSubmit = async (data, actions) => {
-    const { mail, password } = data;
-    const requestData = {
-      email: mail,
-      password,
-    };
-    accountsService
-      .userLogin(requestData)
-      .then((res) => {
-        console.log(res);
-        actions.setSubmitting(false);
-        enqueueSnackbar("User successfully Logged In", {
-          variant: "info",
-          autoHideDuration: 2000,
-          anchorOrigin: { horizontal: "right", vertical: "top" },
-        });
-        authService.setToken(res.data.token);
-        router.push(FRONTEND_HOME_PAGE_URL);
-      })
-      .catch((error) => {
-        actions.setSubmitting(false);
-        console.log(error);
-        enqueueSnackbar(error.response.data.message, {
-          variant: "error",
-          autoHideDuration: 2000,
-          anchorOrigin: { horizontal: "right", vertical: "top" },
-        });
-        actions.resetForm();
+    try {
+      const { mail, password } = data;
+      const reqUrl = `${process.env.API_BASE_SERVICE}/api/auth/login`;
+      const requestData = {
+        email: mail,
+        password,
+      };
+      actions.setSubmitting(true);
+      const Response = await accountsService.post(reqUrl, requestData);
+      await new Promise((r) => setTimeout(r, 1000));
+      console.log(Response);
+      enqueueSnackbar("User successfully signed up", {
+        variant: "info",
+        autoHideDuration: 2000,
+        anchorOrigin: { horizontal: "right", vertical: "top" },
       });
+      authService.setToken(Response.data.token);
+      setIsAuthenticated(true);
+      router.push(FRONTEND_HOME_PAGE_URL);
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error.response.data.message, {
+        variant: "error",
+        autoHideDuration: 2000,
+        anchorOrigin: { horizontal: "right", vertical: "top" },
+      });
+      actions.resetForm();
+    } finally {
+      actions.setSubmitting(false);
+    }
   };
 
   return (

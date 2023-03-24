@@ -5,6 +5,7 @@ import { SnackbarProvider } from "notistack";
 
 import theme from "@/src/common/config/theme";
 import Routes from "../src/common/components/routing/Routes";
+import AuthProvider from "@/src/common/context/AuthProvider";
 import ErrorBoundary from "@/src/common/components/error-handlers/ErrorBoundary";
 import "../styles/globals.css";
 
@@ -26,7 +27,9 @@ const MyApp = (props) => {
         <CssBaseline />
         <ErrorBoundary>
           <SnackbarProvider>
-            <Routes Component={Component} pageProps={pageProps} />
+            <AuthProvider>
+              <Routes Component={Component} pageProps={pageProps} />
+            </AuthProvider>
           </SnackbarProvider>
         </ErrorBoundary>
       </ThemeProvider>

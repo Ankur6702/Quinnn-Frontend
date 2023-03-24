@@ -30,37 +30,39 @@ const SignUpForm = () => {
   };
 
   const handleSubmit = async (data, actions) => {
-    const { name, mail, password, gender, username } = data;
-    const requestData = {
-      name,
-      email: mail,
-      password,
-      gender,
-      username,
-    };
-
-    accountsService
-      .userSignUp(requestData)
-      .then((res) => {
-        console.log(res);
-        actions.setSubmitting(false);
-        enqueueSnackbar("User successfully signed up", {
-          variant: "info",
-          autoHideDuration: 2000,
-          anchorOrigin: { horizontal: "right", vertical: "top" },
-        });
-        router.push(FRONTEND_VERIFY_EMAIL_URL);
-      })
-      .catch((error) => {
-        actions.setSubmitting(false);
-        console.log(error);
-        enqueueSnackbar("Something went wrong, Please try again", {
-          variant: "error",
-          autoHideDuration: 2000,
-          anchorOrigin: { horizontal: "right", vertical: "top" },
-        });
-        // actions.resetForm();
+    try {
+      const { name, mail, password, gender, username } = data;
+      const reqUrl = `${process.env.API_BASE_SERVICE}/api/auth/signup`;
+      const requestData = {
+        name,
+        email: mail,
+        password,
+        gender,
+        username,
+      };
+      actions.setSubmitting(true);
+      const Response = await accountsService.post(reqUrl, requestData);
+      await new Promise((r) => setTimeout(r, 1000));
+      console.log(Response);
+      actions.setSubmitting(false);
+      enqueueSnackbar("User successfully signed up", {
+        variant: "info",
+        autoHideDuration: 2000,
+        anchorOrigin: { horizontal: "right", vertical: "top" },
       });
+      router.push(FRONTEND_VERIFY_EMAIL_URL);
+    } catch (error) {
+      await new Promise((r) => setTimeout(r, 1000));
+      console.log(error);
+      enqueueSnackbar("Something went wrong, Please try again", {
+        variant: "error",
+        autoHideDuration: 2000,
+        anchorOrigin: { horizontal: "right", vertical: "top" },
+      });
+      actions.resetForm();
+    } finally {
+      actions.setSubmitting(false);
+    }
   };
 
   return (

@@ -13,15 +13,9 @@ const Routes = ({ Component, pageProps }) => {
   return (
     <>
       <Route path="/accounts">
-        {router.asPath == "/accounts/signup" ||
-        router.asPath == "/accounts/signin" ||
-        router.asPath == "/accounts/verify-email" ? (
-          <AccountsLayout>
-            <Component {...pageProps} />
-          </AccountsLayout>
-        ) : (
+        <AccountsLayout>
           <Component {...pageProps} />
-        )}
+        </AccountsLayout>
       </Route>
       <Route path="/home">
         <Layout>

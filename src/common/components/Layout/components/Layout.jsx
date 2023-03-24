@@ -4,12 +4,25 @@ import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Navigation from "./Navigation";
 
+import authService from "@/src/common/service/config/AuthService";
+import useAuth from "@/src/common/context/useAuth";
 import { neutral } from "@/src/common/config/colors";
+import { FRONTEND_LOGIN_PAGE_URL } from "@/src/common/utils/constants";
 
 const Layout = ({ children }) => {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
+  useEffect(() => {
+    console.log(isAuthenticated);
+    if (!isAuthenticated) {
+      router.push(`${FRONTEND_LOGIN_PAGE_URL}?next=${router.asPath}`);
+      return;
+    }
+  }, [isAuthenticated, router]);
 
-  return (
+  return !isAuthenticated ? (
+    <></>
+  ) : (
     <Box>
       <Navigation />
       <Box

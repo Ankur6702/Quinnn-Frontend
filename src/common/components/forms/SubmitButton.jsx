@@ -16,6 +16,7 @@ const SubmitButton = ({
         variant="contained"
         color="primary"
         size="medium"
+        disabled={disabled}
         {...otherProps}
         sx={{
           borderRadius: 2,
@@ -24,10 +25,6 @@ const SubmitButton = ({
           bgcolor: "#4E97F5",
           "&:focus": {
             outline: "none",
-          },
-          "&:hover": {
-            backgroundColor: "#4E97F5 !important",
-            color: "#FFFFFF !important",
           },
         }}
       >
