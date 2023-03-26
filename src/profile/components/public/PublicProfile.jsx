@@ -156,9 +156,10 @@ const PublicProfile = ({ profile }) => {
                   src={
                     profile?.profileImageURL === null ||
                     profile?.profileImageURL === ""
-                      ? profile?.gender === "Male"
-                        ? MALE_AVATAR
-                        : FEMALE_AVATAR
+                      ? profile?.gender === "Female" ||
+                        profile?.gender === "Lesbian"
+                        ? FEMALE_AVATAR
+                        : MALE_AVATAR
                       : profile?.profileImageURL
                   }
                 />

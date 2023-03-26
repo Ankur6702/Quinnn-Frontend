@@ -74,9 +74,9 @@ const UpdateAvatarFormFields = ({
               component="img"
               image={
                 imageUrl === null || imageUrl === ""
-                  ? user?.gender === "Male"
-                    ? MALE_AVATAR
-                    : FEMALE_AVATAR
+                  ? user?.gender === "Female" || user?.gender === "Lesbian"
+                    ? FEMALE_AVATAR
+                    : MALE_AVATAR
                   : imageUrl
               }
               alt="Preview"

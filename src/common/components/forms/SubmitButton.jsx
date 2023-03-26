@@ -27,7 +27,7 @@ const SubmitButton = ({
           "&:focus": {
             outline: "none",
           },
-          ...(buttonProps.sx || {}),
+          ...(buttonProps?.sx || {}),
         }}
       >
         {otherProps.children}

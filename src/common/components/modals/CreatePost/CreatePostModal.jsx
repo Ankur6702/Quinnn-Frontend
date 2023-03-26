@@ -33,6 +33,7 @@ import CreatePostFormFields from "./CreatePostFormFields";
 import { firebaseConfig } from "@/src/common/config/firebaseConfig";
 import { CreatePostFormValidationSchema } from "../utils/helper";
 import { Blues, Green, neutral } from "../../../config/colors";
+import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -81,13 +82,6 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
     setImageUrl(null);
   };
 
-  // Handle form submit
-  // const handlePostSubmit = (data, actions) => {
-  //   const { postText } = data;
-  //   setImage(null);
-  //   setImageUrl(null);
-  //   actions.resetForm();
-  // };
   const handlePostSubmit = async (data, actions) => {
     try {
       const { postText } = data;
@@ -240,9 +234,15 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
               cursor: "pointer",
               position: "relative",
             }}
-          >
-            <PersonRoundedIcon sx={{ fontSize: 32, color: neutral["A500"] }} />
-          </Avatar>
+            src={
+              user?.profileImageURL === null || user?.profileImageURL === ""
+                ? user?.gender === "Female" || user?.gender === "Lesbian"
+                  ? FEMALE_AVATAR
+                  : MALE_AVATAR
+                : user?.profileImageURL
+            }
+          />
+
           <Box display="flex" flexDirection="column" rowGap={2}>
             <Typography
               variant="h4"
@@ -253,7 +253,7 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
                 opacity: 0.6,
               }}
             >
-              Rajat Singh
+              {user?.name}
             </Typography>
             <Box display="flex">
               <Typography

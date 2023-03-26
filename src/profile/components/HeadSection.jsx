@@ -143,9 +143,9 @@ const HeadSection = () => {
               }}
               src={
                 avatarImageUrl === null || avatarImageUrl === ""
-                  ? user?.gender === "Male"
-                    ? MALE_AVATAR
-                    : FEMALE_AVATAR
+                  ? user?.gender === "Female" || user?.gender === "Lesbian"
+                    ? FEMALE_AVATAR
+                    : MALE_AVATAR
                   : avatarImageUrl
               }
             />
