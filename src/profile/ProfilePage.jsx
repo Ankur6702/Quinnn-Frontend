@@ -3,20 +3,26 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
 import useAuth from "../common/context/useAuth";
+import useUserContext from "./context/useUserContext";
+import CircularLoaderSkeleton from "../common/components/skeletons/CircularLoaderSkeleton";
 
 const MyProfilePageBase = dynamic(() => import("./common/ProfilePageLayout"));
 
 const ProfilePage = ({ Component, pageProps }) => {
   const router = useRouter();
+  const { user } = useUserContext();
   const { isAuthenticated } = useAuth();
   useEffect(() => {
+    console.log(user);
     if (!isAuthenticated) {
       router.push(`${FRONTEND_LOGIN_PAGE_URL}?next=${router.asPath}`);
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, router, user]);
 
   return !isAuthenticated ? (
     <></>
+  ) : !user ? (
+    <CircularLoaderSkeleton />
   ) : (
     <MyProfilePageBase Component={Component} pageProps={pageProps} />
   );

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFormikContext } from "formik";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -7,16 +7,19 @@ import CardMedia from "@mui/material/CardMedia";
 import PublishIcon from "@mui/icons-material/Publish";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+import useUserContext from "@/src/profile/context/useUserContext";
+import SubmitButton from "../../forms/SubmitButton";
 import { neutral } from "@/src/common/config/colors";
-import { MALE_AVATAR } from "@/src/profile/utils/constants";
+import { MALE_AVATAR, FEMALE_AVATAR } from "@/src/profile/utils/constants";
 
 const UpdateAvatarFormFields = ({
-  image,
+  uploading,
   imageUrl,
   handleRemoveImage,
   handleImageChange,
 }) => {
   const [key, setKey] = useState(Date.now());
+  const { user } = useUserContext();
   const { values, setFieldValue, errors, touched } = useFormikContext();
   const fileInputRef = useRef(null);
 
@@ -31,6 +34,10 @@ const UpdateAvatarFormFields = ({
     fileInputRef.current.value = null;
     handleRemoveImage();
   };
+
+  useEffect(() => {
+    console.log(imageUrl);
+  }, [imageUrl]);
 
   return (
     <Box
@@ -65,7 +72,13 @@ const UpdateAvatarFormFields = ({
             <CardMedia
               key={Date.now()}
               component="img"
-              image={imageUrl || MALE_AVATAR}
+              image={
+                imageUrl === null || imageUrl === ""
+                  ? user?.gender === "Male"
+                    ? MALE_AVATAR
+                    : FEMALE_AVATAR
+                  : imageUrl
+              }
               alt="Preview"
               sx={{
                 width: 200,
@@ -154,9 +167,13 @@ const UpdateAvatarFormFields = ({
             </Box>
           </Box>
           <Box>
-            <Button type="submit" variant="contained" sx={{ py: 1 }}>
+            <SubmitButton
+              type="submit"
+              disabled={uploading}
+              variant="contained"
+            >
               Save
-            </Button>
+            </SubmitButton>
           </Box>
         </Box>
       </Box>

@@ -38,7 +38,7 @@ const SignInForm = () => {
       const Response = await accountsService.post(reqUrl, requestData);
       await new Promise((r) => setTimeout(r, 1000));
       console.log(Response);
-      enqueueSnackbar("User successfully signed up", {
+      enqueueSnackbar("User successfully Logged In", {
         variant: "info",
         autoHideDuration: 2000,
         anchorOrigin: { horizontal: "right", vertical: "top" },

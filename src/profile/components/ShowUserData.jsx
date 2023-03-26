@@ -4,8 +4,10 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import DateRangeIcon from "@mui/icons-material/DateRange";
-import { neutral } from "@/src/common/config/colors";
 import UserStats from "./UserStats";
+import { neutral } from "@/src/common/config/colors";
+import { formatDate } from "@/src/common/utils/utils";
+import { SITE_NAME } from "@/src/common/config/seo";
 
 const ShowUserData = ({ user }) => {
   return (
@@ -60,22 +62,23 @@ const ShowUserData = ({ user }) => {
         </Box>
       </Box>
 
-      {user?.bio && (
-        <Box display="flex" flexDirection="column" my={2}>
-          <Typography
-            variant="h5"
-            sx={{
-              width: { xs: "100%", md: "90%" },
-              color: neutral["700"],
-              fontWeight: 400,
-              fontSize: { xs: 14, lg: 16 },
-            }}
-          >
-            {user?.bio}
-          </Typography>
-        </Box>
-      )}
-      <Box display="flex" my={user?.bio ? 1 : 3}>
+      <Box display="flex" flexDirection="column" my={2}>
+        <Typography
+          variant="h5"
+          sx={{
+            width: { xs: "100%", md: "90%" },
+            color: neutral["700"],
+            fontWeight: 400,
+            fontSize: { xs: 14, lg: 16 },
+          }}
+        >
+          {user?.bio
+            ? user?.bio
+            : `Hey there! I'm ${user?.name}. I'm excited to connect with new people on ${SITE_NAME} and share my experiences with you all. Do follow for more updates from me soon!`}
+        </Typography>
+      </Box>
+
+      <Box display="flex" my={1}>
         <Box px={2} py={1} bgcolor={neutral["A400"]} sx={{ borderRadius: 1.5 }}>
           <Typography
             variant="h5"
@@ -91,44 +94,50 @@ const ShowUserData = ({ user }) => {
         </Box>
       </Box>
       <Box display="flex" columnGap={4} alignItems="center">
-        <Box display="flex" columnGap={1} alignItems="center">
-          <LocationOnIcon sx={{ fontSize: 20, color: neutral["A200"] }} />
+        {user?.country && (
+          <Box display="flex" columnGap={1} alignItems="center">
+            <LocationOnIcon sx={{ fontSize: 20, color: neutral["A200"] }} />
+            <Typography
+              variant="h6"
+              sx={{
+                color: neutral["800"],
+                opacity: 0.5,
+                fontWeight: 500,
+                fontSize: { xs: 14, lg: 16 },
+              }}
+            >
+              India
+            </Typography>
+          </Box>
+        )}
+        {user?.country && user?.dob && (
           <Typography
             variant="h6"
             sx={{
               color: neutral["800"],
-              opacity: 0.5,
-              fontWeight: 500,
+              fontWeight: 400,
               fontSize: { xs: 14, lg: 16 },
             }}
           >
-            India
+            .
           </Typography>
-        </Box>
-        <Typography
-          variant="h6"
-          sx={{
-            color: neutral["800"],
-            fontWeight: 400,
-            fontSize: { xs: 14, lg: 16 },
-          }}
-        >
-          .
-        </Typography>
-        <Box display="flex" columnGap={1} alignItems="center">
-          <DateRangeIcon sx={{ fontSize: 20, color: neutral["A200"] }} />
-          <Typography
-            variant="h6"
-            sx={{
-              color: neutral["800"],
-              opacity: 0.5,
-              fontWeight: 500,
-              fontSize: { xs: 14, lg: 16 },
-            }}
-          >
-            12 April 2021
-          </Typography>
-        </Box>
+        )}
+        {user?.dob && (
+          <Box display="flex" columnGap={1} alignItems="center">
+            <DateRangeIcon sx={{ fontSize: 20, color: neutral["A200"] }} />
+            <Typography
+              variant="h6"
+              sx={{
+                color: neutral["800"],
+                opacity: 0.5,
+                fontWeight: 500,
+                fontSize: { xs: 14, lg: 16 },
+              }}
+            >
+              {formatDate(user?.dob)}
+            </Typography>
+          </Box>
+        )}
       </Box>
       <Box display="flex" columnGap={4} alignItems="center" my={1} width="100%">
         <UserStats user={user} />

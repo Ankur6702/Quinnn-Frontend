@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
@@ -15,11 +15,16 @@ import ShowUserData from "./ShowUserData";
 import useUserContext from "../context/useUserContext";
 
 const HeadSection = () => {
-  const [bannerImageUrl, setBannerImageUrl] = useState(null);
-  const [avatarImageUrl, setAvatarImageUrl] = useState(null);
+  const { user } = useUserContext();
+  const [bannerImageUrl, setBannerImageUrl] = useState(user?.coverImageURL);
+  const [avatarImageUrl, setAvatarImageUrl] = useState(user?.profileImageURL);
   const [bannerOpen, setBannerOpen] = useState(false);
   const [avatarOpen, setAvatarOpen] = useState(false);
-  const { user } = useUserContext();
+
+  useEffect(() => {
+    setBannerImageUrl(user?.coverImageURL);
+    setAvatarImageUrl(user?.profileImageURL);
+  }, [user?.coverImageURL, user?.profileImageURL]);
 
   const handleBannerClick = () => {
     setBannerOpen(true);
@@ -95,7 +100,6 @@ const HeadSection = () => {
           handleClose={handleBannerClose}
           url={bannerImageUrl}
           handleUpdateImage={handleUpdateBannerImage}
-          handleModalSubmit={() => {}}
         />
       </Box>
       <Box
@@ -128,9 +132,11 @@ const HeadSection = () => {
               cursor: "pointer",
             }}
             src={
-              avatarImageUrl || user?.gender === "Male"
-                ? MALE_AVATAR
-                : FEMALE_AVATAR
+              avatarImageUrl === null || avatarImageUrl === ""
+                ? user?.gender === "Male"
+                  ? MALE_AVATAR
+                  : FEMALE_AVATAR
+                : avatarImageUrl
             }
           />
           <IconButton
@@ -155,7 +161,6 @@ const HeadSection = () => {
             handleClose={handleAvatarClose}
             url={avatarImageUrl}
             handleUpdateImage={handleUpdateAvatarImage}
-            handleModalSubmit={() => {}}
           />
         </Box>
         <Box display="flex">

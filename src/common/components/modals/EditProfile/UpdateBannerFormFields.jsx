@@ -7,12 +7,13 @@ import CardMedia from "@mui/material/CardMedia";
 import PublishIcon from "@mui/icons-material/Publish";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+import SubmitButton from "../../forms/SubmitButton";
 import { neutral } from "@/src/common/config/colors";
 import { BANNER_IMAGE } from "@/src/profile/utils/constants";
 
 const UpdateBannerFormFields = ({
-  image,
   imageUrl,
+  uploading,
   handleRemoveImage,
   handleImageChange,
 }) => {
@@ -156,9 +157,13 @@ const UpdateBannerFormFields = ({
             </Box>
           </Box>
           <Box>
-            <Button type="submit" variant="contained" sx={{ py: 1 }}>
+            <SubmitButton
+              type="submit"
+              disabled={uploading}
+              variant="contained"
+            >
               Save
-            </Button>
+            </SubmitButton>
           </Box>
         </Box>
       </Box>

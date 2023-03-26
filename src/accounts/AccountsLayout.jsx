@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 
 import Section from "../common/components/Layout/utils/Section";
 
-import authService from "../common/service/config/AuthService";
 import useAuth from "../common/context/useAuth";
 import { neutral } from "../common/config/colors";
 import { FRONTEND_HOME_PAGE_URL } from "../common/utils/constants";
@@ -13,7 +12,7 @@ const AccountsLayout = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    if (isAuthenticated && !router.asPath == "/accounts/verify-email") {
+    if (isAuthenticated && router.asPath !== "/accounts/verify-email") {
       router.push(`${FRONTEND_HOME_PAGE_URL}`);
       return;
     }
@@ -21,7 +20,7 @@ const AccountsLayout = ({ children }) => {
 
   return (
     <>
-      {isAuthenticated && !router.asPath == "/accounts/verify-email" ? (
+      {isAuthenticated && router.asPath !== "/accounts/verify-email" ? (
         <></>
       ) : (
         <Section

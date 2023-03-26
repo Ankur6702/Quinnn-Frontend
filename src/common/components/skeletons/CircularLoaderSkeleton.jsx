@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const CircularLoaderSkeleton = () => {
+const CircularLoaderSkeleton = ({ sx }) => {
   return (
     <Box
       sx={{
@@ -10,6 +10,7 @@ const CircularLoaderSkeleton = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        ...(sx || {}),
       }}
     >
       <CircularProgress color="primary" />

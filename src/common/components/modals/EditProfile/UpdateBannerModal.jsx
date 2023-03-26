@@ -1,4 +1,12 @@
 import React, { useRef, useState } from "react";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { initializeApp } from "firebase/app";
+import { useSnackbar } from "notistack";
 import { Form, Formik } from "formik";
 
 import Box from "@mui/material/Box";
@@ -11,7 +19,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import CloseIcon from "@mui/icons-material/Close";
 
+import ProfileService from "@/src/profile/service/ProfileService";
+import useUserContext from "@/src/profile/context/useUserContext";
 import UpdateBannerFormFields from "./UpdateBannerFormFields";
+import { firebaseConfig } from "@/src/common/config/firebaseConfig";
 import { BannerValidationSchema } from "../utils/helper";
 import { neutral } from "../../../config/colors";
 
@@ -19,15 +30,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const UpdateBannerModal = ({
-  isOpen,
-  handleClose,
-  handleModalSubmit,
-  url,
-  handleUpdateImage,
-}) => {
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
+
+const profileService = new ProfileService();
+const UpdateBannerModal = ({ isOpen, handleClose, url, handleUpdateImage }) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const { setUser } = useUserContext();
   const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(url);
+  const [uploading, setUploading] = useState(false);
+  const [imageUrl, setImageUrl] = useState(null);
+  const storageRef = ref(storage, "images/");
   const formikRef = useRef();
 
   const initialState = { image: "" };
@@ -43,16 +56,91 @@ const UpdateBannerModal = ({
   const handleRemoveImage = () => {
     setImage(null);
     setImageUrl(null);
-    handleUpdateImage(null);
+    const requestData = {
+      coverImageURL: null,
+    };
+    profileService
+      .updateProfile(requestData)
+      .then((response) => {
+        console.log(response);
+        handleUpdateImage(null);
+        setUser(response?.data?.data);
+        enqueueSnackbar("Profile updated successfully", {
+          variant: "info",
+          autoHideDuration: 2000,
+          anchorOrigin: { horizontal: "right", vertical: "top" },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        enqueueSnackbar("Something went wrong,Please try again", {
+          variant: "error",
+          autoHideDuration: 2000,
+          anchorOrigin: { horizontal: "right", vertical: "top" },
+        });
+      });
+
     handleClose();
   };
-
-  // Handle form submit
-  const handleSubmit = (data, actions) => {
-    imageUrl && handleUpdateImage(imageUrl);
-    setImage(null);
-    setImageUrl(null);
-    handleClose();
+  const handleSubmit = async () => {
+    try {
+      if (image) {
+        const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/profile/update`;
+        setUploading(true);
+        const uploadTask = uploadBytesResumable(
+          ref(storage, `images/${image.name}`),
+          image
+        );
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Handle progress
+          },
+          (error) => {
+            console.log(error);
+          },
+          async () => {
+            // Get the download URL of the uploaded image
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            console.log(downloadURL);
+            setImageUrl(downloadURL);
+            handleUpdateImage(imageUrl);
+            const requestData = {
+              coverImageURL: downloadURL,
+            };
+            console.log(requestData);
+            const Response = await profileService.put(reqUrl, requestData);
+            console.log(Response);
+            setUser(Response?.data?.data);
+            enqueueSnackbar("Profile update successfully", {
+              variant: "info",
+              autoHideDuration: 2000,
+              anchorOrigin: { horizontal: "right", vertical: "top" },
+            });
+            setUploading(false);
+            setImage(null);
+            setImageUrl(null);
+            handleClose();
+          }
+        );
+      } else {
+        setImage(null);
+        setImageUrl(null);
+        handleClose();
+        setUploading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setUploading(false);
+      enqueueSnackbar("Something went wrong, Please try again", {
+        variant: "error",
+        autoHideDuration: 2000,
+        anchorOrigin: { horizontal: "right", vertical: "top" },
+      });
+      setImage(null);
+      setImageUrl(null);
+      handleClose();
+    }
   };
 
   const handleModalClose = () => {
@@ -118,7 +206,7 @@ const UpdateBannerModal = ({
             {({ isSubmitting }) => (
               <Form style={{ height: "100%" }}>
                 <UpdateBannerFormFields
-                  image={image}
+                  uploading={uploading}
                   imageUrl={imageUrl || url}
                   handleImageChange={handleImageChange}
                   handleRemoveImage={handleRemoveImage}

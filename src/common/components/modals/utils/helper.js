@@ -1,5 +1,16 @@
 import * as Yup from "yup";
 
+export const status = [
+  {
+    label: "Public",
+    value: "Public",
+  },
+  {
+    label: "Private",
+    value: "Private",
+  },
+];
+
 const CreatePostFormValidation = {};
 
 export const CreatePostFormValidationSchema = Yup.object(
@@ -18,8 +29,8 @@ const BannerValidation = {
     }
   ),
 };
-
 export const BannerValidationSchema = Yup.object(BannerValidation);
+
 const AvatarValidation = {
   image: Yup.mixed().test(
     "fileSize",
@@ -32,3 +43,28 @@ const AvatarValidation = {
 };
 
 export const AvatarValidationSchema = Yup.object(AvatarValidation);
+
+const EditProfileValidation = {
+  name: Yup.string()
+    .typeError("Please add valid name")
+    .required("This field is required"),
+  username: Yup.string()
+    .required("This field is required")
+    .min(3, "username is too short")
+    .matches(
+      /^[a-zA-Z_][a-zA-Z0-9_]*$/,
+      "Username must start with a letter or underscore and can only contain letters, numbers, and underscores"
+    )
+    .test(
+      "no-spaces",
+      "Username cannot contain spaces",
+      (value) => !/\s/.test(value)
+    ),
+  dob: Yup.date(),
+  bio: Yup.string().max(160, "Your bio is too long"),
+  isPrivate: Yup.string()
+    .required("This field is required")
+    .oneOf(["Public", "Private"], "This is not a valid choice."),
+};
+
+export const EditProfileValidationSchema = Yup.object(EditProfileValidation);

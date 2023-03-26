@@ -1,4 +1,5 @@
 import BaseService from "./BaseService";
+import jwt_decode from "jwt-decode";
 
 class AuthService extends BaseService {
   get isAuthenticated() {

@@ -7,6 +7,7 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import SignUpForm from "./SignUpForm";
 import { neutral, Blues } from "@/src/common/config/colors";
 import { SIGN_UP_IMAGE, LOGO } from "../utils/constants";
+import { SITE_NAME } from "@/src/common/config/seo";
 
 const SignUp = () => {
   const theme = useTheme();
@@ -74,7 +75,7 @@ const SignUp = () => {
                   fontSize: { xs: 24, lg: 32 },
                 }}
               >
-                LGBTQ
+                {SITE_NAME}
               </Typography>
               !
             </Typography>

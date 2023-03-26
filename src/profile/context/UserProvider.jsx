@@ -11,7 +11,7 @@ const UserProvider = ({ children }) => {
   useEffect(() => {
     if (!isLoaded) {
       const fetchUser = async () => {
-        if (isAuthenticated) {
+        if (isAuthenticated === true) {
           authService
             .user()
             .then((response) => {
@@ -19,7 +19,9 @@ const UserProvider = ({ children }) => {
               setUser(!!response.data.data ? response.data.data : null);
               setIsLoaded(true);
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+              console.log(error);
+            });
         }
       };
       fetchUser();
