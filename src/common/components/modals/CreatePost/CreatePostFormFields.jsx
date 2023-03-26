@@ -10,14 +10,16 @@ import PublishIcon from "@mui/icons-material/Publish";
 
 import InputWithoutLabel from "../../forms/InputWithoutLabel";
 import { neutral } from "@/src/common/config/colors";
+import SubmitButton from "../../forms/SubmitButton";
 
 const CreatePostFormFields = ({
   image,
   imageUrl,
+  uploading,
   handleRemoveImage,
   handleImageChange,
 }) => {
-  const { values, setValues } = useFormikContext();
+  const { values, setFieldValue, errors, touched } = useFormikContext();
   const [key, setKey] = useState(Date.now());
   const inputRef = useRef();
   const fileInputRef = useRef(null);
@@ -30,6 +32,13 @@ const CreatePostFormFields = ({
       clearTimeout(timeout);
     };
   }, []);
+
+  const handleSubmit = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setFieldValue("postImage", event.target.files[0]);
+    }
+    handleImageChange(event);
+  };
 
   const handleDeleteImage = () => {
     fileInputRef.current.value = null;
@@ -123,18 +132,18 @@ const CreatePostFormFields = ({
           sx={{ position: "relative", bottom: 0 }}
         >
           <Box display="flex" alignItems="center" columnGap={1}>
-            <Input
+            <input
               id="image-upload"
               ref={fileInputRef}
               key={key}
               name="postImage"
               type="file"
-              inputProps={{ accept: "image/*" }}
-              onChange={() => {
-                handleImageChange(event);
+              accept="image/*"
+              onChange={(event) => {
+                handleSubmit(event);
                 setKey(Date.now());
               }}
-              sx={{ display: "none" }}
+              style={{ display: "none" }}
             />
             <Box>
               <label htmlFor="image-upload">
@@ -158,14 +167,25 @@ const CreatePostFormFields = ({
             </Box>
           </Box>
           <Box>
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={!values["postText"] && !image}
-              sx={{ py: 1 }}
-            >
-              Post
-            </Button>
+            {!values["postText"] && !image ? (
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={!values["postText"] && !image}
+                sx={{ py: 1 }}
+              >
+                Post
+              </Button>
+            ) : (
+              <SubmitButton
+                type="submit"
+                disabled={uploading}
+                variant="contained"
+                buttonProps={{ sx: { borderRadius: 1, py: 1 } }}
+              >
+                Post
+              </SubmitButton>
+            )}
           </Box>
         </Box>
       </Box>

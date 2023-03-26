@@ -1,5 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { initializeApp } from "firebase/app";
+import { useSnackbar } from "notistack";
 import { Form, Formik } from "formik";
+import ReactMarkdown from "react-markdown";
+import MarkdownIt from "markdown-it";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -17,7 +27,10 @@ import Slide from "@mui/material/Slide";
 import CloseIcon from "@mui/icons-material/Close";
 
 import Viewership from "./Viewership";
+import useUserContext from "@/src/profile/context/useUserContext";
+import PostsService from "@/src/home/service/PostsService";
 import CreatePostFormFields from "./CreatePostFormFields";
+import { firebaseConfig } from "@/src/common/config/firebaseConfig";
 import { CreatePostFormValidationSchema } from "../utils/helper";
 import { Blues, Green, neutral } from "../../../config/colors";
 
@@ -25,15 +38,24 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CreatePostModal = ({ isOpen, handleClose, handleModalSubmit }) => {
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
+const md = new MarkdownIt();
+
+const postsService = new PostsService();
+const CreatePostModal = ({ isOpen, handleClose }) => {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [status, setStatus] = useState("Anyone");
   const [anchorEl, setAnchorEl] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
+  const { user, setUser } = useUserContext();
+  const [uploading, setUploading] = useState(false);
+  const storageRef = ref(storage, "images/");
   const formikRef = useRef();
 
   const initialState = {
-    postText: "",
+    postText: null,
   };
 
   // viewership dropdown
@@ -60,11 +82,97 @@ const CreatePostModal = ({ isOpen, handleClose, handleModalSubmit }) => {
   };
 
   // Handle form submit
-  const handlePostSubmit = (data, actions) => {
-    const { postText } = data;
-    setImage(null);
-    setImageUrl(null);
-    actions.resetForm();
+  // const handlePostSubmit = (data, actions) => {
+  //   const { postText } = data;
+  //   setImage(null);
+  //   setImageUrl(null);
+  //   actions.resetForm();
+  // };
+  const handlePostSubmit = async (data, actions) => {
+    try {
+      const { postText } = data;
+      const markdownText = md.render(postText);
+      console.log(markdownText);
+      const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/create-post`;
+      if (image) {
+        const timestamp = Date.now().toString(36);
+        const randomString = Math.random().toString(36).substring(2, 8);
+        const imageName = timestamp + randomString;
+        setUploading(true);
+        const uploadTask = uploadBytesResumable(
+          ref(storage, `images/${imageName}`),
+          image
+        );
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Handle progress
+          },
+          (error) => {
+            console.log(error);
+          },
+          async () => {
+            // Get the download URL of the uploaded image
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            console.log(downloadURL);
+            setImageUrl(downloadURL);
+            const requestData = {
+              text: markdownText,
+              imageURL: downloadURL,
+            };
+            console.log(requestData);
+            const Response = await postsService.post(reqUrl, requestData);
+            console.log(Response);
+            setUser({
+              ...user,
+              posts: [...user.posts, Response?.data?.data?._id],
+            });
+            enqueueSnackbar("Post created successfully", {
+              variant: "info",
+              autoHideDuration: 2000,
+              anchorOrigin: { horizontal: "right", vertical: "top" },
+            });
+            setUploading(false);
+            setImage(null);
+            setImageUrl(null);
+            handleClose();
+          }
+        );
+      } else {
+        setUploading(true);
+        const requestData = {
+          text: postText,
+          imageURL: null,
+        };
+        console.log(requestData);
+        const Response = await postsService.post(reqUrl, requestData);
+        console.log(Response);
+        setUser({
+          ...user,
+          posts: [...user.posts, Response?.data?.data?._id],
+        });
+        enqueueSnackbar("Post created successfully", {
+          variant: "info",
+          autoHideDuration: 2000,
+          anchorOrigin: { horizontal: "right", vertical: "top" },
+        });
+        setUploading(false);
+        setImage(null);
+        setImageUrl(null);
+        handleClose();
+      }
+    } catch (error) {
+      console.log(error);
+      setUploading(false);
+      enqueueSnackbar("Something went wrong, Please try again", {
+        variant: "error",
+        autoHideDuration: 2000,
+        anchorOrigin: { horizontal: "right", vertical: "top" },
+      });
+      setImage(null);
+      setImageUrl(null);
+      handleClose();
+    }
   };
 
   const handleModalClose = () => {
@@ -189,6 +297,7 @@ const CreatePostModal = ({ isOpen, handleClose, handleModalSubmit }) => {
               <Form style={{ height: "100%" }}>
                 <CreatePostFormFields
                   image={image}
+                  uploading={uploading}
                   imageUrl={imageUrl}
                   handleImageChange={handleImageChange}
                   handleRemoveImage={handleRemoveImage}

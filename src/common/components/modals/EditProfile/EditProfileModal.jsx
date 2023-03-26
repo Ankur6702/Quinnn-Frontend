@@ -32,6 +32,7 @@ const EditProfileModal = ({ isOpen, handleClose }) => {
   const initialState = {
     name: user?.name || "",
     username: user?.username || "",
+    country: user?.country || "",
     dob: user?.dob
       ? getDayjsDate({
           date: user?.dob,
@@ -46,11 +47,12 @@ const EditProfileModal = ({ isOpen, handleClose }) => {
 
   const handleSubmit = async (data, actions) => {
     try {
-      const { name, username, dob, bio, isPrivate } = data;
+      const { name, country, username, dob, bio, isPrivate } = data;
       const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/profile/update`;
       const requestData = {
         name,
         username,
+        country,
         dob,
         bio,
         isPrivate: isPrivate === "Private",

@@ -1,15 +1,17 @@
 import React from "react";
 import { useFormikContext } from "formik";
 import Box from "@mui/material/Box";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 import CustomInput from "../../forms/CustomInput";
 import SelectField from "../../forms/SelectField";
-import { status } from "../utils/helper";
+import { status, countryList } from "../utils/helper";
 import SubmitButton from "../../forms/SubmitButton";
 
 const EditProfileFormFields = ({ isSubmitting }) => {
   const { values } = useFormikContext();
-
+  const theme = useTheme();
+  const isDownSm = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <Box
       display="flex"
@@ -52,6 +54,44 @@ const EditProfileFormFields = ({ isSubmitting }) => {
           "aria-label": "Bio",
           sx: { width: { xs: "100%", sm: "100%" } },
         }}
+      />
+      <SelectField
+        name="country"
+        label="Location"
+        inputLabelProps={{
+          id: "Location",
+        }}
+        selectProps={{
+          label: "Location",
+          sx: {
+            fontSize: { xs: 14, md: 16 },
+            borderRadius: 2,
+            "& .MuiOutlinedInput-input": {
+              p: "10px !important",
+              color: "#000000",
+            },
+            "& .MuiInputBase-root": {
+              fontSize: { xs: 14, md: 14 },
+              padding: "12px",
+            },
+          },
+        }}
+        formControlProps={{
+          fullWidth: true,
+          variant: "outlined",
+          sx: {
+            width: { xs: "100%", sm: "100%" },
+            "& .MuiInputLabel-root": {
+              top: values["country"] ? 0 : isDownSm ? -4 : -3.5,
+              color: "#A2A2A2",
+            },
+            "& .Mui-focused": {
+              top: 2,
+              color: "#1976d2",
+            },
+          },
+        }}
+        items={countryList}
       />
       <CustomInput
         name="dob"

@@ -5,6 +5,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 const SubmitButton = ({
   showDisableSpinner = true,
+  buttonProps,
   boxProps,
   ...otherProps
 }) => {
@@ -26,6 +27,7 @@ const SubmitButton = ({
           "&:focus": {
             outline: "none",
           },
+          ...(buttonProps.sx || {}),
         }}
       >
         {otherProps.children}

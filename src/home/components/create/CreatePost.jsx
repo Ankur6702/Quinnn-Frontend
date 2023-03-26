@@ -117,11 +117,7 @@ const CreatePost = () => {
           </Box>
         </Box>
       )}
-      <CreatePostModal
-        isOpen={open}
-        handleClose={handleClose}
-        handleModalSubmit={() => {}}
-      />
+      <CreatePostModal isOpen={open} handleClose={handleClose} />
     </>
   );
 };

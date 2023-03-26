@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { countries } from "./countries";
 
 export const status = [
   {
@@ -11,7 +12,21 @@ export const status = [
   },
 ];
 
-const CreatePostFormValidation = {};
+export const countryList = countries.map((country) => ({
+  label: country,
+  value: country,
+}));
+
+const CreatePostFormValidation = {
+  postImage: Yup.mixed().test(
+    "fileSize",
+    "File size too large. Maximum size is 5MB",
+    (value) => {
+      if (!value) return true;
+      return value.size <= MAX_FILE_SIZE;
+    }
+  ),
+};
 
 export const CreatePostFormValidationSchema = Yup.object(
   CreatePostFormValidation
