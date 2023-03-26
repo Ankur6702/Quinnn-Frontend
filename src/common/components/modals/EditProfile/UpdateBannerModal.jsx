@@ -36,7 +36,7 @@ const storage = getStorage(app);
 const profileService = new ProfileService();
 const UpdateBannerModal = ({ isOpen, handleClose, url, handleUpdateImage }) => {
   const { enqueueSnackbar } = useSnackbar();
-  const { setUser } = useUserContext();
+  const { user, setUser } = useUserContext();
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
@@ -88,7 +88,7 @@ const UpdateBannerModal = ({ isOpen, handleClose, url, handleUpdateImage }) => {
         const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/profile/update`;
         setUploading(true);
         const uploadTask = uploadBytesResumable(
-          ref(storage, `images/${image.name}`),
+          ref(storage, `images/${user.id}-avatar`),
           image
         );
         uploadTask.on(
