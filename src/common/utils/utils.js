@@ -39,3 +39,13 @@ function getOrdinalSuffix(day) {
   }
   return "th";
 }
+
+export const tabProps = (link, component) => {
+  return {
+    id: `simple-tab-${link}`,
+    "aria-controls": `simple-tabpanel-${link}`,
+    component: component,
+    href: `${link}`,
+    underline: "none",
+  };
+};

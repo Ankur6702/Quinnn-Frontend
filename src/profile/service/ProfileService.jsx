@@ -7,4 +7,7 @@ export default class ProfileService extends BaseService {
   async updateProfile(data) {
     return await this.put(`${this.buildUrl("/user/profile/update")}`, data);
   }
+  async fetchProfile(username) {
+    return await this.get(`${this.buildUrl(`/search/${username}`)}`);
+  }
 }

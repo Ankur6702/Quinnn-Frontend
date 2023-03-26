@@ -13,7 +13,6 @@ const ProfilePage = ({ Component, pageProps }) => {
   const { user } = useUserContext();
   const { isAuthenticated } = useAuth();
   useEffect(() => {
-    console.log(user);
     if (!isAuthenticated) {
       router.push(`${FRONTEND_LOGIN_PAGE_URL}?next=${router.asPath}`);
     }

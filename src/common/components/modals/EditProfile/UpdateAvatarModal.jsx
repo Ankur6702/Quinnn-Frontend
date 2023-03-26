@@ -89,7 +89,7 @@ const UpdateAvatarModal = ({ isOpen, handleClose, url, handleUpdateImage }) => {
         const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/profile/update`;
         setUploading(true);
         const uploadTask = uploadBytesResumable(
-          ref(storage, `images/${user.id}-banner`),
+          ref(storage, `images/${user?._id}-banner`),
           image
         );
         uploadTask.on(

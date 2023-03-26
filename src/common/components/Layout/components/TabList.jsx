@@ -12,6 +12,7 @@ import EventIcon from "@mui/icons-material/Event";
 import FeedSharpIcon from "@mui/icons-material/FeedSharp";
 
 import TabListItem from "./TabListItem";
+import { SITE_NAME } from "@/src/common/config/seo";
 import { Blues, neutral } from "@/src/common/config/colors";
 
 import {
@@ -94,9 +95,9 @@ const TabList = ({ handleClick }) => {
     >
       <Box>
         <Box display="flex" flexDirection="column" rowGap={8}>
-          <Box display="flex" alignItems="center" columnGap={2}>
+          <Box display="flex" alignItems="center" columnGap={1}>
             <Box display="flex">
-              <Image src={LOGO} alt="logo" width={35} height={35} priority />
+              <Image src={LOGO} alt="logo" width={50} height={50} priority />
             </Box>
 
             <Typography
@@ -108,7 +109,7 @@ const TabList = ({ handleClick }) => {
                 fontSize: { xs: 24, lg: 24 },
               }}
             >
-              NetScape
+              {SITE_NAME}
             </Typography>
           </Box>
         </Box>
