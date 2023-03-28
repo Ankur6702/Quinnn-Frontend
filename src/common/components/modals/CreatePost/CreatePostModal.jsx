@@ -74,7 +74,7 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
       const { postText } = data;
       const markdownText = md.render(postText);
       console.log(markdownText);
-      const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/create-post`;
+      const reqUrl = `${process.env.API_BASE_SERVICE}/api/post/create`;
       if (image) {
         const timestamp = Date.now().toString(36);
         const randomString = Math.random().toString(36).substring(2, 8);

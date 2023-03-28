@@ -9,7 +9,6 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ShareIcon from "@mui/icons-material/Share";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -19,10 +18,11 @@ import { useMediaQuery, useTheme } from "@mui/material";
 
 import usePosts from "../../context/usePosts";
 import CommentsSection from "../comments/CommentsSection";
-import { sliceString, formatTimeAgo } from "@/src/common/utils/utils";
-import { POST_IMAGE_1, POST_IMAGE_2 } from "../../utils/constants";
-import { Blues, neutral } from "@/src/common/config/colors";
 import ShareModal from "@/src/common/components/share/ShareModal";
+import { sliceString, formatTimeAgo } from "@/src/common/utils/utils";
+import PostOptions from "./PostOptions";
+import { Blues, neutral } from "@/src/common/config/colors";
+import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 
 const PostItem = ({
   boxprops,
@@ -120,18 +120,7 @@ const PostItem = ({
               </Box>
             </Box>
           </Box>
-          <Button
-            component="span"
-            sx={{
-              color: Blues["A200"],
-              textTransform: "none",
-              fontSize: { xs: 14, lg: 16 },
-              fontWeight: 500,
-            }}
-            startIcon={<AddIcon sx={{ color: Blues["Aa00"], fontSize: 22 }} />}
-          >
-            Follow
-          </Button>
+          <PostOptions />
         </Box>
         <Box px={4} pb={{ xs: 8, md: 6 }} sx={{ position: "relative" }}>
           <Typography

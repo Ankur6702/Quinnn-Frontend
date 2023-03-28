@@ -57,7 +57,7 @@ const UpdateAvatarModal = ({ isOpen, handleClose, url, handleUpdateImage }) => {
     setImage(null);
     setImageUrl(null);
     const requestData = {
-      profileImageURL: null,
+      profileImageURL: "",
     };
     profileService
       .updateProfile(requestData)

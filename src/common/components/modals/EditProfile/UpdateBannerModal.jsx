@@ -57,7 +57,7 @@ const UpdateBannerModal = ({ isOpen, handleClose, url, handleUpdateImage }) => {
     setImage(null);
     setImageUrl(null);
     const requestData = {
-      coverImageURL: null,
+      coverImageURL: "",
     };
     profileService
       .updateProfile(requestData)

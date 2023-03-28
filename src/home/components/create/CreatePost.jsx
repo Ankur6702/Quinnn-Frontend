@@ -11,6 +11,7 @@ import EventRoundedIcon from "@mui/icons-material/EventRounded";
 import CreatePostModal from "@/src/common/components/modals/CreatePost/CreatePostModal";
 import useUserContext from "@/src/profile/context/useUserContext";
 import { neutral } from "@/src/common/config/colors";
+import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 
 const CreatePost = () => {
   const [open, setOpen] = useState(false);
