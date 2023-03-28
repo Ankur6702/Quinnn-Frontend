@@ -85,7 +85,7 @@ const TabList = ({ handleClick }) => {
   );
   return (
     <Box
-      pt={{ xs: 12, lg: 8 }}
+      pt={{ xs: 8, lg: 5 }}
       pb={6}
       px={4}
       minHeight="100vh"
@@ -95,23 +95,25 @@ const TabList = ({ handleClick }) => {
     >
       <Box>
         <Box display="flex" flexDirection="column" rowGap={8}>
-          <Box display="flex" alignItems="center" columnGap={1}>
-            <Box display="flex">
-              <Image src={LOGO} alt="logo" width={50} height={50} priority />
-            </Box>
+          <Link href={"/home"}>
+            <Box display="flex" alignItems="center" columnGap={1}>
+              <Box display="flex">
+                <Image src={LOGO} alt="logo" width={55} height={55} priority />
+              </Box>
 
-            <Typography
-              variant="h2"
-              component="span"
-              sx={{
-                color: Blues["A100"],
-                fontWeight: 600,
-                fontSize: { xs: 24, lg: 24 },
-              }}
-            >
-              {SITE_NAME}
-            </Typography>
-          </Box>
+              <Typography
+                variant="h2"
+                component="span"
+                sx={{
+                  color: Blues["A100"],
+                  fontWeight: 600,
+                  fontSize: { xs: 24, lg: 28 },
+                }}
+              >
+                {SITE_NAME}
+              </Typography>
+            </Box>
+          </Link>
         </Box>
 
         <List sx={{ my: 4 }}>

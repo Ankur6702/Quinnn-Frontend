@@ -6,8 +6,8 @@ import PostItem from "./PostItem";
 const ShowPosts = () => {
   return (
     <Box display="flex" flexDirection="column" rowGap={4}>
-      <PostItem />
-      <PostItem />
+      {/* <PostItem />
+      <PostItem /> */}
     </Box>
   );
 };

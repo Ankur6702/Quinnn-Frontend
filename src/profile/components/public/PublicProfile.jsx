@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
 import { useMediaQuery, useTheme } from "@mui/material";
 
 import ShowUserData from "../ShowUserData";
@@ -19,7 +18,7 @@ import {
   MALE_AVATAR,
   USER_NOT_FOUND,
 } from "../../utils/constants";
-import { Blues, neutral } from "@/src/common/config/colors";
+import { neutral } from "@/src/common/config/colors";
 
 const profileService = new ProfileService();
 const PublicProfile = ({ profile }) => {
@@ -78,7 +77,7 @@ const PublicProfile = ({ profile }) => {
   };
 
   useEffect(() => {
-    if (profile?.followers.includes(user?._id)) {
+    if (profile?.followers.some((e) => e.userID === user?._id)) {
       setIsFollowing(true);
     } else {
       setIsFollowing(false);

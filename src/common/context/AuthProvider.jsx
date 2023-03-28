@@ -12,11 +12,9 @@ const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
         authService.removeToken();
       } else {
-        console.log("use is authenticated");
         setIsAuthenticated(authService.isAuthenticated);
       }
     } else {
-      console.log("use is not authenticated");
       setIsAuthenticated(authService.isAuthenticated);
     }
   }, []);

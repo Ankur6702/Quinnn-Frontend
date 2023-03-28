@@ -22,6 +22,7 @@ import { neutral } from "@/src/common/config/colors";
 import authService from "@/src/common/service/config/AuthService";
 import useUserContext from "@/src/profile/context/useUserContext";
 import { FRONTEND_LOGIN_PAGE_URL } from "@/src/common/utils/constants";
+import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 
 const ProfileIcon = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -68,10 +69,16 @@ const ProfileIcon = () => {
                 fontSize: 20,
                 cursor: "pointer",
                 position: "relative",
+                // border: 0.5,
               }}
-            >
-              {user?.name.charAt(0).toUpperCase()}
-            </Avatar>
+              src={
+                user?.profileImageURL === null || user?.profileImageURL === ""
+                  ? user?.gender === "Female" || user?.gender === "Lesbian"
+                    ? FEMALE_AVATAR
+                    : MALE_AVATAR
+                  : user?.profileImageURL
+              }
+            />
           </IconButton>
         </Tooltip>
       </Box>
@@ -179,7 +186,7 @@ const ProfileIcon = () => {
         </Box>
         <Divider sx={{ opacity: 0.75, mx: 2 }} />
         <Box py={1}>
-          <MenuItem onClick={handleLogout}>
+          <MenuItem>
             <ListItemIcon>
               <CommentIcon fontSize="small" />
             </ListItemIcon>
@@ -194,7 +201,7 @@ const ProfileIcon = () => {
               Messages
             </Typography>
           </MenuItem>
-          <MenuItem onClick={handleLogout}>
+          <MenuItem>
             <ListItemIcon>
               <EventIcon fontSize="small" />
             </ListItemIcon>

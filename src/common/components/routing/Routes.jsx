@@ -5,6 +5,7 @@ import Route from "./Route";
 import AccountsLayout from "@/src/accounts/AccountsLayout";
 import Layout from "../Layout/components/Layout";
 import HomePage from "@/src/home/HomePage";
+import TermsPage from "@/src/terms-&-conditions/common/TermsPage";
 import ProfilePage from "@/src/profile/ProfilePage";
 import UserProvider from "@/src/profile/context/UserProvider";
 import CircularLoaderSkeleton from "../skeletons/CircularLoaderSkeleton";
@@ -25,6 +26,11 @@ const Routes = ({ Component, pageProps }) => {
               <Component {...pageProps} />
             </AccountsLayout>
           </Route>
+          <Route path="/terms-&-conditions">
+            <TermsPage>
+              <Component {...pageProps} />
+            </TermsPage>
+          </Route>
           <UserProvider>
             <Route path="/home">
               <Layout>
@@ -38,7 +44,7 @@ const Routes = ({ Component, pageProps }) => {
                 <ProfilePage Component={Component} pageProps={pageProps} />
               </Layout>
             </Route>
-            {!["accounts", "home", "profile"].includes(
+            {!["accounts", "home", "profile", "terms-&-conditions"].includes(
               router.asPath.split("/")[1]
             ) && (
               <Route path="/" isBaseRoute>

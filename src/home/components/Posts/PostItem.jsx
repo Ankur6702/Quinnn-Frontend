@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -24,7 +25,17 @@ import { POST_IMAGE_1, POST_IMAGE_2 } from "../../utils/constants";
 import { Blues, neutral } from "@/src/common/config/colors";
 import ShareModal from "@/src/common/components/share/ShareModal";
 
-const PostItem = () => {
+const PostItem = ({
+  boxprops,
+  text,
+  imageUrl,
+  likes,
+  comments,
+  name,
+  time,
+  avatar,
+  gender,
+}) => {
   const [showMore, setShowMore] = useState(false);
   const [share, setShare] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -53,6 +64,7 @@ const PostItem = () => {
         borderRadius: 2,
         boxShadow:
           " rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
+        ...(boxprops?.sx || {}),
       }}
     >
       <Box display="flex" flexDirection="column" rowGap={3} width="100%">
@@ -77,9 +89,14 @@ const PostItem = () => {
                 cursor: "pointer",
                 position: "relative",
               }}
-            >
-              <PersonRoundedIcon />
-            </Avatar>
+              src={
+                avatar === null || avatar === ""
+                  ? gender === "Female" || gender === "Lesbian"
+                    ? FEMALE_AVATAR
+                    : MALE_AVATAR
+                  : avatar
+              }
+            />
             <Box display="flex" flexDirection="column" rowGap={0.5}>
               <Typography
                 variant="h4"
@@ -90,7 +107,7 @@ const PostItem = () => {
                   opacity: 0.9,
                 }}
               >
-                Rajat Singh
+                {name}
               </Typography>
               <Box display="flex" alignItems="center" columnGap={0.5}>
                 <AccessTimeIcon sx={{ fontSize: 14, color: neutral["700"] }} />
@@ -136,7 +153,11 @@ const PostItem = () => {
               whiteSpace: "pre-wrap",
             }}
           >
-            {showMore ? postText : sliceString(postText, 200)}
+            {showMore ? (
+              <ReactMarkdown>{text}</ReactMarkdown>
+            ) : (
+              sliceString(<ReactMarkdown>{text}</ReactMarkdown>, 200)
+            )}
           </Typography>
           <Button
             disableRipple
@@ -165,7 +186,7 @@ const PostItem = () => {
           sx={{ maxWidth: "100%", height: "auto", position: "relative" }}
         >
           <img
-            src={POST_IMAGE_1}
+            src={imageUrl}
             alt="posted-image"
             style={{ width: "auto", height: "auto", maxWidth: "100%" }}
           />
@@ -215,7 +236,7 @@ const PostItem = () => {
                 fontWeight: 400,
               }}
             >
-              12
+              {likes}
             </Typography>
           </Box>
           <Box display="flex" columnGap={1} alignItems="center">
@@ -267,7 +288,7 @@ const PostItem = () => {
                 fontWeight: 400,
               }}
             >
-              32
+              {comments}
             </Typography>
           </Box>
           <Box>

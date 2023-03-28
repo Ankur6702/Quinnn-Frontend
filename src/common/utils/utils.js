@@ -6,7 +6,6 @@ export const sliceString = (text, length) =>
 export const isTokenExpired = (token) => {
   const decodedToken = jwt_decode(token);
   const currentTime = Date.now() / 1000; // Convert current time to seconds
-  console.log(decodedToken.exp < currentTime);
   return decodedToken.exp < currentTime;
 };
 

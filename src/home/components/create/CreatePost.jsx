@@ -4,16 +4,17 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import IconButton from "@mui/material/IconButton";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import EventRoundedIcon from "@mui/icons-material/EventRounded";
 
 import CreatePostModal from "@/src/common/components/modals/CreatePost/CreatePostModal";
+import useUserContext from "@/src/profile/context/useUserContext";
 import { neutral } from "@/src/common/config/colors";
 
 const CreatePost = () => {
   const [open, setOpen] = useState(false);
+  const { user } = useUserContext();
 
   const handleClick = () => {
     setOpen(true);
@@ -50,9 +51,14 @@ const CreatePost = () => {
                 cursor: "pointer",
                 position: "relative",
               }}
-            >
-              <PersonRoundedIcon />
-            </Avatar>
+              src={
+                user?.profileImageURL === null || user?.profileImageURL === ""
+                  ? user?.gender === "Female" || user?.gender === "Lesbian"
+                    ? FEMALE_AVATAR
+                    : MALE_AVATAR
+                  : user?.profileImageURL
+              }
+            />
             <Box
               display="flex"
               component="button"

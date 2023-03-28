@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import { Box } from "@mui/system";
-import { Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import { useMediaQuery, useTheme } from "@mui/material";
 
 import SignInForm from "./SignInForm";

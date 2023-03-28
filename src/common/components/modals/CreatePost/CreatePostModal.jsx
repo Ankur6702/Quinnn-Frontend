@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   getStorage,
   ref,
@@ -8,31 +8,26 @@ import {
 import { initializeApp } from "firebase/app";
 import { useSnackbar } from "notistack";
 import { Form, Formik } from "formik";
-import ReactMarkdown from "react-markdown";
 import MarkdownIt from "markdown-it";
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Dialog from "@mui/material/Dialog";
 import Divider from "@mui/material/Divider";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DialogContent from "@mui/material/DialogContent";
 import Avatar from "@mui/material/Avatar";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import CloseIcon from "@mui/icons-material/Close";
 
-import Viewership from "./Viewership";
 import useUserContext from "@/src/profile/context/useUserContext";
 import PostsService from "@/src/home/service/PostsService";
 import CreatePostFormFields from "./CreatePostFormFields";
 import { firebaseConfig } from "@/src/common/config/firebaseConfig";
 import { CreatePostFormValidationSchema } from "../utils/helper";
-import { Blues, Green, neutral } from "../../../config/colors";
+import { Green, neutral } from "../../../config/colors";
 import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -48,7 +43,6 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [status, setStatus] = useState("Anyone");
-  const [anchorEl, setAnchorEl] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
   const { user, setUser } = useUserContext();
   const [uploading, setUploading] = useState(false);
@@ -56,19 +50,12 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
   const formikRef = useRef();
 
   const initialState = {
-    postText: null,
+    postText: "",
   };
 
-  // viewership dropdown
-  const openViewership = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const closeViewership = () => {
-    setAnchorEl(null);
-  };
-  const handleViewershipChange = (e) => {
-    setStatus(e);
-  };
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   // Handle posted image
   const handleImageChange = (event) => {
@@ -117,9 +104,14 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
             console.log(requestData);
             const Response = await postsService.post(reqUrl, requestData);
             console.log(Response);
+            const newPostData = {
+              postID: Response?.data?.data?._id,
+              imageURL: Response?.data?.data?.imageURL,
+              text: Response?.data?.data?.text,
+            };
             setUser({
               ...user,
-              posts: [...user.posts, Response?.data?.data?._id],
+              posts: [...user.posts, newPostData],
             });
             enqueueSnackbar("Post created successfully", {
               variant: "info",
@@ -135,15 +127,20 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
       } else {
         setUploading(true);
         const requestData = {
-          text: postText,
+          text: markdownText,
           imageURL: null,
         };
         console.log(requestData);
         const Response = await postsService.post(reqUrl, requestData);
         console.log(Response);
+        const newPostData = {
+          postID: Response?.data?.data?._id,
+          imageURL: null,
+          text: Response?.data?.data?.text,
+        };
         setUser({
           ...user,
-          posts: [...user.posts, Response?.data?.data?._id],
+          posts: [...user.posts, newPostData],
         });
         enqueueSnackbar("Post created successfully", {
           variant: "info",
@@ -228,8 +225,8 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
           <Avatar
             alt="profile-photo"
             sx={{
-              width: 50,
-              height: 50,
+              width: 60,
+              height: 60,
               fontSize: 15,
               cursor: "pointer",
               position: "relative",
@@ -243,7 +240,7 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
             }
           />
 
-          <Box display="flex" flexDirection="column" rowGap={2}>
+          <Box display="flex" flexDirection="column" rowGap={1}>
             <Typography
               variant="h4"
               sx={{
@@ -255,35 +252,32 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
             >
               {user?.name}
             </Typography>
-            <Box display="flex">
-              <Typography
-                variant="h4"
-                display="flex"
-                alignItems="center"
-                columnGap={1}
-                component="button"
-                onClick={openViewership}
-                sx={{
-                  fontSize: { xs: 12, lg: 14 },
-                  color: status == "Anyone" ? Blues["A100"] : Green["A100"],
-                  fontWeight: 500,
-                  opacity: 0.6,
-                  px: 2,
-                  py: 0,
-                  borderRadius: 4,
-                  cursor: "pointer",
-                  border: 1,
-                }}
-              >
-                {status}
-                <KeyboardArrowDownIcon />
-              </Typography>
-              <Viewership
-                anchorEl={anchorEl}
-                handleMenuClose={closeViewership}
-                handleStatusChange={handleViewershipChange}
-              />
-            </Box>
+            <Tooltip
+              placement="right"
+              title={
+                user?.isPrivate
+                  ? "Your account is private so only your friends will be able to see this post"
+                  : "Your account is Public so everyone will be able to see this post"
+              }
+            >
+              <Box display="flex">
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontSize: { xs: 12, lg: 14 },
+                    color: user?.isPrivate ? "red" : Green["A100"],
+                    fontWeight: 500,
+                    opacity: 0.6,
+                    px: 2,
+                    py: 0.5,
+                    borderRadius: 3,
+                    border: 1,
+                  }}
+                >
+                  {user?.isPrivate ? "Private" : "Public"}
+                </Typography>
+              </Box>
+            </Tooltip>
           </Box>
         </Box>
         <Box height="80%">
@@ -311,8 +305,3 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
   );
 };
 export default CreatePostModal;
-{
-  /* <form onSubmit={handleSubmit}>
-         
-        </form> */
-}
