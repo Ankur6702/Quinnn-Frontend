@@ -34,7 +34,7 @@ const PublicProfile = ({ profile }) => {
     try {
       const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/follow/${profile._id}`;
       setIsLoading(true);
-      const Response = profileService.put(reqUrl);
+      const Response = await profileService.put(reqUrl);
       console.log(Response);
       setIsFollowing(true);
       enqueueSnackbar("User followed", {
@@ -192,9 +192,9 @@ const PublicProfile = ({ profile }) => {
               <ShowUserData user={profile} />
             </Box>
           </Box>
-          {/* {(!profile.isPrivate || user?._id === profile?._id) && ( */}
-          <PublicProfileActivity profile={profile} />
-          {/* )} */}
+          {!profile.isPrivate ||
+            user?._id === profile?._id ||
+            (isFollowing && <PublicProfileActivity profile={profile} />)}
         </Box>
       ) : (
         <Box

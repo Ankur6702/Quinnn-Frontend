@@ -30,7 +30,7 @@ const PublicProfileActivity = ({ profile }) => {
       <Navbar tabs={tabs} tabIndex={tabIndex} />
       <Box display="flex" flexDirection="column" rowGap={4} my={4}>
         {profile?.posts?.map((post, index) => {
-          console.log(post._id);
+          // console.log(post._id);
           return (
             <PostItem
               key={index}
@@ -43,7 +43,7 @@ const PublicProfileActivity = ({ profile }) => {
               gender={profile?.gender}
               likes={post?.likes?.length}
               comments={post?.comments?.length}
-              link={`${process.env.BASE_FRONTEND_URL}/post/${post?._id}`}
+              link={`${process.env.BASE_FRONTEND_URL}/${post?._id}`}
             />
           );
         })}
