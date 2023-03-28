@@ -122,44 +122,46 @@ const PostItem = ({
           </Box>
           <PostOptions />
         </Box>
-        <Box px={4} pb={{ xs: 8, md: 6 }} sx={{ position: "relative" }}>
-          <Typography
-            variant="h4"
-            sx={{
-              fontSize: { xs: 12, lg: 14 },
-              color: neutral["800"],
-              fontWeight: 400,
-              opacity: 0.9,
-              whiteSpace: "pre-wrap",
-            }}
-            dangerouslySetInnerHTML={{
-              __html: showMore ? text : sliceString(text, 200),
-            }}
-          />
-
-          {text.length > 200 && (
-            <Button
-              disableRipple
+        {text && (
+          <Box px={4} pb={{ xs: 8, md: 6 }} sx={{ position: "relative" }}>
+            <Typography
+              variant="h4"
               sx={{
-                color: neutral["A200"],
-                textTransform: "none",
-                fontSize: { xs: 12, md: 14 },
+                fontSize: { xs: 12, lg: 14 },
+                color: neutral["800"],
                 fontWeight: 400,
-                position: "absolute",
-                right: 0,
-                bottom: 0,
-
-                "&:hover": {
-                  backgroundColor: "transparent !important",
-                },
+                opacity: 0.9,
+                whiteSpace: "pre-wrap",
               }}
-              startIcon={showMore ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-              onClick={() => setShowMore(!showMore)}
-            >
-              {showMore ? "Show Less" : "Show More"}
-            </Button>
-          )}
-        </Box>
+              dangerouslySetInnerHTML={{
+                __html: showMore ? text : sliceString(text, 200),
+              }}
+            />
+
+            {text.length > 200 && (
+              <Button
+                disableRipple
+                sx={{
+                  color: neutral["A200"],
+                  textTransform: "none",
+                  fontSize: { xs: 12, md: 14 },
+                  fontWeight: 400,
+                  position: "absolute",
+                  right: 0,
+                  bottom: 0,
+
+                  "&:hover": {
+                    backgroundColor: "transparent !important",
+                  },
+                }}
+                startIcon={showMore ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                onClick={() => setShowMore(!showMore)}
+              >
+                {showMore ? "Show Less" : "Show More"}
+              </Button>
+            )}
+          </Box>
+        )}
         {imageUrl && (
           <Box
             display="flex"
@@ -301,7 +303,7 @@ const PostItem = ({
             )}
             {share && (
               <ShareModal
-                copyLink={window.location.href}
+                copyLink={link}
                 closeModal={() => setShare(false)}
                 facebook="https://lgbtq-social-media-frontend-ankur6702.vercel.app"
                 linkedin="https://lgbtq-social-media-frontend-ankur6702.vercel.app"

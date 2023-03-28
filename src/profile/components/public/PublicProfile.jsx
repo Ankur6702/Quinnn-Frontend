@@ -12,6 +12,7 @@ import ShowUserData from "../ShowUserData";
 import UserActivity from "../UserActivity";
 import ProfileService from "../../service/ProfileService";
 import useUserContext from "../../context/useUserContext";
+import PublicProfileActivity from "./PublicProfileActivity";
 import {
   BANNER_IMAGE,
   FEMALE_AVATAR,
@@ -23,7 +24,6 @@ import { neutral } from "@/src/common/config/colors";
 const profileService = new ProfileService();
 const PublicProfile = ({ profile }) => {
   const theme = useTheme();
-  console.log(profile);
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useUserContext();
   const [isFollowing, setIsFollowing] = useState();
@@ -58,7 +58,7 @@ const PublicProfile = ({ profile }) => {
       const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/unfollow/${profile._id}`;
       setIsLoading(true);
       const Response = profileService.put(reqUrl);
-      console.log(Response);
+
       setIsFollowing(false);
       enqueueSnackbar("User unfollowed", {
         variant: "info",
@@ -192,9 +192,9 @@ const PublicProfile = ({ profile }) => {
               <ShowUserData user={profile} />
             </Box>
           </Box>
-          {(!profile.isPrivate || user?._id === profile?._id) && (
-            <UserActivity />
-          )}
+          {/* {(!profile.isPrivate || user?._id === profile?._id) && ( */}
+          <PublicProfileActivity profile={profile} />
+          {/* )} */}
         </Box>
       ) : (
         <Box

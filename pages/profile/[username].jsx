@@ -24,15 +24,10 @@ export default function () {
       setProfile(Response?.data?.data);
     } catch (error) {
       console.log(error);
-      enqueueSnackbar("Something went wrong, Please try again", {
-        variant: "error",
-        autoHideDuration: 2000,
-        anchorOrigin: { horizontal: "right", vertical: "top" },
-      });
     } finally {
       setIsLoading(false);
     }
-  }, [enqueueSnackbar, username]);
+  }, [username]);
 
   useEffect(() => {
     fetchUserData();

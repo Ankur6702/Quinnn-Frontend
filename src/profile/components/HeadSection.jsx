@@ -186,7 +186,9 @@ const HeadSection = () => {
           <ShowUserData user={user} />
         </Box>
       </Box>
-      <UserActivity />
+      <Box>
+        <UserActivity />
+      </Box>
     </Box>
   );
 };

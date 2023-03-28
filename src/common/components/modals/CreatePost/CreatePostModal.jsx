@@ -9,7 +9,6 @@ import { initializeApp } from "firebase/app";
 import { useSnackbar } from "notistack";
 import { Form, Formik } from "formik";
 import MarkdownIt from "markdown-it";
-
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
@@ -21,6 +20,7 @@ import Avatar from "@mui/material/Avatar";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import CloseIcon from "@mui/icons-material/Close";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 import useUserContext from "@/src/profile/context/useUserContext";
 import PostsService from "@/src/home/service/PostsService";
@@ -48,6 +48,8 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
   const [uploading, setUploading] = useState(false);
   const storageRef = ref(storage, "images/");
   const formikRef = useRef();
+  const theme = useTheme();
+  const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
 
   const initialState = {
     postText: "",
@@ -253,7 +255,8 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
               {user?.name}
             </Typography>
             <Tooltip
-              placement="right"
+              placement={isDownMd ? "bottom" : "right"}
+              disableInteractive
               title={
                 user?.isPrivate
                   ? "Your account is private so only your friends will be able to see this post"

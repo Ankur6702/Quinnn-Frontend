@@ -6,12 +6,16 @@ import Navigation from "./Navigation";
 
 import authService from "@/src/common/service/config/AuthService";
 import useAuth from "@/src/common/context/useAuth";
+import useUserContext from "@/src/profile/context/useUserContext";
+import CircularLoaderSkeleton from "../../skeletons/CircularLoaderSkeleton";
+
 import { neutral } from "@/src/common/config/colors";
 import { FRONTEND_LOGIN_PAGE_URL } from "@/src/common/utils/constants";
 
 const Layout = ({ children }) => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
+  const { user } = useUserContext();
   useEffect(() => {
     if (!isAuthenticated) {
       router.push(`${FRONTEND_LOGIN_PAGE_URL}?next=${router.asPath}`);
@@ -20,6 +24,8 @@ const Layout = ({ children }) => {
 
   return !isAuthenticated ? (
     <></>
+  ) : !user ? (
+    <CircularLoaderSkeleton />
   ) : (
     <Box>
       <Navigation />

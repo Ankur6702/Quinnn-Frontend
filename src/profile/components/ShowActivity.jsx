@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 
 import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
-import CircularLoaderSkeleton from "@/src/common/components/skeletons/CircularLoaderSkeleton";
 import useAsync from "@/src/common/components/custom-hooks/useAsync";
 import useUserContext from "../context/useUserContext";
 import PostItem from "@/src/home/components/Posts/PostItem";
 import ProfileService from "../service/ProfileService";
+import GenericListSkeleton from "@/src/common/components/skeletons/GenericListSkeleton";
 
 const profileService = new ProfileService();
 const ShowActivity = () => {
@@ -25,23 +25,49 @@ const ShowActivity = () => {
   }, [run]);
 
   return (
-    <Box display="flex" flexDirection="column" rowGap={4} my={4}>
-      {posts?.data.map((post, index) => (
-        <PostItem
-          key={index}
-          boxprops={{ sx: { maxWidth: "auto" } }}
-          text={post?.text}
-          imageUrl={post?.imageURL}
-          time={post?.creationDate}
-          name={user?.name}
-          avatar={user?.profileImageURL}
-          gender={user?.gender}
-          likes={post?.likes.length}
-          comments={post?.comments.length}
-          link={`${process.env.BASE_FRONTEND_URL}${post?._id}`}
+    <GenericResponseHandler
+      status={status}
+      error={error}
+      skeleton={
+        <GenericListSkeleton
+          items={3}
+          gridProps={{ sx: { my: 4 } }}
+          gridItemProps={{
+            rowGap: 1,
+            sx: {
+              borderRadius: 2,
+            },
+          }}
+          boxProps={{
+            height: 100,
+
+            sx: {
+              "& .MuiSkeleton-root": {
+                borderRadius: 1.5,
+              },
+            },
+          }}
         />
-      ))}
-    </Box>
+      }
+    >
+      <Box display="flex" flexDirection="column" rowGap={4} my={4}>
+        {posts?.data.map((post, index) => (
+          <PostItem
+            key={index}
+            boxprops={{ sx: { maxWidth: "auto" } }}
+            text={post?.text}
+            imageUrl={post?.imageURL}
+            time={post?.creationDate}
+            name={user?.name}
+            avatar={user?.profileImageURL}
+            gender={user?.gender}
+            likes={post?.likes.length}
+            comments={post?.comments.length}
+            link={`${process.env.BASE_FRONTEND_URL}/post/${post?._id}`}
+          />
+        ))}
+      </Box>
+    </GenericResponseHandler>
   );
 };
 

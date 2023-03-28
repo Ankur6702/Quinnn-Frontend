@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import ReportIcon from "@mui/icons-material/Report";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
@@ -25,8 +26,6 @@ import { Blues, neutral } from "@/src/common/config/colors";
 
 const PostOptions = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { user } = useUserContext();
-  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -51,17 +50,15 @@ const PostOptions = () => {
   return (
     <>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Tooltip title="Account settings">
-          <IconButton
-            onClick={handleClick}
-            sx={{ p: 1 }}
-            aria-controls={open ? "account-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-          >
-            <MoreVertIcon />
-          </IconButton>
-        </Tooltip>
+        <IconButton
+          onClick={handleClick}
+          sx={{ p: 1 }}
+          aria-controls={open ? "account-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+        >
+          <MoreVertIcon />
+        </IconButton>
       </Box>
       <Menu
         anchorEl={anchorEl}
@@ -76,7 +73,8 @@ const PostOptions = () => {
             width: 150,
             py: 2,
             borderRadius: 1.5,
-            filter: "drop-shadow(0px 2px 10px rgba(0,0,0,0.32))",
+            boxShadow:
+              " rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
             mt: 1.5,
             "& .MuiAvatar-root": {
               width: 36,
@@ -143,6 +141,28 @@ const PostOptions = () => {
             }}
           >
             Follow
+          </Typography>
+        </MenuItem>
+        <MenuItem
+          sx={{
+            color: neutral["900"],
+            "&:hover": {
+              color: Blues["A100"],
+            },
+          }}
+        >
+          <ListItemIcon>
+            <ReportIcon fontSize="small" />
+          </ListItemIcon>
+          <Typography
+            variant="h6"
+            sx={{
+              color: "inherit",
+              fontWeight: 400,
+              fontSize: { xs: 14, lg: 16 },
+            }}
+          >
+            Report
           </Typography>
         </MenuItem>
       </Menu>
