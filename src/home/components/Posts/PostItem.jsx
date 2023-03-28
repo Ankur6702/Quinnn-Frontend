@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -10,7 +9,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ShareIcon from "@mui/icons-material/Share";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -20,7 +19,7 @@ import { useMediaQuery, useTheme } from "@mui/material";
 
 import usePosts from "../../context/usePosts";
 import CommentsSection from "../comments/CommentsSection";
-import { sliceString } from "@/src/common/utils/utils";
+import { sliceString, formatTimeAgo } from "@/src/common/utils/utils";
 import { POST_IMAGE_1, POST_IMAGE_2 } from "../../utils/constants";
 import { Blues, neutral } from "@/src/common/config/colors";
 import ShareModal from "@/src/common/components/share/ShareModal";
@@ -35,22 +34,14 @@ const PostItem = ({
   time,
   avatar,
   gender,
+  link,
 }) => {
   const [showMore, setShowMore] = useState(false);
   const [share, setShare] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const theme = useTheme();
   const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
-  const postText = `Love this meme! It really hits hard, as doing my job sometimes causes me impostor syndrome. There are days when I get up from my desk, being tired as hell and having nothing to show for it... Or do I?
 
-  I really envy my colleagues. By the end of the day:
-  code developers will have a lot of code to present at the end of the day,
-  designers will surely make progress in their designs,
-  data analysts will progress in their data discoveries,
-  QA engineers will find new bugs,
-  etc...
-  
-  Thank you Vishal Chaudhary 👋 for the meme :)`;
   return (
     <Box
       display="flex"
@@ -124,7 +115,7 @@ const PostItem = ({
                     pt: 0.25,
                   }}
                 >
-                  32 minutes ago
+                  {formatTimeAgo(time)}
                 </Typography>
               </Box>
             </Box>
@@ -152,45 +143,47 @@ const PostItem = ({
               opacity: 0.9,
               whiteSpace: "pre-wrap",
             }}
-          >
-            {showMore ? (
-              <ReactMarkdown>{text}</ReactMarkdown>
-            ) : (
-              sliceString(<ReactMarkdown>{text}</ReactMarkdown>, 200)
-            )}
-          </Typography>
-          <Button
-            disableRipple
-            sx={{
-              color: neutral["A200"],
-              textTransform: "none",
-              fontSize: { xs: 12, md: 14 },
-              fontWeight: 400,
-              position: "absolute",
-              right: 0,
-              bottom: 0,
-
-              "&:hover": {
-                backgroundColor: "transparent !important",
-              },
+            dangerouslySetInnerHTML={{
+              __html: showMore ? text : sliceString(text, 200),
             }}
-            startIcon={showMore ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            onClick={() => setShowMore(!showMore)}
-          >
-            {showMore ? "Show Less" : "Show More"}
-          </Button>
-        </Box>
-        <Box
-          display="flex"
-          justifyContent="center"
-          sx={{ maxWidth: "100%", height: "auto", position: "relative" }}
-        >
-          <img
-            src={imageUrl}
-            alt="posted-image"
-            style={{ width: "auto", height: "auto", maxWidth: "100%" }}
           />
+
+          {text.length > 200 && (
+            <Button
+              disableRipple
+              sx={{
+                color: neutral["A200"],
+                textTransform: "none",
+                fontSize: { xs: 12, md: 14 },
+                fontWeight: 400,
+                position: "absolute",
+                right: 0,
+                bottom: 0,
+
+                "&:hover": {
+                  backgroundColor: "transparent !important",
+                },
+              }}
+              startIcon={showMore ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              onClick={() => setShowMore(!showMore)}
+            >
+              {showMore ? "Show Less" : "Show More"}
+            </Button>
+          )}
         </Box>
+        {imageUrl && (
+          <Box
+            display="flex"
+            justifyContent="center"
+            sx={{ maxWidth: "100%", height: "auto", position: "relative" }}
+          >
+            <img
+              src={imageUrl}
+              alt="posted-image"
+              style={{ width: "auto", height: "auto", maxWidth: "100%" }}
+            />
+          </Box>
+        )}
         {/* <Divider sx={{ opacity: 0.75, mx: 2 }} /> */}
         <Box display="flex" px={4} width="100%" justifyContent="space-between">
           <Box display="flex" columnGap={1} alignItems="center">

@@ -22,7 +22,7 @@ const ProfileSection = () => {
     >
       <HeadSection />
       {isLargeScreen && (
-        <Box display="flex" width="100%" maxWidth={320} maxH>
+        <Box display="flex" width="100%" maxWidth={320}>
           <Box width="100%">
             <Friends />
           </Box>

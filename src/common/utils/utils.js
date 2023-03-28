@@ -48,3 +48,23 @@ export const tabProps = (link, component) => {
     underline: "none",
   };
 };
+
+export function formatTimeAgo(dateString) {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diff = Math.round((now - date) / 1000 / 60); // difference in minutes
+
+  if (diff < 1) {
+    return "Just now";
+  } else if (diff === 1) {
+    return "1 min ago";
+  } else if (diff < 60) {
+    return diff + " mins ago";
+  } else if (diff < 24 * 60) {
+    const hours = Math.round(diff / 60);
+    return hours + " " + (hours === 1 ? "hr" : "hrs") + " ago";
+  } else {
+    const days = Math.round(diff / 60 / 24);
+    return days + " " + (days === 1 ? "day" : "days") + " ago";
+  }
+}
