@@ -16,7 +16,7 @@ const GenericResponseHandler = ({
     case "pending":
       return skeleton;
     case "rejected":
-      return errorPlaceholder || <GenericError description={error} />;
+      return errorPlaceholder || <GenericError />;
     case "resolved":
       return <>{children}</>;
     default:

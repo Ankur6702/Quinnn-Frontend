@@ -1,12 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
-import Head from "next/head";
-import Box from "@mui/system/Box";
+import { useSnackbar } from "notistack";
 
 import PublicProfile from "@/src/profile/components/public/PublicProfile";
-import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
-import useAsync from "@/src/common/components/custom-hooks/useAsync";
 import CircularLoaderSkeleton from "@/src/common/components/skeletons/CircularLoaderSkeleton";
 import ProfileService from "@/src/profile/service/ProfileService";
 
@@ -14,27 +10,41 @@ const profileService = new ProfileService();
 // eslint-disable-next-line import/no-anonymous-default-export, react/display-name
 export default function () {
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+  const [isLoading, setIsLoading] = useState(true);
+  const [profile, setProfile] = useState(null);
   const { username } = router.query;
-  const { data: profile, run, status, error } = useAsync();
+
+  const fetchUserData = useCallback(async () => {
+    try {
+      const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/search/${username}`;
+      setIsLoading(true);
+      const Response = await profileService.get(reqUrl);
+      console.log(Response);
+      setProfile(Response?.data?.data);
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar("Something went wrong, Please try again", {
+        variant: "error",
+        autoHideDuration: 2000,
+        anchorOrigin: { horizontal: "right", vertical: "top" },
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [enqueueSnackbar, username]);
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      run(profileService.fetchProfile(username))
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => console.error(error));
-    };
-    fetchProfile();
-  }, [run, username]);
+    fetchUserData();
+  }, [fetchUserData]);
 
   return (
-    <GenericResponseHandler
-      status={status}
-      error={error}
-      skeleton={<CircularLoaderSkeleton />}
-    >
-      <PublicProfile profile={profile?.data[0]} />
-    </GenericResponseHandler>
+    <>
+      {isLoading ? (
+        <CircularLoaderSkeleton />
+      ) : (
+        <PublicProfile profile={profile} />
+      )}
+    </>
   );
 }

@@ -23,6 +23,7 @@ import { neutral } from "@/src/common/config/colors";
 const profileService = new ProfileService();
 const PublicProfile = ({ profile }) => {
   const theme = useTheme();
+  console.log(profile);
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useUserContext();
   const [isFollowing, setIsFollowing] = useState();
