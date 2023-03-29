@@ -23,28 +23,54 @@ const PublicProfileActivity = ({ profile, isFollowing }) => {
     ];
     return tabsList;
   }, []);
-  console.log(profile);
+  console.log(profile?.posts);
+
+  function updateLikes(id, isLiked, userId) {
+    const objIndex = profile?.posts.findIndex((obj) => obj.postID === id);
+    if (objIndex === -1) {
+      console.log("Post not found");
+      return;
+    }
+    const obj = profile?.posts[objIndex];
+
+    if (isLiked) {
+      obj.likes.push(userId);
+    } else {
+      const likeIndex = obj?.likes.findIndex((like) => like === userId);
+      if (likeIndex === -1) {
+        console.log("user not found");
+        return;
+      }
+      obj.likes.splice(likeIndex, 1);
+    }
+    // remove the like from the array
+    const newObjects = [...posts?.data];
+    newObjects[objIndex] = obj; // replace the modified object in the copy
+    console.log(newObjects);
+    // setData(newObjects); // update the state variable with the new array
+  }
 
   return (
     <Box width="100%" boxSizing="border-box">
       <Navbar tabs={tabs} tabIndex={tabIndex} />
       <Box display="flex" flexDirection="column" rowGap={4} my={4}>
         {profile?.posts?.map((post, index) => {
-          // console.log(post._id);
+          console.log(post);
           return (
             <PostItem
               key={index}
               userId={profile?._id}
-              boxprops={{ sx: { maxWidth: "auto" } }}
               postId={post?.postID}
+              boxprops={{ sx: { maxWidth: "auto" } }}
+              updateLikes={updateLikes}
               text={post?.text}
               imageUrl={post?.imageURL}
               time={post?.creationDate}
               name={profile?.name}
               avatar={profile?.profileImageURL}
               gender={profile?.gender}
-              likes={post?.numberOfLikes}
-              comments={post?.comments?.length}
+              likes={post?.likes}
+              comments={post?.comments}
               link={`${process.env.BASE_FRONTEND_URL}/${post?.postID}`}
             />
           );

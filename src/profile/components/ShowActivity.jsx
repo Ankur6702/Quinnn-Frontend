@@ -24,15 +24,42 @@ const ShowActivity = () => {
     fetchPosts();
   }, [run]);
 
-  const updatePosts = (id) => {
+  const removePost = (id) => {
     const indexToRemove = posts?.data.findIndex((post) => {
       return post?._id === id;
     });
-    console.log(indexToRemove);
     const temp = posts;
     temp?.data.splice(indexToRemove, 1);
     setData(temp);
   };
+
+  function updateLikes(id, isLiked, userId) {
+    const objIndex = posts?.data.findIndex((obj) => obj._id === id);
+    if (objIndex === -1) {
+      console.log("Post not found");
+      return;
+    }
+    const obj = posts?.data[objIndex];
+
+    if (isLiked) {
+      obj.likes.push(userId);
+    } else {
+      const likeIndex = obj?.likes.findIndex((like) => like === userId);
+      if (likeIndex === -1) {
+        console.log("user not found");
+        return;
+      }
+      obj.likes.splice(likeIndex, 1);
+    }
+    // remove the like from the array
+    const newObjects = [...posts?.data];
+    newObjects[objIndex] = obj; // replace the modified object in the copy
+    console.log(newObjects);
+    setData(() => ({
+      data: newObjects,
+    }));
+    console.log(posts);
+  }
 
   return (
     <GenericResponseHandler
@@ -62,6 +89,7 @@ const ShowActivity = () => {
     >
       <Box display="flex" flexDirection="column" rowGap={4} my={4}>
         {posts?.data.map((post, index) => {
+          console.log(post);
           return (
             <PostItem
               key={index}
@@ -69,14 +97,15 @@ const ShowActivity = () => {
               postId={post?._id}
               boxprops={{ sx: { maxWidth: "auto" } }}
               text={post?.text}
-              updatePosts={updatePosts}
+              removePost={removePost}
+              updateLikes={updateLikes}
               imageUrl={post?.imageURL}
               time={post?.creationDate}
               name={user?.name}
               avatar={user?.profileImageURL}
               gender={user?.gender}
-              likes={post?.numberOfLikes}
-              comments={post?.comments.length}
+              likes={post?.likes}
+              comments={post?.comments}
               link={`${process.env.BASE_FRONTEND_URL}/post/${post?.postID}`}
             />
           );

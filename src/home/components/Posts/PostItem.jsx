@@ -19,9 +19,9 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import CommentsSection from "../comments/CommentsSection";
 import ShareModal from "@/src/common/components/share/ShareModal";
 import useUserContext from "@/src/profile/context/useUserContext";
+import PostOptions from "./PostOptions";
 import PostsService from "../../service/PostsService";
 import { sliceString, formatTimeAgo } from "@/src/common/utils/utils";
-import PostOptions from "./PostOptions";
 import { Blues, neutral } from "@/src/common/config/colors";
 import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 
@@ -39,22 +39,31 @@ const PostItem = ({
   avatar,
   gender,
   link,
-  updatePosts,
+  removePost,
+  updateLikes,
 }) => {
   const [showMore, setShowMore] = useState(false);
   const [share, setShare] = useState(false);
   const { user, setUser } = useUserContext();
   const [showComments, setShowComments] = useState(false);
-  const [liked, SetLiked] = useState();
+  const [isLiked, SetIsLiked] = useState();
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
   const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
+
+  useEffect(() => {
+    if (likes.includes(user?._id)) {
+      SetIsLiked(true);
+    } else {
+      SetIsLiked(false);
+    }
+  }, [likes, user?._id]);
 
   const handleDeletePost = () => {
     postsService
       .deletePost(postId)
       .then((response) => {
-        updatePosts(postId);
+        removePost(postId);
         setUser(response?.data?.updatedUser);
         enqueueSnackbar("Post deleted successfully", {
           variant: "info",
@@ -72,52 +81,42 @@ const PostItem = ({
       });
   };
 
-  // const handleLike = async () => {
-  //   try {
-  //     const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/follow/${profile._id}`;
-  //     setIsLoading(true);
-  //     const Response = await profileService.put(reqUrl);
-  //     console.log(Response);
-  //     setIsFollowing(true);
-  //     enqueueSnackbar("User followed", {
-  //       variant: "info",
-  //       autoHideDuration: 2000,
-  //       anchorOrigin: { horizontal: "right", vertical: "top" },
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     enqueueSnackbar("Something went wrong, Please try again", {
-  //       variant: "error",
-  //       autoHideDuration: 2000,
-  //       anchorOrigin: { horizontal: "right", vertical: "top" },
-  //     });
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-  // const handleUnLike = async () => {
-  //   try {
-  //     const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/unfollow/${profile._id}`;
-  //     setIsLoading(true);
-  //     const Response = await profileService.put(reqUrl);
-
-  //     setIsFollowing(false);
-  //     enqueueSnackbar("User unfollowed", {
-  //       variant: "info",
-  //       autoHideDuration: 2000,
-  //       anchorOrigin: { horizontal: "right", vertical: "top" },
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     enqueueSnackbar("Something went wrong, Please try again", {
-  //       variant: "error",
-  //       autoHideDuration: 2000,
-  //       anchorOrigin: { horizontal: "right", vertical: "top" },
-  //     });
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+  const handleLike = async () => {
+    postsService
+      .likePost(postId)
+      .then((response) => {
+        console.log(response);
+        SetIsLiked(true);
+        updateLikes(postId, true, user?._id);
+        // setUser(response?.data?.updatedUser);
+      })
+      .catch((error) => {
+        console.log(error);
+        enqueueSnackbar("Something went wrong,Please try again", {
+          variant: "error",
+          autoHideDuration: 2000,
+          anchorOrigin: { horizontal: "right", vertical: "top" },
+        });
+      });
+  };
+  const handleUnLike = async () => {
+    postsService
+      .unlikePost(postId)
+      .then((response) => {
+        console.log(response);
+        SetIsLiked(false);
+        updateLikes(postId, false, user?._id);
+        // setUser(response?.data?.updatedUser);
+      })
+      .catch((error) => {
+        console.log(error);
+        enqueueSnackbar("Something went wrong,Please try again", {
+          variant: "error",
+          autoHideDuration: 2000,
+          anchorOrigin: { horizontal: "right", vertical: "top" },
+        });
+      });
+  };
 
   // useEffect(() => {
   //   if (profile?.followers.some((e) => e.userID === user?._id)) {
@@ -271,18 +270,19 @@ const PostItem = ({
         <Box display="flex" px={4} width="100%" justifyContent="space-between">
           <Box display="flex" columnGap={1} alignItems="center">
             {isDownMd ? (
-              <IconButton aria-label="comments" size="medium">
+              <IconButton aria-label="Like" size="medium">
                 <ThumbUpIcon
                   sx={{
-                    color: neutral["A200"],
+                    color: isLiked ? Blues["A100"] : neutral["A200"],
                     fontSize: 22,
                   }}
                 />
               </IconButton>
             ) : (
               <Button
+                onClick={isLiked ? handleUnLike : handleLike}
                 sx={{
-                  color: neutral["A200"],
+                  color: isLiked ? Blues["A100"] : neutral["A200"],
                   textTransform: "none",
                   fontSize: 16,
                   fontWeight: 500,
@@ -291,7 +291,7 @@ const PostItem = ({
                 startIcon={
                   <ThumbUpIcon
                     sx={{
-                      color: neutral["A200"],
+                      color: isLiked ? Blues["A100"] : neutral["A200"],
                       fontSize: 22,
                     }}
                   />
@@ -312,7 +312,7 @@ const PostItem = ({
                 fontWeight: 400,
               }}
             >
-              {likes}
+              {likes.length}
             </Typography>
           </Box>
           <Box display="flex" columnGap={1} alignItems="center">
@@ -364,7 +364,7 @@ const PostItem = ({
                 fontWeight: 400,
               }}
             >
-              {comments}
+              {comments.length}
             </Typography>
           </Box>
           <Box>
