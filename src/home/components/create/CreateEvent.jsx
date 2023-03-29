@@ -8,11 +8,10 @@ import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import IconButton from "@mui/material/IconButton";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import EventRoundedIcon from "@mui/icons-material/EventRounded";
-
-import CreatePostModal from "@/src/common/components/modals/CreatePost/CreatePostModal";
+import CreateEventModal from "@/src/common/components/modals/CreateEvent/CreateEventModal";
 import { neutral } from "@/src/common/config/colors";
 
-const CreatePost = () => {
+const CreateEvent = () => {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -30,9 +29,10 @@ const CreatePost = () => {
           flexDirection="column"
           rowGap={4}
           boxSizing="border-box"
+          marginX="auto"
           p={4}
           sx={{
-            maxWidth: 630,
+            maxWidth: 800,
             width: "100%",
             bgcolor: neutral["A500"],
             borderRadius: 2,
@@ -62,64 +62,45 @@ const CreatePost = () => {
               alignItems="center"
               bgcolor={neutral["A700"]}
               borderRadius={10}
-              sx={{ cursor: "text" }}
+              sx={{ cursor: "pointer" }}
               onClick={handleClick}
             >
-              <Typography
-                variant="h4"
-                sx={{
-                  fontSize: { xs: 12, lg: 14 },
-                  color: neutral["A200"],
-                  fontWeight: 500,
-                  opacity: 0.8,
-                }}
-              >
-                {`What's on your mind?`}
-              </Typography>
+                <Typography
+                    variant="h4"
+                    sx={{ fontSize: 14, color: neutral["A100"], fontWeight: 500 }}
+                >
+                    Add an Event!
+                </Typography>
+              <IconButton size="small" onClick={handleClick} alignItems="right">
+                  <EventRoundedIcon
+                    sx={{ color: neutral["700"], fontSize: 22 }}
+                  />
+                </IconButton>
             </Box>
           </Box>
           <Box
             display="flex"
-            justifyContent="space-between"
-            alignItems="center"
+            justifyContent="right"
           >
-            <Box display="flex" columnGap={2} alignItems="center">
-              <Tooltip title="Add a Image">
-                <IconButton size="small" onClick={handleClick}>
-                  <AddPhotoAlternateIcon
-                    sx={{ color: neutral["700"], fontSize: 22 }}
-                  />
-                </IconButton>
-              </Tooltip>
-              {/* <Tooltip title="Add a Video">
-            <IconButton size="small">
-              <VideocamRoundedIcon
-                sx={{ color: neutral["700"], fontSize: 20 }}
-              />
-            </IconButton>
-          </Tooltip> */}
-
-              <Tooltip title="Add a event">
-                <IconButton size="small">
-                  <EventRoundedIcon
-                    sx={{ color: neutral["700"], fontSize: 20 }}
-                  />
-                </IconButton>
-              </Tooltip>
-            </Box>
+            
             <Button
               variant="outlined"
               disabled
               sx={{ textTransform: "none", px: 3, py: 0.5, cursor: "pointer" }}
+              margin="auto"
             >
-              Post
+              Add
             </Button>
           </Box>
         </Box>
       )}
-      <CreatePostModal isOpen={open} handleClose={handleClose} />
+      <CreateEventModal
+        isOpen={open}
+        handleClose={handleClose}
+        handleModalSubmit={() => {}}
+      />
     </>
   );
 };
 
-export default CreatePost;
+export default CreateEvent;
