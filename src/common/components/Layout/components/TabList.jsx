@@ -10,6 +10,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import GroupsIcon from "@mui/icons-material/Groups";
 import EventIcon from "@mui/icons-material/Event";
 import FeedSharpIcon from "@mui/icons-material/FeedSharp";
+import PersonIcon from "@mui/icons-material/Person";
 
 import TabListItem from "./TabListItem";
 import { SITE_NAME } from "@/src/common/config/seo";
@@ -20,6 +21,7 @@ import {
   FRONTEND_BLOGS_PAGE_URL,
   FRONTEND_EVENTS_PAGE_URL,
   FRONTEND_RESOURCES_PAGE_URL,
+  FRONTEND_USER_PROFILE_URL,
 } from "@/src/common/utils/constants";
 import { LOGO } from "@/src/accounts/utils/constants";
 import Events from "./Events";
@@ -77,6 +79,16 @@ const TabList = ({ handleClick }) => {
         Icon: (
           <FeedSharpIcon
             sx={{ color: iconColor(FRONTEND_RESOURCES_PAGE_URL), fontSize: 22 }}
+          />
+        ),
+      },
+      {
+        id: "profile",
+        name: "Profile",
+        route: `${FRONTEND_USER_PROFILE_URL}`,
+        Icon: (
+          <PersonIcon
+            sx={{ color: iconColor(FRONTEND_USER_PROFILE_URL), fontSize: 22 }}
           />
         ),
       },

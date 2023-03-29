@@ -5,14 +5,17 @@ import { useSnackbar } from "notistack";
 import PublicProfile from "@/src/profile/components/public/PublicProfile";
 import CircularLoaderSkeleton from "@/src/common/components/skeletons/CircularLoaderSkeleton";
 import ProfileService from "@/src/profile/service/ProfileService";
+import useUserContext from "@/src/profile/context/useUserContext";
 
 const profileService = new ProfileService();
 // eslint-disable-next-line import/no-anonymous-default-export, react/display-name
 export default function () {
   const router = useRouter();
+  const { user } = useUserContext();
   const { enqueueSnackbar } = useSnackbar();
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState(null);
+  const [isFollowing, setIsFollowing] = useState();
   const { username } = router.query;
 
   const fetchUserData = useCallback(async () => {
@@ -21,6 +24,7 @@ export default function () {
       setIsLoading(true);
       const Response = await profileService.get(reqUrl);
       console.log(Response);
+      setIsFollowing(Response?.data?.isFollowing);
       setProfile(Response?.data?.data);
     } catch (error) {
       console.log(error);
@@ -29,16 +33,34 @@ export default function () {
     }
   }, [username]);
 
+  const followUser = () => {
+    console.log("followed");
+    setIsFollowing(true);
+  };
+  const unFollowUser = () => {
+    console.log("unfollowd");
+    setIsFollowing(false);
+  };
+
   useEffect(() => {
-    fetchUserData();
-  }, [fetchUserData]);
+    if (username === user?.username) {
+      router.push("/profile");
+    } else {
+      fetchUserData();
+    }
+  }, [fetchUserData, router, user?.username, username]);
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && username ? (
         <CircularLoaderSkeleton />
       ) : (
-        <PublicProfile profile={profile} />
+        <PublicProfile
+          profile={profile}
+          isFollowing={isFollowing}
+          followUser={followUser}
+          unFollowUser={unFollowUser}
+        />
       )}
     </>
   );

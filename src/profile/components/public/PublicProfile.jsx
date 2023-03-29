@@ -9,7 +9,6 @@ import Button from "@mui/material/Button";
 import { useMediaQuery, useTheme } from "@mui/material";
 
 import ShowUserData from "../ShowUserData";
-import UserActivity from "../UserActivity";
 import ProfileService from "../../service/ProfileService";
 import useUserContext from "../../context/useUserContext";
 import PublicProfileActivity from "./PublicProfileActivity";
@@ -22,11 +21,10 @@ import {
 import { neutral } from "@/src/common/config/colors";
 
 const profileService = new ProfileService();
-const PublicProfile = ({ profile }) => {
+const PublicProfile = ({ profile, isFollowing, followUser, unFollowUser }) => {
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useUserContext();
-  const [isFollowing, setIsFollowing] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const idDownMd = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -36,7 +34,7 @@ const PublicProfile = ({ profile }) => {
       setIsLoading(true);
       const Response = await profileService.put(reqUrl);
       console.log(Response);
-      setIsFollowing(true);
+      followUser();
       enqueueSnackbar("User followed", {
         variant: "info",
         autoHideDuration: 2000,
@@ -57,9 +55,8 @@ const PublicProfile = ({ profile }) => {
     try {
       const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/unfollow/${profile._id}`;
       setIsLoading(true);
-      const Response = profileService.put(reqUrl);
-
-      setIsFollowing(false);
+      const Response = await profileService.put(reqUrl);
+      unFollowUser();
       enqueueSnackbar("User unfollowed", {
         variant: "info",
         autoHideDuration: 2000,
@@ -77,13 +74,13 @@ const PublicProfile = ({ profile }) => {
     }
   };
 
-  useEffect(() => {
-    if (profile?.followers.some((e) => e.userID === user?._id)) {
-      setIsFollowing(true);
-    } else {
-      setIsFollowing(false);
-    }
-  }, [profile?.followers, user?._id]);
+  // useEffect(() => {
+  //   if (profile?.followers.some((e) => e.userID === user?._id)) {
+  //     setIsFollowing(true);
+  //   } else {
+  //     setIsFollowing(false);
+  //   }
+  // }, [profile?.followers, user?._id]);
 
   return (
     <>
@@ -164,24 +161,26 @@ const PublicProfile = ({ profile }) => {
                   }
                 />
               </Box>
-              <Box display="flex">
-                <Box py={3}>
-                  <Button
-                    component="span"
-                    onClick={isFollowing ? handleUnFollow : handleFollow}
-                    disabled={isLoading}
-                    sx={{
-                      bgcolor: neutral["A500"],
-                      fontSize: 16,
-                      textTransform: "none",
-                      p: 1,
-                      "&:hover": {},
-                    }}
-                  >
-                    {isFollowing ? "Following" : "Follow"}
-                  </Button>
+              {user?._id !== profile?._id && (
+                <Box display="flex">
+                  <Box py={3}>
+                    <Button
+                      component="span"
+                      onClick={isFollowing ? handleUnFollow : handleFollow}
+                      disabled={isLoading}
+                      sx={{
+                        bgcolor: neutral["A500"],
+                        fontSize: 16,
+                        textTransform: "none",
+                        p: 1,
+                        "&:hover": {},
+                      }}
+                    >
+                      {isFollowing ? "Following" : "Follow"}
+                    </Button>
+                  </Box>
                 </Box>
-              </Box>
+              )}
             </Box>
             <Box
               display="flex"
@@ -192,9 +191,14 @@ const PublicProfile = ({ profile }) => {
               <ShowUserData user={profile} />
             </Box>
           </Box>
-          {!profile.isPrivate ||
-            user?._id === profile?._id ||
-            (isFollowing && <PublicProfileActivity profile={profile} />)}
+          {(user?._id === profile?._id ||
+            !profile.isPrivate ||
+            isFollowing) && (
+            <PublicProfileActivity
+              profile={profile}
+              isFollowing={isFollowing}
+            />
+          )}
         </Box>
       ) : (
         <Box

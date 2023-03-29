@@ -24,6 +24,16 @@ const ShowActivity = () => {
     fetchPosts();
   }, [run]);
 
+  const updatePosts = (id) => {
+    const indexToRemove = posts?.data.findIndex((post) => {
+      return post?._id === id;
+    });
+    console.log(indexToRemove);
+    const temp = posts;
+    temp?.data.splice(indexToRemove, 1);
+    setData(temp);
+  };
+
   return (
     <GenericResponseHandler
       status={status}
@@ -51,21 +61,26 @@ const ShowActivity = () => {
       }
     >
       <Box display="flex" flexDirection="column" rowGap={4} my={4}>
-        {posts?.data.map((post, index) => (
-          <PostItem
-            key={index}
-            boxprops={{ sx: { maxWidth: "auto" } }}
-            text={post?.text}
-            imageUrl={post?.imageURL}
-            time={post?.creationDate}
-            name={user?.name}
-            avatar={user?.profileImageURL}
-            gender={user?.gender}
-            likes={post?.likes.length}
-            comments={post?.comments.length}
-            link={`${process.env.BASE_FRONTEND_URL}/post/${post?._id}`}
-          />
-        ))}
+        {posts?.data.map((post, index) => {
+          return (
+            <PostItem
+              key={index}
+              userId={user?._id}
+              postId={post?._id}
+              boxprops={{ sx: { maxWidth: "auto" } }}
+              text={post?.text}
+              updatePosts={updatePosts}
+              imageUrl={post?.imageURL}
+              time={post?.creationDate}
+              name={user?.name}
+              avatar={user?.profileImageURL}
+              gender={user?.gender}
+              likes={post?.numberOfLikes}
+              comments={post?.comments.length}
+              link={`${process.env.BASE_FRONTEND_URL}/post/${post?.postID}`}
+            />
+          );
+        })}
       </Box>
     </GenericResponseHandler>
   );

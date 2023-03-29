@@ -5,7 +5,7 @@ import Navbar from "../Navbar";
 import useUserContext from "../../context/useUserContext";
 import PostItem from "@/src/home/components/Posts/PostItem";
 
-const PublicProfileActivity = ({ profile }) => {
+const PublicProfileActivity = ({ profile, isFollowing }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const tabs = useMemo(() => {
@@ -34,16 +34,18 @@ const PublicProfileActivity = ({ profile }) => {
           return (
             <PostItem
               key={index}
+              userId={profile?._id}
               boxprops={{ sx: { maxWidth: "auto" } }}
+              postId={post?.postID}
               text={post?.text}
               imageUrl={post?.imageURL}
               time={post?.creationDate}
               name={profile?.name}
               avatar={profile?.profileImageURL}
               gender={profile?.gender}
-              likes={post?.likes?.length}
+              likes={post?.numberOfLikes}
               comments={post?.comments?.length}
-              link={`${process.env.BASE_FRONTEND_URL}/${post?._id}`}
+              link={`${process.env.BASE_FRONTEND_URL}/${post?.postID}`}
             />
           );
         })}

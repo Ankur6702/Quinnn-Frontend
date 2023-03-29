@@ -5,6 +5,7 @@ export const FRONTEND_BLOGS_PAGE_URL = "/blogs";
 export const FRONTEND_EVENTS_PAGE_URL = "/events";
 export const FRONTEND_RESOURCES_PAGE_URL = "/resources";
 export const FRONTEND_VERIFY_EMAIL_URL = "/accounts/verify-email";
+export const FRONTEND_USER_PROFILE_URL = "/profile";
 
 export const FACEBOOK = "/share/Facebook.svg";
 export const LINKEDIN = "/share/Linkedin.svg";

@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSnackbar } from "notistack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -13,34 +14,118 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ShareIcon from "@mui/icons-material/Share";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
-import AddIcon from "@mui/icons-material/Add";
 import { useMediaQuery, useTheme } from "@mui/material";
 
-import usePosts from "../../context/usePosts";
 import CommentsSection from "../comments/CommentsSection";
 import ShareModal from "@/src/common/components/share/ShareModal";
+import useUserContext from "@/src/profile/context/useUserContext";
+import PostsService from "../../service/PostsService";
 import { sliceString, formatTimeAgo } from "@/src/common/utils/utils";
 import PostOptions from "./PostOptions";
 import { Blues, neutral } from "@/src/common/config/colors";
 import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 
+const postsService = new PostsService();
 const PostItem = ({
   boxprops,
   text,
   imageUrl,
   likes,
+  userId,
+  postId,
   comments,
   name,
   time,
   avatar,
   gender,
   link,
+  updatePosts,
 }) => {
   const [showMore, setShowMore] = useState(false);
   const [share, setShare] = useState(false);
+  const { user, setUser } = useUserContext();
   const [showComments, setShowComments] = useState(false);
+  const [liked, SetLiked] = useState();
   const theme = useTheme();
+  const { enqueueSnackbar } = useSnackbar();
   const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
+
+  const handleDeletePost = () => {
+    postsService
+      .deletePost(postId)
+      .then((response) => {
+        updatePosts(postId);
+        setUser(response?.data?.updatedUser);
+        enqueueSnackbar("Post deleted successfully", {
+          variant: "info",
+          autoHideDuration: 2000,
+          anchorOrigin: { horizontal: "right", vertical: "top" },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        enqueueSnackbar("Something went wrong,Please try again", {
+          variant: "error",
+          autoHideDuration: 2000,
+          anchorOrigin: { horizontal: "right", vertical: "top" },
+        });
+      });
+  };
+
+  // const handleLike = async () => {
+  //   try {
+  //     const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/follow/${profile._id}`;
+  //     setIsLoading(true);
+  //     const Response = await profileService.put(reqUrl);
+  //     console.log(Response);
+  //     setIsFollowing(true);
+  //     enqueueSnackbar("User followed", {
+  //       variant: "info",
+  //       autoHideDuration: 2000,
+  //       anchorOrigin: { horizontal: "right", vertical: "top" },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     enqueueSnackbar("Something went wrong, Please try again", {
+  //       variant: "error",
+  //       autoHideDuration: 2000,
+  //       anchorOrigin: { horizontal: "right", vertical: "top" },
+  //     });
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+  // const handleUnLike = async () => {
+  //   try {
+  //     const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/unfollow/${profile._id}`;
+  //     setIsLoading(true);
+  //     const Response = await profileService.put(reqUrl);
+
+  //     setIsFollowing(false);
+  //     enqueueSnackbar("User unfollowed", {
+  //       variant: "info",
+  //       autoHideDuration: 2000,
+  //       anchorOrigin: { horizontal: "right", vertical: "top" },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     enqueueSnackbar("Something went wrong, Please try again", {
+  //       variant: "error",
+  //       autoHideDuration: 2000,
+  //       anchorOrigin: { horizontal: "right", vertical: "top" },
+  //     });
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (profile?.followers.some((e) => e.userID === user?._id)) {
+  //     setIsFollowing(true);
+  //   } else {
+  //     setIsFollowing(false);
+  //   }
+  // }, [profile?.followers, user?._id]);
 
   return (
     <Box
@@ -120,10 +205,17 @@ const PostItem = ({
               </Box>
             </Box>
           </Box>
-          <PostOptions />
+          <PostOptions userId={userId} handleDeletePost={handleDeletePost} />
         </Box>
         {text && (
-          <Box px={4} pb={{ xs: 8, md: 6 }} sx={{ position: "relative" }}>
+          <Box
+            px={4}
+            pb={{
+              xs: text.length > 200 ? 8 : 0,
+              md: text.length > 200 ? 6 : 0,
+            }}
+            sx={{ position: "relative" }}
+          >
             <Typography
               variant="h4"
               sx={{

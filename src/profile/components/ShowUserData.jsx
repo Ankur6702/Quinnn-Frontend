@@ -106,7 +106,7 @@ const ShowUserData = ({ user }) => {
                 fontSize: { xs: 14, lg: 16 },
               }}
             >
-              India
+              {user?.country}
             </Typography>
           </Box>
         )}

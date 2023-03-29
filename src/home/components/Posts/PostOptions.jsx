@@ -1,7 +1,5 @@
 import React from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
 import Box from "@mui/material/Box";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -12,20 +10,14 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ReportIcon from "@mui/icons-material/Report";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
-import PostAddIcon from "@mui/icons-material/PostAdd";
-import CommentIcon from "@mui/icons-material/Comment";
-import EventIcon from "@mui/icons-material/Event";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-import useAuth from "@/src/common/context/useAuth";
 import useUserContext from "@/src/profile/context/useUserContext";
 import { Blues, neutral } from "@/src/common/config/colors";
 
-const PostOptions = () => {
+const PostOptions = ({ userId, handleDeletePost }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { user } = useUserContext();
   const router = useRouter();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -57,7 +49,7 @@ const PostOptions = () => {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
         >
-          <MoreVertIcon />
+          <MoreVertIcon fontSize="small" />
         </IconButton>
       </Box>
       <Menu
@@ -71,17 +63,9 @@ const PostOptions = () => {
           sx: {
             overflow: "visible",
             width: 150,
-            py: 2,
             borderRadius: 1.5,
-            boxShadow:
-              " rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
+            filter: "drop-shadow(0px 2px 10px rgba(0,0,0,0.1))",
             mt: 1.5,
-            "& .MuiAvatar-root": {
-              width: 36,
-              height: 36,
-              ml: -0.5,
-              mr: 2,
-            },
             "&:before": {
               content: '""',
               display: "block",
@@ -99,72 +83,79 @@ const PostOptions = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem
-          sx={{
-            color: neutral["900"],
-            "&:hover": {
-              color: Blues["A100"],
-            },
-          }}
-        >
-          <ListItemIcon>
-            <DeleteIcon fontSize="small" />
-          </ListItemIcon>
-          <Typography
-            variant="h6"
+        {user?._id === userId && (
+          <MenuItem
+            onClick={handleDeletePost}
             sx={{
-              color: "inherit",
-              fontWeight: 400,
-              fontSize: { xs: 14, lg: 16 },
+              color: neutral["900"],
+              "&:hover": {
+                color: Blues["A100"],
+              },
             }}
           >
-            Delete
-          </Typography>
-        </MenuItem>
-        <MenuItem
-          sx={{
-            color: neutral["900"],
-            "&:hover": {
-              color: Blues["A100"],
-            },
-          }}
-        >
-          <ListItemIcon>
-            <AddIcon fontSize="small" />
-          </ListItemIcon>
-          <Typography
-            variant="h6"
+            <ListItemIcon>
+              <DeleteIcon fontSize="small" />
+            </ListItemIcon>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "inherit",
+                fontWeight: 400,
+                fontSize: { xs: 14, lg: 16 },
+              }}
+            >
+              Delete
+            </Typography>
+          </MenuItem>
+        )}
+        {user?._id !== userId && router.pathname === "/profile" && (
+          <MenuItem
             sx={{
-              color: "inherit",
-              fontWeight: 400,
-              fontSize: { xs: 14, lg: 16 },
+              color: neutral["900"],
+              "&:hover": {
+                color: Blues["A100"],
+              },
             }}
           >
-            Follow
-          </Typography>
-        </MenuItem>
-        <MenuItem
-          sx={{
-            color: neutral["900"],
-            "&:hover": {
-              color: Blues["A100"],
-            },
-          }}
-        >
-          <ListItemIcon>
-            <ReportIcon fontSize="small" />
-          </ListItemIcon>
-          <Typography
-            variant="h6"
+            <ListItemIcon>
+              <AddIcon fontSize="small" />
+            </ListItemIcon>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "inherit",
+                fontWeight: 400,
+                fontSize: { xs: 14, lg: 16 },
+              }}
+            >
+              Follow
+            </Typography>
+          </MenuItem>
+        )}
+        {
+          <MenuItem
             sx={{
-              color: "inherit",
-              fontWeight: 400,
-              fontSize: { xs: 14, lg: 16 },
+              color: neutral["900"],
+              "&:hover": {
+                color: Blues["A100"],
+              },
             }}
           >
-            Report
-          </Typography>
-        </MenuItem>
+            <ListItemIcon>
+              <ReportIcon fontSize="small" />
+            </ListItemIcon>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "inherit",
+                fontWeight: 400,
+                fontSize: { xs: 14, lg: 16 },
+              }}
+            >
+              Report
+            </Typography>
+          </MenuItem>
+        }
       </Menu>
     </>
   );

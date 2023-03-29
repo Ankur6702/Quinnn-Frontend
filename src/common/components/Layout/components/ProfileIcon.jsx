@@ -125,7 +125,16 @@ const ProfileIcon = () => {
             sx={{ display: "flex", columnGap: 2, alignItems: "center" }}
           >
             <ListItemIcon>
-              <Avatar fontSize="small" />
+              <Avatar
+                fontSize="small"
+                src={
+                  user?.profileImageURL === null || user?.profileImageURL === ""
+                    ? user?.gender === "Female" || user?.gender === "Lesbian"
+                      ? FEMALE_AVATAR
+                      : MALE_AVATAR
+                    : user?.profileImageURL
+                }
+              />
             </ListItemIcon>
             <Box display="flex" flexDirection="column" rowGap={0.5}>
               <Typography
