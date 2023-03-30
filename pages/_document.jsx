@@ -8,6 +8,7 @@ export default class MyDocument extends Document {
       <Html lang="en" style={{ scrollBehavior: "smooth" }}>
         <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="icon" href="/favicon/favicon.svg" />
           <link
             rel="preconnect"
             href="https://fonts.gstatic.com"

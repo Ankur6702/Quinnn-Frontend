@@ -182,7 +182,8 @@ const HomePostItem = ({
                   src={
                     userData?.data?.profileImageURL === null ||
                     userData?.data?.profileImageURL === ""
-                      ? gender === "Female" || gender === "Lesbian"
+                      ? userData?.data?.gender === "Female" ||
+                        userData?.data?.gender === "Lesbian"
                         ? FEMALE_AVATAR
                         : MALE_AVATAR
                       : userData?.data?.profileImageURL

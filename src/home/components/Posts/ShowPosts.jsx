@@ -7,11 +7,9 @@ import HomePostItem from "./HomePostItem";
 import BouncingDotsLoader from "@/src/common/components/skeletons/BouncingDotsLoader";
 
 const postsService = new PostsService();
-const ShowPosts = () => {
-  const { posts, setPosts } = usePosts();
-  const [page, setPage] = useState(1);
+const ShowPosts = ({ sort }) => {
+  const { posts, setPosts, page, setPage, refresh } = usePosts();
   const [fetchedPosts, setFetchedPosts] = useState(null);
-  const [sort, setSort] = useState("recent");
   const [loading, setLoading] = useState(true);
 
   const fetchPosts = useCallback(async () => {
@@ -60,11 +58,13 @@ const ShowPosts = () => {
     } else {
       setLoading(false);
     }
-  }, [fetchPosts, page]);
+    console.log(sort);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchPosts, sort, page, refresh]);
 
   console.log(posts);
 
-  const handelInfiniteScroll = async () => {
+  const handelInfiniteScroll = useCallback(async () => {
     try {
       if (
         window.innerHeight + document.documentElement.scrollTop + 1 >=
@@ -76,12 +76,12 @@ const ShowPosts = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [setPage]);
 
   useEffect(() => {
     window.addEventListener("scroll", handelInfiniteScroll);
     return () => window.removeEventListener("scroll", handelInfiniteScroll);
-  }, []);
+  }, [handelInfiniteScroll]);
 
   return (
     <Box display="flex" flexDirection="column" rowGap={4}>
