@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 
-import PostItem from "./PostItem";
 import usePosts from "../../context/usePosts";
 import PostsService from "../../service/PostsService";
+import HomePostItem from "./HomePostItem";
 import BouncingDotsLoader from "@/src/common/components/skeletons/BouncingDotsLoader";
 
 const postsService = new PostsService();
@@ -29,6 +29,26 @@ const ShowPosts = () => {
         setLoading(false);
       });
   }, [page, setPosts, sort]);
+
+  function updateLikes(id, isLiked, userId) {
+    const objIndex = posts?.findIndex((obj) => obj._id === id);
+    if (objIndex === -1) {
+      console.log("Post not found");
+      return;
+    }
+    const obj = posts?.[objIndex];
+
+    if (isLiked) {
+      obj.likes.push(userId);
+    } else {
+      const likeIndex = obj?.likes.findIndex((like) => like === userId);
+      if (likeIndex === -1) {
+        console.log("user not found");
+        return;
+      }
+      obj.likes.splice(likeIndex, 1);
+    }
+  }
 
   useEffect(() => {
     fetchPosts();
@@ -59,19 +79,15 @@ const ShowPosts = () => {
     <Box display="flex" flexDirection="column" rowGap={4}>
       {posts?.map((post, index) => {
         return (
-          <PostItem
+          <HomePostItem
             key={index}
-            userId={post?.user?.userID}
-            username={post?.user?.username}
+            userId={post?.userID}
             postId={post?._id}
             boxprops={{ sx: { maxWidth: "auto" } }}
             text={post?.text}
-            updateLikes={() => {}}
+            updateLikes={updateLikes}
             imageUrl={post?.imageURL}
             time={post?.creationDate}
-            name={post?.user?.name}
-            avatar={null}
-            gender={post?.user?.gender}
             likes={post?.likes}
             comments={post?.comments}
             link={`${process.env.BASE_FRONTEND_URL}/post/${post?._id}`}

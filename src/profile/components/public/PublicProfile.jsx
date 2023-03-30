@@ -74,14 +74,6 @@ const PublicProfile = ({ profile, isFollowing, followUser, unFollowUser }) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (profile?.followers.some((e) => e.userID === user?._id)) {
-  //     setIsFollowing(true);
-  //   } else {
-  //     setIsFollowing(false);
-  //   }
-  // }, [profile?.followers, user?._id]);
-
   return (
     <>
       {profile ? (

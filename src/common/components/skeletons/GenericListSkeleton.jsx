@@ -4,7 +4,13 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 
-const GenericListSkeleton = ({ items, gridProps, gridItemProps, boxProps }) => {
+const GenericListSkeleton = ({
+  items,
+  gridProps,
+  gridItemProps,
+  boxProps,
+  variant,
+}) => {
   return (
     <Grid
       container
@@ -19,7 +25,7 @@ const GenericListSkeleton = ({ items, gridProps, gridItemProps, boxProps }) => {
               width="100%"
               height="100%"
               component="div"
-              variant="rectangular"
+              variant={variant ? variant : "rectangular"}
             />
           </Box>
         </Grid>

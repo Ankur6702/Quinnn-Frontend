@@ -13,4 +13,7 @@ export default class ProfileService extends BaseService {
   async fetchUserPosts() {
     return await this.get(`${this.buildUrl(`/post/all`)}`);
   }
+  async fetchUserData(id) {
+    return await this.get(`${this.buildUrl(`/fetchUser/${id}`)}`);
+  }
 }

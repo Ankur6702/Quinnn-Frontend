@@ -402,11 +402,11 @@ const PostItem = ({
               <ShareModal
                 copyLink={link}
                 closeModal={() => setShare(false)}
-                facebook="https://lgbtq-social-media-frontend-ankur6702.vercel.app"
-                linkedin="https://lgbtq-social-media-frontend-ankur6702.vercel.app"
-                twitter="https://lgbtq-social-media-frontend-ankur6702.vercel.app"
+                facebook={link}
+                linkedin={link}
+                twitter={link}
                 title="Share this Post"
-                instagram="https://lgbtq-social-media-frontend-ankur6702.vercel.app"
+                instagram={link}
               />
             )}
           </Box>
