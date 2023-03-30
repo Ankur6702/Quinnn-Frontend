@@ -193,12 +193,7 @@ const PublicProfile = ({ profile, isFollowing, followUser, unFollowUser }) => {
           </Box>
           {(user?._id === profile?._id ||
             !profile.isPrivate ||
-            isFollowing) && (
-            <PublicProfileActivity
-              profile={profile}
-              isFollowing={isFollowing}
-            />
-          )}
+            isFollowing) && <PublicProfileActivity profile={profile} />}
         </Box>
       ) : (
         <Box

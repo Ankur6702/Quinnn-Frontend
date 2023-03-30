@@ -105,7 +105,7 @@ const ShowActivity = () => {
               gender={user?.gender}
               likes={post?.likes}
               comments={post?.comments}
-              username={post?.user?.username}
+              username={user?.username}
               link={`${process.env.BASE_FRONTEND_URL}/post/${post?._id}`}
             />
           );

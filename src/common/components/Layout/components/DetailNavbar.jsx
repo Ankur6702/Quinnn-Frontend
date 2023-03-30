@@ -26,7 +26,12 @@ const DetailNavbar = ({
   return (
     <AppBar
       {...(appBarProps || {})}
-      sx={{ top: "-100px", paddingTop: "2px", ...(appBarProps?.sx || {}) }}
+      sx={{
+        top: "-100px",
+        zIndex: 100,
+        paddingTop: "2px",
+        ...(appBarProps?.sx || {}),
+      }}
     >
       <Container maxWidth="xl" {...(containerProps || {})}>
         <Tabs

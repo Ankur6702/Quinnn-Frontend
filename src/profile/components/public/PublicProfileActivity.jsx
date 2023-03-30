@@ -1,12 +1,30 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 
+import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
+import useAsync from "@/src/common/components/custom-hooks/useAsync";
+import GenericListSkeleton from "@/src/common/components/skeletons/GenericListSkeleton";
 import Navbar from "../Navbar";
 import useUserContext from "../../context/useUserContext";
 import PostItem from "@/src/home/components/Posts/PostItem";
+import PostsService from "@/src/home/service/PostsService";
 
-const PublicProfileActivity = ({ profile, isFollowing }) => {
+const postsService = new PostsService();
+const PublicProfileActivity = ({ profile }) => {
   const [tabIndex, setTabIndex] = useState(0);
+  const { data: posts, run, status, error, setData } = useAsync();
+  const { user } = useUserContext();
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      run(postsService.getUserPosts(profile?._id))
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => console.error(error));
+    };
+    fetchPosts();
+  }, [profile?._id, run]);
 
   const tabs = useMemo(() => {
     const tabsList = [
@@ -23,19 +41,17 @@ const PublicProfileActivity = ({ profile, isFollowing }) => {
     ];
     return tabsList;
   }, []);
-  console.log(profile?.posts);
 
   function updateLikes(id, isLiked, userId) {
-    const objIndex = profile?.posts.findIndex((obj) => obj.postID === id);
+    const objIndex = posts?.data.findIndex((obj) => obj._id === id);
     if (objIndex === -1) {
       console.log("Post not found");
       return;
     }
-    const obj = profile?.posts[objIndex];
+    const obj = posts?.data[objIndex];
 
     if (isLiked) {
       obj.likes.push(userId);
-      console.log(profile?.posts[objIndex]);
     } else {
       const likeIndex = obj?.likes.findIndex((like) => like === userId);
       if (likeIndex === -1) {
@@ -50,27 +66,53 @@ const PublicProfileActivity = ({ profile, isFollowing }) => {
     <Box width="100%" boxSizing="border-box">
       <Navbar tabs={tabs} tabIndex={tabIndex} />
       <Box display="flex" flexDirection="column" rowGap={4} my={4}>
-        {profile?.posts?.map((post, index) => {
-          return (
-            <PostItem
-              key={index}
-              userId={profile?._id}
-              postId={post?.postID}
-              boxprops={{ sx: { maxWidth: "auto" } }}
-              updateLikes={updateLikes}
-              text={post?.text}
-              imageUrl={post?.imageURL}
-              time={post?.creationDate}
-              name={profile?.name}
-              avatar={profile?.profileImageURL}
-              gender={profile?.gender}
-              likes={post?.likes}
-              comments={post?.comments}
-              username={profile?.username}
-              link={`${process.env.BASE_FRONTEND_URL}/${post?.postID}`}
+        <GenericResponseHandler
+          status={status}
+          error={error}
+          skeleton={
+            <GenericListSkeleton
+              items={3}
+              gridProps={{ sx: { my: 4 } }}
+              gridItemProps={{
+                rowGap: 1,
+                sx: {
+                  borderRadius: 2,
+                },
+              }}
+              boxProps={{
+                height: 100,
+                px: 0,
+                sx: {
+                  "& .MuiSkeleton-root": {
+                    borderRadius: 1.5,
+                  },
+                },
+              }}
             />
-          );
-        })}
+          }
+        >
+          {posts?.data.map((post, index) => {
+            return (
+              <PostItem
+                key={index}
+                userId={post?.userID}
+                postId={post?._id}
+                boxprops={{ sx: { maxWidth: "auto" } }}
+                updateLikes={updateLikes}
+                text={post?.text}
+                imageUrl={post?.imageURL}
+                time={post?.creationDate}
+                name={profile?.name}
+                avatar={profile?.profileImageURL}
+                gender={profile?.gender}
+                likes={post?.likes}
+                comments={post?.comments}
+                username={profile?.username}
+                link={`${process.env.BASE_FRONTEND_URL}/${post?._id}`}
+              />
+            );
+          })}
+        </GenericResponseHandler>
       </Box>
     </Box>
   );
