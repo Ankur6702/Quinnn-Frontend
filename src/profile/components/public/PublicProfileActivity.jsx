@@ -35,6 +35,7 @@ const PublicProfileActivity = ({ profile, isFollowing }) => {
 
     if (isLiked) {
       obj.likes.push(userId);
+      console.log(profile?.posts[objIndex]);
     } else {
       const likeIndex = obj?.likes.findIndex((like) => like === userId);
       if (likeIndex === -1) {
@@ -43,11 +44,6 @@ const PublicProfileActivity = ({ profile, isFollowing }) => {
       }
       obj.likes.splice(likeIndex, 1);
     }
-    // remove the like from the array
-    const newObjects = [...posts?.data];
-    newObjects[objIndex] = obj; // replace the modified object in the copy
-    console.log(newObjects);
-    // setData(newObjects); // update the state variable with the new array
   }
 
   return (
@@ -55,7 +51,6 @@ const PublicProfileActivity = ({ profile, isFollowing }) => {
       <Navbar tabs={tabs} tabIndex={tabIndex} />
       <Box display="flex" flexDirection="column" rowGap={4} my={4}>
         {profile?.posts?.map((post, index) => {
-          console.log(post);
           return (
             <PostItem
               key={index}
@@ -71,6 +66,7 @@ const PublicProfileActivity = ({ profile, isFollowing }) => {
               gender={profile?.gender}
               likes={post?.likes}
               comments={post?.comments}
+              username={profile?.username}
               link={`${process.env.BASE_FRONTEND_URL}/${post?.postID}`}
             />
           );

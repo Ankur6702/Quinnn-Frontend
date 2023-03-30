@@ -89,7 +89,6 @@ const ShowActivity = () => {
     >
       <Box display="flex" flexDirection="column" rowGap={4} my={4}>
         {posts?.data.map((post, index) => {
-          console.log(post);
           return (
             <PostItem
               key={index}
@@ -106,7 +105,8 @@ const ShowActivity = () => {
               gender={user?.gender}
               likes={post?.likes}
               comments={post?.comments}
-              link={`${process.env.BASE_FRONTEND_URL}/post/${post?.postID}`}
+              username={post?.user?.username}
+              link={`${process.env.BASE_FRONTEND_URL}/post/${post?._id}`}
             />
           );
         })}

@@ -31,6 +31,7 @@ const PostItem = ({
   text,
   imageUrl,
   likes,
+  username,
   userId,
   postId,
   comments,
@@ -155,35 +156,39 @@ const PostItem = ({
             alignItems="center"
             columnGap={2}
           >
-            <Avatar
-              alt="profile-photo"
-              sx={{
-                width: 40,
-                height: 40,
-                fontSize: 15,
-                cursor: "pointer",
-                position: "relative",
-              }}
-              src={
-                avatar === null || avatar === ""
-                  ? gender === "Female" || gender === "Lesbian"
-                    ? FEMALE_AVATAR
-                    : MALE_AVATAR
-                  : avatar
-              }
-            />
-            <Box display="flex" flexDirection="column" rowGap={0.5}>
-              <Typography
-                variant="h4"
+            <Link href={`/profile/${username}`}>
+              <Avatar
+                alt="profile-photo"
                 sx={{
-                  fontSize: { xs: 14, lg: 16 },
-                  color: neutral["900"],
-                  fontWeight: 500,
-                  opacity: 0.9,
+                  width: 40,
+                  height: 40,
+                  fontSize: 15,
+                  cursor: "pointer",
+                  position: "relative",
                 }}
-              >
-                {name}
-              </Typography>
+                src={
+                  avatar === null || avatar === ""
+                    ? gender === "Female" || gender === "Lesbian"
+                      ? FEMALE_AVATAR
+                      : MALE_AVATAR
+                    : avatar
+                }
+              />
+            </Link>
+            <Box display="flex" flexDirection="column" rowGap={0.5}>
+              <Link href={`/profile/${username}`}>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontSize: { xs: 14, lg: 16 },
+                    color: neutral["900"],
+                    fontWeight: 500,
+                    opacity: 0.9,
+                  }}
+                >
+                  {name}
+                </Typography>
+              </Link>
               <Box display="flex" alignItems="center" columnGap={0.5}>
                 <AccessTimeIcon sx={{ fontSize: 14, color: neutral["700"] }} />
                 <Typography

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import PostsContext from "./PostsContext";
 
 const PostsProvider = ({ children }) => {
-  const [postDetail, setPostDetail] = useState(null);
+  const [posts, setPosts] = useState(null);
 
   return (
-    <PostsContext.Provider value={{ postDetail, setPostDetail }}>
+    <PostsContext.Provider value={{ posts, setPosts }}>
       {children}
     </PostsContext.Provider>
   );

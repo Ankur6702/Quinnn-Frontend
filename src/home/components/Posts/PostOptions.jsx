@@ -83,7 +83,7 @@ const PostOptions = ({ userId, handleDeletePost }) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        {user?._id === userId && (
+        {user?._id === userId && router.pathname === "/profile" && (
           <MenuItem
             onClick={handleDeletePost}
             sx={{

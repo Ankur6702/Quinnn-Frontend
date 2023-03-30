@@ -57,12 +57,7 @@ const ShareModal = ({
         >
           {title}
         </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color-="#888888"
-          fontWeight={400}
-        >
+        <Typography align="center" color-="#888888" fontWeight={400}>
           Share it with your friends
         </Typography>
       </DialogTitle>

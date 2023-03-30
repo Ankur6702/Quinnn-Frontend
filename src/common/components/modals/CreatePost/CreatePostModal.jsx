@@ -25,6 +25,7 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import useUserContext from "@/src/profile/context/useUserContext";
 import PostsService from "@/src/home/service/PostsService";
 import CreatePostFormFields from "./CreatePostFormFields";
+import usePosts from "@/src/home/context/usePosts";
 import { firebaseConfig } from "@/src/common/config/firebaseConfig";
 import { CreatePostFormValidationSchema } from "../utils/helper";
 import { Green, neutral } from "../../../config/colors";
@@ -43,6 +44,7 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [status, setStatus] = useState("Anyone");
+  const { posts, setPosts } = usePosts();
   const { enqueueSnackbar } = useSnackbar();
   const { user, setUser } = useUserContext();
   const [uploading, setUploading] = useState(false);
@@ -54,10 +56,6 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
   const initialState = {
     postText: "",
   };
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   // Handle posted image
   const handleImageChange = (event) => {
@@ -97,24 +95,20 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
           async () => {
             // Get the download URL of the uploaded image
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-            console.log(downloadURL);
             setImageUrl(downloadURL);
             const requestData = {
               text: markdownText,
               imageURL: downloadURL,
             };
-            console.log(requestData);
             const Response = await postsService.post(reqUrl, requestData);
             console.log(Response);
-            const newPostData = {
-              postID: Response?.data?.data?._id,
-              imageURL: Response?.data?.data?.imageURL,
-              text: Response?.data?.data?.text,
-            };
             setUser({
               ...user,
-              posts: [...user.posts, newPostData],
+              posts: [...user.posts, Response?.data?.data],
             });
+            setPosts((prev) =>
+              prev ? [Response?.data?.data, ...prev] : Response?.data?.data
+            );
             enqueueSnackbar("Post created successfully", {
               variant: "info",
               autoHideDuration: 2000,
@@ -132,18 +126,15 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
           text: markdownText,
           imageURL: null,
         };
-        console.log(requestData);
         const Response = await postsService.post(reqUrl, requestData);
         console.log(Response);
-        const newPostData = {
-          postID: Response?.data?.data?._id,
-          imageURL: null,
-          text: Response?.data?.data?.text,
-        };
         setUser({
           ...user,
-          posts: [...user.posts, newPostData],
+          posts: [...user.posts, Response?.data?.data],
         });
+        setPosts((prev) =>
+          prev ? [Response?.data?.data, ...prev] : Response?.data?.data
+        );
         enqueueSnackbar("Post created successfully", {
           variant: "info",
           autoHideDuration: 2000,

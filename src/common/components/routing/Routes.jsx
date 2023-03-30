@@ -10,6 +10,7 @@ import ProfilePage from "@/src/profile/ProfilePage";
 import UserProvider from "@/src/profile/context/UserProvider";
 import CircularLoaderSkeleton from "../skeletons/CircularLoaderSkeleton";
 import useAuth from "../../context/useAuth";
+import PostsProvider from "@/src/home/context/PostsProvider";
 
 const Routes = ({ Component, pageProps }) => {
   const router = useRouter();
@@ -33,11 +34,13 @@ const Routes = ({ Component, pageProps }) => {
           </Route>
           <UserProvider>
             <Route path="/home">
-              <Layout>
-                <HomePage>
-                  <Component {...pageProps} />
-                </HomePage>
-              </Layout>
+              <PostsProvider>
+                <Layout>
+                  <HomePage>
+                    <Component {...pageProps} />
+                  </HomePage>
+                </Layout>
+              </PostsProvider>
             </Route>
             <Route path="/profile">
               <Layout>
