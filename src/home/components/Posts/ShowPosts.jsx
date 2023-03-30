@@ -10,6 +10,7 @@ const postsService = new PostsService();
 const ShowPosts = () => {
   const { posts, setPosts } = usePosts();
   const [page, setPage] = useState(1);
+  const [fetchedPosts, setFetchedPosts] = useState(null);
   const [sort, setSort] = useState("recent");
   const [loading, setLoading] = useState(true);
 
@@ -19,6 +20,7 @@ const ShowPosts = () => {
       .then((response) => {
         console.log("new posts fetched");
         console.log(response);
+        setFetchedPosts(response?.data?.data);
         setPosts((prev) =>
           prev ? [...prev, ...response?.data?.data] : response?.data?.data
         );
@@ -51,7 +53,13 @@ const ShowPosts = () => {
   }
 
   useEffect(() => {
-    fetchPosts();
+    if (fetchedPosts && fetchedPosts.length > 0) {
+      fetchPosts();
+    } else if (!fetchedPosts) {
+      fetchPosts();
+    } else {
+      setLoading(false);
+    }
   }, [fetchPosts, page]);
 
   console.log(posts);
