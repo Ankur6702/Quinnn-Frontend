@@ -62,7 +62,6 @@ const UpdateBannerModal = ({ isOpen, handleClose, url, handleUpdateImage }) => {
     profileService
       .updateProfile(requestData)
       .then((response) => {
-        console.log(response);
         handleUpdateImage(null);
         setUser(response?.data?.data);
         enqueueSnackbar("Profile updated successfully", {
@@ -102,15 +101,12 @@ const UpdateBannerModal = ({ isOpen, handleClose, url, handleUpdateImage }) => {
           async () => {
             // Get the download URL of the uploaded image
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-            console.log(downloadURL);
             setImageUrl(downloadURL);
             handleUpdateImage(imageUrl);
             const requestData = {
               coverImageURL: downloadURL,
             };
-            console.log(requestData);
             const Response = await profileService.put(reqUrl, requestData);
-            console.log(Response);
             setUser(Response?.data?.data);
             enqueueSnackbar("Profile update successfully", {
               variant: "info",

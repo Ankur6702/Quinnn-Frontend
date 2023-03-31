@@ -35,10 +35,6 @@ const UpdateAvatarFormFields = ({
     handleRemoveImage();
   };
 
-  useEffect(() => {
-    console.log(imageUrl);
-  }, [imageUrl]);
-
   return (
     <Box
       display="flex"

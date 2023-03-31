@@ -77,7 +77,6 @@ const HomePostItem = ({
     postsService
       .likePost(postId)
       .then((response) => {
-        console.log(response);
         SetIsLiked(true);
         updateLikes(postId, true, user?._id);
         setIsLoading(false);
@@ -97,7 +96,6 @@ const HomePostItem = ({
     postsService
       .unlikePost(postId)
       .then((response) => {
-        console.log(response);
         SetIsLiked(false);
         updateLikes(postId, false, user?._id);
         setIsLoading(false);

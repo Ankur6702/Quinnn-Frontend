@@ -23,7 +23,6 @@ const ToxicityWarningModal = ({
     handleClose();
     handlePostSubmit(postText);
   };
-  console.log(postText);
   return (
     <div>
       <Dialog

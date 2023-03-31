@@ -23,7 +23,6 @@ export default function () {
       const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/search/${username}`;
       setIsLoading(true);
       const Response = await profileService.get(reqUrl);
-      console.log(Response);
       setIsFollowing(Response?.data?.isFollowing);
       setProfile(Response?.data?.data);
     } catch (error) {
@@ -38,11 +37,9 @@ export default function () {
   };
 
   const followUser = () => {
-    console.log("followed");
     setIsFollowing(true);
   };
   const unFollowUser = () => {
-    console.log("unfollowd");
     setIsFollowing(false);
   };
 

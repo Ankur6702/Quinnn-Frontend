@@ -94,13 +94,11 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
       const Response = await postsService.post(reqUrl, requestData);
       const toxicScore =
         Response?.data?.data.attributeScores.TOXICITY.summaryScore.value;
-      console.log(toxicScore);
       if (toxicScore > 0.7) {
         setUploading(false);
         handleClick();
       } else {
         handlePostSubmit(postText);
-        console.log("done");
       }
     } catch (error) {
       console.log(error);
@@ -137,7 +135,6 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
               imageURL: downloadURL,
             };
             const Response = await postsService.post(reqUrl, requestData);
-            console.log(Response);
             setUser({
               ...user,
               posts: [...user.posts, Response?.data?.data],
@@ -163,7 +160,6 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
           imageURL: null,
         };
         const Response = await postsService.post(reqUrl, requestData);
-        console.log(Response);
         setUser({
           ...user,
           posts: [...user.posts, Response?.data?.data],

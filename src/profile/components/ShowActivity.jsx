@@ -16,9 +16,7 @@ const ShowActivity = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       run(profileService.fetchUserPosts())
-        .then((response) => {
-          console.log(response);
-        })
+        .then((response) => {})
         .catch((error) => console.error(error));
     };
     fetchPosts();
@@ -54,11 +52,9 @@ const ShowActivity = () => {
     // remove the like from the array
     const newObjects = [...posts?.data];
     newObjects[objIndex] = obj; // replace the modified object in the copy
-    console.log(newObjects);
     setData(() => ({
       data: newObjects,
     }));
-    console.log(posts);
   }
 
   return (

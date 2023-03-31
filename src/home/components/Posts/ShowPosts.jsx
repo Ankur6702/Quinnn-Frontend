@@ -16,8 +16,6 @@ const ShowPosts = ({ sort }) => {
     postsService
       .getPosts(2, page, sort)
       .then((response) => {
-        console.log("new posts fetched");
-        console.log(response?.data?.data);
         setFetchedPosts(response?.data?.data);
         setPosts((prev) =>
           prev ? [...prev, ...response?.data?.data] : response?.data?.data
@@ -57,7 +55,6 @@ const ShowPosts = ({ sort }) => {
     } else if (!fetchedPosts) {
       fetchPosts();
     }
-    console.log(sort);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchPosts, sort, page, refresh]);
 

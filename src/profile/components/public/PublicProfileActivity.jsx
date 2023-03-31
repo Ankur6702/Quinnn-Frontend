@@ -18,9 +18,7 @@ const PublicProfileActivity = ({ profile }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       run(postsService.getUserPosts(profile?._id))
-        .then((response) => {
-          console.log(response);
-        })
+        .then((response) => {})
         .catch((error) => console.error(error));
     };
     fetchPosts();

@@ -58,9 +58,7 @@ const EditProfileModal = ({ isOpen, handleClose }) => {
         isPrivate: isPrivate === "Private",
       };
       actions.setSubmitting(true);
-      console.log(requestData);
       const Response = await profileService.put(reqUrl, requestData);
-      console.log(Response);
       setUser(Response?.data?.data);
       enqueueSnackbar("Profile updated successfully", {
         variant: "info",

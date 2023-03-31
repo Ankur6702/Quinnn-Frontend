@@ -42,7 +42,6 @@ const SignUpForm = () => {
       };
       actions.setSubmitting(true);
       const Response = await accountsService.post(reqUrl, requestData);
-      console.log(Response);
       actions.setSubmitting(false);
       enqueueSnackbar("User successfully signed up", {
         variant: "info",

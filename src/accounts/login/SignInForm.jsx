@@ -36,7 +36,6 @@ const SignInForm = () => {
       };
       actions.setSubmitting(true);
       const Response = await accountsService.post(reqUrl, requestData);
-      console.log(Response);
       enqueueSnackbar("User successfully Logged In", {
         variant: "info",
         autoHideDuration: 2000,
