@@ -61,7 +61,7 @@ const ShowPosts = ({ sort }) => {
   const handelInfiniteScroll = useCallback(async () => {
     try {
       if (
-        window.innerHeight + document.documentElement.scrollTop + 1 >=
+        window.innerHeight + document.documentElement.scrollTop + 100 >=
         document.documentElement.scrollHeight
       ) {
         setLoading(true);
