@@ -1,9 +1,12 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 
@@ -30,9 +33,15 @@ const TopEvents = () => {
       `,
     },
   ];
+
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
+
+  const cardsPerRow = isLargeScreen ? 3 : 2;
+
   return (
     <Box
-      width="100%"
+      width="90%"
       display="flex"
       flexDirection="column"
       rowGap={5}
@@ -45,152 +54,144 @@ const TopEvents = () => {
         <Typography
           variant="h1"
           component="span"
-          padding= {5}
+          padding={5}
           alignItems="left"
-  
           sx={{
             color: neutral["800"],
             fontWeight: 500,
             fontSize: { xs: 20, lg: 22 },
           }}
         >
-        Popular Events
-        <br></br>
-        <Typography
-          variant="h4"
-          component="span"
-          alignItems="left"
-          sx={{
-            color: neutral["800"],
-            fontWeight: 200,
-            fontSize: { xs: 14, lg: 16 },
-          }}
-        >
-        See the events that may interest you!
+          Popular Events
+          <br />
+          <Typography
+            variant="h4"
+            component="span"
+            alignItems="left"
+            sx={{
+              color: neutral["800"],
+              fontWeight: 200,
+              fontSize: { xs: 14, lg: 16 },
+            }}
+          >
+            See the events that may interest you!
+          </Typography>
         </Typography>
-        </Typography>
-        
       </Box>
 
-      <Box display="flex" flexDirection="row" columnGap={5} width="100%">
-        {cards.map((cards, index) => (
+      <Box display="flex" flexWrap="wrap" justifyContent="center">
+      {cards.map((card) => (
+        <Box key={card.id} width={1 / cardsPerRow} px={2} pb={4}>
           <Box
-            key={index}
             display="flex"
-            justifyContent="space-between"
+            flexDirection="column"
             alignItems="center"
-            padding= {10}
-            width="30%"
+            padding={10}
+            maxWidth="100%"
             sx={{
-                bgcolor: neutral["A500"],
-                borderRadius: 3,
-                boxShadow:
-                  " rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
-              }}
+              bgcolor: neutral["A500"],
+              borderRadius: 3,
+              boxShadow:
+                " rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
+              "&:last-of-type": {
+                marginRight: 0,
+              },
+            }}
           >
-            <Box display="flex" columnGap={4} alignItems="center" >
-              
-              <Box display="flex" flexDirection="column" columnGap={4} alignItems="center" >
-                <Typography
-                  variant="h4"
-                  sx={{
-                    color: neutral["900"],
-                    fontWeight: 500,
-                    fontSize: { xs: 14, lg: 14 },
-                    padding: 2,
-                  }}
-                >
-                  {cards?.name}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    color: neutral["700"],
-                    fontWeight: 400,
-                    fontSize: { xs: 12, lg: 12 },
-                    padding: 2,
-                  }}
-                >
-                  {cards?.description}
-                </Typography>
-                <Typography>
-                    <Button
-                    component="span"
-                    sx={{
-                    color: Blues["A100"],
-                    textTransform: "none",
-                    fontSize: 12,
-                    fontWeight: 400,
-                    padding: 2,}}
-                    >
-                    Read More
-                    </Button>
-                </Typography>
-              </Box>
-            </Box>
-            
+            <Typography
+              variant="h4"
+              sx={{
+                color: "text.primary",
+                fontWeight: 500,
+                fontSize: { xs: 14, lg: 14 },
+                mb: 2,
+              }}
+            >
+              {card.name}
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "text.secondary",
+                fontWeight: 400,
+                fontSize: { xs: 12, lg: 12 },
+                mb: 2,
+              }}
+            >
+              {card.description}
+            </Typography>
+            <Button
+              component="span"
+              sx={{
+              color: Blues["A100"],
+              textTransform: "none",
+              fontSize: 12,
+              fontWeight: 400,
+              padding: 2,}}
+              >
+              Read More
+            </Button>
           </Box>
-        ))}
-      </Box>
-      <Box display="flex" flexDirection="row" columnGap={5} width="100%">
-        {cards.map((cards, index) => (
+        </Box>
+      ))}
+    </Box>
+
+    <Box display="flex" flexWrap="wrap" justifyContent="center">
+      {cards.map((card) => (
+        <Box key={card.id} width={1 / cardsPerRow} px={2} pb={4}>
           <Box
-            key={index}
             display="flex"
-            justifyContent="space-between"
+            flexDirection="column"
             alignItems="center"
-            padding= {10}
-            width="30%"
+            padding={10}
+            maxWidth="100%"
             sx={{
-                bgcolor: neutral["A500"],
-                borderRadius: 3,
-                boxShadow:
-                  " rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
-              }}
+              bgcolor: neutral["A500"],
+              borderRadius: 3,
+              boxShadow:
+                " rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
+              "&:last-of-type": {
+                marginRight: 0,
+              },
+            }}
           >
-            <Box display="flex" columnGap={4} alignItems="center" >
-              
-              <Box display="flex" flexDirection="column" columnGap={4} alignItems="center" >
-                <Typography
-                  variant="h4"
-                  sx={{
-                    color: neutral["900"],
-                    fontWeight: 500,
-                    fontSize: { xs: 14, lg: 14 },
-                    padding: 2,
-                  }}
-                >
-                  {cards?.name}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    color: neutral["700"],
-                    fontWeight: 400,
-                    fontSize: { xs: 12, lg: 12 },
-                    padding: 2,
-                  }}
-                >
-                  {cards?.description}
-                </Typography>
-                <Typography>
-                    <Button
-                    component="span"
-                    sx={{
-                    color: Blues["A100"],
-                    textTransform: "none",
-                    fontSize: 12,
-                    fontWeight: 400,
-                    padding: 2,}}
-                    >
-                    Read More
-                    </Button>
-                </Typography>
-              </Box>
-            </Box>
+            <Typography
+              variant="h4"
+              sx={{
+                color: "text.primary",
+                fontWeight: 500,
+                fontSize: { xs: 14, lg: 14 },
+                mb: 2,
+              }}
+            >
+              {card.name}
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "text.secondary",
+                fontWeight: 400,
+                fontSize: { xs: 12, lg: 12 },
+                mb: 2,
+              }}
+            >
+              {card.description}
+            </Typography>
+            <Button
+              component="span"
+              sx={{
+              color: Blues["A100"],
+              textTransform: "none",
+              fontSize: 12,
+              fontWeight: 400,
+              padding: 2,}}
+              >
+              Read More
+            </Button>
           </Box>
-        ))}
-      </Box>
+        </Box>
+      ))}
+    </Box>
     </Box>
   );
 };
