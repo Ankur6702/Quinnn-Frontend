@@ -11,16 +11,16 @@ import { Blues, neutral } from "@/src/common/config/colors";
 const CategoryCards = () => {
   const cards = [
     {
-      name: "Assistance",
-      description: "Have a question? A bug? Get in touch.",
+      name: "Mental Health",
+      description: "Resources for mental health support and counseling for LGBTQ+ individuals",
     },
     {
-      name: "User Guide",
-      description: "Have a question? A bug? Get in touch.",
+      name: "Education and Awareness",
+      description: "Educational resources and information to promote LGBTQ+ awareness and acceptance.",
     },
     {
-      name: "Developers",
-      description: "Have a question? A bug? Get in touch.",
+      name: "Legal Rights",
+      description: "Information and resources for LGBTQ+ individuals related to legal rights and protections.",
     },
   ];
   return (

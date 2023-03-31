@@ -9,22 +9,19 @@ const AnswerCard = () => {
     {
       question: "How can I setup my user profile?",
       description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid censes in Latino fore? Egone quaeris, inquit, quid sentiam? Sed haec omittamus; Prodest, inquit, mihi eo esse animo.
-      Duo Reges: constructio interrete. Quod ea non occurrentia fingunt, vincunt Aristonem; Quis est tam dissimile homini. Age, inquies, ista parva sunt.
+      You can set it up by signing up for quinn. Once you're done with verifying your email, you can start setting up your profile. You can edit your profile anytime by clicking on the profile icon on the top right corner of the page. You can also change your password by clicking on the "Change Password" button on the profile page.
       `,
     },
     {
-      question: "Can I have more than one subscription at a time?",
+      question: "Can I have only selected people see my posts?",
       description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid censes in Latino fore? Egone quaeris, inquit, quid sentiam? Sed haec omittamus; Prodest, inquit, mihi eo esse animo.
-      Duo Reges: constructio interrete. Quod ea non occurrentia fingunt, vincunt Aristonem; Quis est tam dissimile homini. Age, inquies, ista parva sunt.
+      Yes you can. You can set your privacy settings by clicking on the "Privacy Settings" button on the profile page. Once made private, only your followers will be able to see your posts. You can also make your posts visible to only your followers by clicking on the "Make Private" button on the post.
       `,
     },
     {
-      question: "Can I cancel my subscription anytime?",
+      question: "Can I create events?",
       description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid censes in Latino fore? Egone quaeris, inquit, quid sentiam? Sed haec omittamus; Prodest, inquit, mihi eo esse animo.
-      Duo Reges: constructio interrete. Quod ea non occurrentia fingunt, vincunt Aristonem; Quis est tam dissimile homini. Age, inquies, ista parva sunt.
+      Absolutely! You can create events by clicking on the "Create Event" button on the home page. You can also edit your events by clicking on the "Edit Event" button on the event page. You can also delete your events by clicking on the "Delete Event" button on the event page. You can also delete your events by clicking on the "Delete Event" button on the event page.
       `,
     },
   ];
