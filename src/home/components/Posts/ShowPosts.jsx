@@ -17,7 +17,7 @@ const ShowPosts = ({ sort }) => {
       .getPosts(2, page, sort)
       .then((response) => {
         console.log("new posts fetched");
-        console.log(response);
+        console.log(response?.data?.data);
         setFetchedPosts(response?.data?.data);
         setPosts((prev) =>
           prev ? [...prev, ...response?.data?.data] : response?.data?.data
@@ -51,18 +51,15 @@ const ShowPosts = ({ sort }) => {
   }
 
   useEffect(() => {
-    if (fetchedPosts && fetchedPosts.length > 0) {
+    setLoading(false);
+    if (fetchedPosts) {
       fetchPosts();
     } else if (!fetchedPosts) {
       fetchPosts();
-    } else {
-      setLoading(false);
     }
     console.log(sort);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchPosts, sort, page, refresh]);
-
-  console.log(posts);
 
   const handelInfiniteScroll = useCallback(async () => {
     try {

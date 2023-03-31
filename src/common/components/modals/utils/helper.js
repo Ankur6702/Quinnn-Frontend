@@ -26,6 +26,7 @@ const CreatePostFormValidation = {
       return value.size <= MAX_FILE_SIZE;
     }
   ),
+  postText: Yup.string().max(3000, "Caption is too long"),
 };
 
 export const CreatePostFormValidationSchema = Yup.object(

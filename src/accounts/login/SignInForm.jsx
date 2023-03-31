@@ -36,7 +36,6 @@ const SignInForm = () => {
       };
       actions.setSubmitting(true);
       const Response = await accountsService.post(reqUrl, requestData);
-      await new Promise((r) => setTimeout(r, 1000));
       console.log(Response);
       enqueueSnackbar("User successfully Logged In", {
         variant: "info",

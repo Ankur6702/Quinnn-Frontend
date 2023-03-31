@@ -65,9 +65,7 @@ const HomePostItem = ({
   useEffect(() => {
     const fetchUser = async () => {
       run(profileService.fetchUserData(userId))
-        .then((response) => {
-          console.log(response);
-        })
+        .then((response) => {})
         .catch((error) => console.error(error));
     };
     fetchUser();
@@ -311,7 +309,6 @@ const HomePostItem = ({
                   color: neutral["800"],
                   fontWeight: 400,
                   opacity: 0.9,
-                  whiteSpace: "pre-wrap",
                 }}
                 dangerouslySetInnerHTML={{
                   __html: showMore ? text : sliceString(text, 200),

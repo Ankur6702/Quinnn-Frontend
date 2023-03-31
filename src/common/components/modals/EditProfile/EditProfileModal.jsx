@@ -70,7 +70,6 @@ const EditProfileModal = ({ isOpen, handleClose }) => {
       actions.resetForm();
       handleClose();
     } catch (error) {
-      await new Promise((r) => setTimeout(r, 1000));
       console.log(error);
       enqueueSnackbar("Something went wrong, Please try again", {
         variant: "error",

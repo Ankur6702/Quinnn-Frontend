@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useFormikContext } from "formik";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
 import CloseIcon from "@mui/icons-material/Close";

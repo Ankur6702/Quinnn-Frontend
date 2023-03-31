@@ -33,6 +33,10 @@ export default function () {
     }
   }, [username]);
 
+  const updateProfile = (updatedProfile) => {
+    setProfile(updateProfile);
+  };
+
   const followUser = () => {
     console.log("followed");
     setIsFollowing(true);
@@ -60,6 +64,7 @@ export default function () {
           isFollowing={isFollowing}
           followUser={followUser}
           unFollowUser={unFollowUser}
+          updateProfile={updateProfile}
         />
       )}
     </>

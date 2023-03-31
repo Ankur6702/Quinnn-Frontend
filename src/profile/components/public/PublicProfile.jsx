@@ -21,7 +21,13 @@ import {
 import { neutral } from "@/src/common/config/colors";
 
 const profileService = new ProfileService();
-const PublicProfile = ({ profile, isFollowing, followUser, unFollowUser }) => {
+const PublicProfile = ({
+  profile,
+  isFollowing,
+  followUser,
+  unFollowUser,
+  updateProfile,
+}) => {
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useUserContext();
@@ -57,6 +63,14 @@ const PublicProfile = ({ profile, isFollowing, followUser, unFollowUser }) => {
       setIsLoading(true);
       const Response = await profileService.put(reqUrl);
       unFollowUser();
+      const updatedFollowers = profile?.followers.filter(
+        (follower) => follower.userID !== user?._id
+      );
+      updateProfile({
+        ...prevProfile,
+        followers: updatedFollowers,
+      });
+
       enqueueSnackbar("User unfollowed", {
         variant: "info",
         autoHideDuration: 2000,
