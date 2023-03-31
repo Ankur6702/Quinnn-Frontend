@@ -34,7 +34,7 @@ export default function () {
   }, [username]);
 
   const updateProfile = (updatedProfile) => {
-    setProfile(updateProfile);
+    setProfile(updatedProfile);
   };
 
   const followUser = () => {

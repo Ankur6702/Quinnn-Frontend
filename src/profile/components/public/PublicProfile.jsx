@@ -39,8 +39,18 @@ const PublicProfile = ({
       const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/follow/${profile._id}`;
       setIsLoading(true);
       const Response = await profileService.put(reqUrl);
-      console.log(Response);
       followUser();
+      const followerToAdd = {
+        gender: user?.gender,
+        name: user?.name,
+        numberOfFollowers: user?.followers.length,
+        profileImageURL: user?.profileImageURL,
+        userID: user?._id,
+        username: user?.username,
+      };
+      const copyProfile = profile;
+      copyProfile.followers.push(followerToAdd);
+      updateProfile(copyProfile);
       enqueueSnackbar("User followed", {
         variant: "info",
         autoHideDuration: 2000,
@@ -66,11 +76,9 @@ const PublicProfile = ({
       const updatedFollowers = profile?.followers.filter(
         (follower) => follower.userID !== user?._id
       );
-      updateProfile({
-        ...prevProfile,
-        followers: updatedFollowers,
-      });
-
+      const copyProfile = profile;
+      copyProfile.followers = updatedFollowers;
+      updateProfile(copyProfile);
       enqueueSnackbar("User unfollowed", {
         variant: "info",
         autoHideDuration: 2000,
