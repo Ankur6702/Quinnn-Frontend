@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import { useFormikContext } from "formik";
 import Box from "@mui/material/Box";
@@ -51,6 +52,8 @@ const CreateEventFormFields = ({
       flexDirection="column"
       alignItems="center"
       height="100%"
+      maxHeight="fit-content"
+
     >
       <Box
         width="100%"
@@ -58,14 +61,15 @@ const CreateEventFormFields = ({
         display="flex"
         flexDirection="column"
         justifyContent="space-between"
-        rowGap={3}
+        rowGap={6}
+        maxHeight="fit-content"
         sx={{ position: "relative" }}
       >
         <Box
           display="flex"
           flexDirection="column"
-          rowGap={2}
-          maxHeight="100%"
+          rowGap={6}
+
           sx={{
             overflowY: "scroll",
             "&::-webkit-scrollbar": {
@@ -74,165 +78,186 @@ const CreateEventFormFields = ({
           }}
         >
          <CustomInput
-        name="eventName"
-        type="text"
-        value={values["eventName"]}
-        textFieldProps={{
-          label: "Event Name",
-          "aria-label": "Event Name",
-          sx: { width: { xs: "100%", sm: "100%" } },
-        }}
-      />
-          <CustomInput
-        name="eventDescription"
-        type="text"
-        value={values["eventDescription"]}
-        textFieldProps={{
-          multiline: true,
-          minRows: 2,
-          maxRows: 4,
-          label: "About the Event",
-          "aria-label": "About the Event",
-          sx: { width: { xs: "100%", sm: "100%" } },
-        }}
-      />
-          <Box
-          display="flex"
-          flexDirection="row"
-          columnGap={2}
-          sx={{
-            overflowY: "scroll",
-            "&::-webkit-scrollbar": {
-              display: "none",
-            },
-          }}
-        >
-        <CustomInput
-        name="startDate"
-        type="date"
-        value={values[""]}
-        textFieldProps={{
-          label: "Start Date",
-          "aria-label": "Start Date",
-          InputLabelProps: {
-            shrink: true,
+  name="eventName"
+  type="text"
+  value={values["eventName"]}
+  textFieldProps={{
+    label: "Event Name",
+    "aria-label": "Event Name",
+    sx: { width: { xs: "100%", sm: "100%" } },
+    InputLabelProps: {
+      shrink: true,
+      sx: { mt: 2, mb: 0.5 },
+    },
+  }}
+/>
+<CustomInput
+  name="eventDescription"
+  type="text"
+  value={values["eventDescription"]}
+  textFieldProps={{
+    multiline: true,
+    minRows: 2,
+    maxRows: 4,
+    label: "About the Event",
+    "aria-label": "About the Event",
+    sx: { width: { xs: "100%", sm: "100%" } },
+    InputLabelProps: {
+      shrink: true,
+      sx: { mt: 1, mb: 0.5 },
+    },
+  }}
+/>
+
+  <Box sx={{ display: "flex", flexDirection: "column", rowGap:6}}>
+  <Box
+    display="flex"
+    flexDirection="row"
+    columnGap={2}
+    sx={{
+      overflowY: "scroll",
+      "&::-webkit-scrollbar": {
+        display: "none",
+      },
+    }}
+  >
+    <CustomInput
+      name="startDate"
+      type="date"
+      value={values[""]}
+      textFieldProps={{
+        label: "Start Date",
+        "aria-label": "Start Date",
+        sx: {
+          width: { xs: "100%", sm: "100%" },
+          "& .MuiInputLabel-root": {
+            top: 0,
+            color: "#A2A2A2",
           },
-          sx: {
-            width: { xs: "100%", sm: "100%" },
-            "& .MuiInputLabel-root": {
-              top: 0,
-              color: "#A2A2A2",
-            },
+        },
+        InputLabelProps: {
+          shrink: true,
+          sx: { mt: 1.5, mb: 0.5 },
+        },
+      }}
+    />
+    <SelectField
+  name="startTime"
+  label="Start Time"
+  inputLabelProps={{
+    id: "startTime",
+  }}
+  selectProps={{
+    label: "Start Time",
+    sx: {
+      fontSize: { xs: 14, md: 16 },
+      borderRadius: 2,
+      "& .MuiOutlinedInput-input": {
+        p: "10px !important",
+        color: "#000000",
+      },
+      "& .MuiInputBase-root": {
+        fontSize: { xs: 14, md: 14 },
+        padding: "12px",
+        paddingTop: "24px", // add top padding to prevent label overlapping
+      },
+    },
+    InputLabelProps: {
+      sx: {
+        mt: 3.5,
+        mb: 0.5,
+        fontSize: 5// adjust as needed
+      },
+    }
+  }}
+  formControlProps={{
+    fullWidth: true,
+    variant: "outlined",
+    sx: {
+      width: { xs: "100%", sm: "100%" },
+      "& .MuiInputLabel-root": {
+        color: "#A2A2A2",
+      },
+      "& .Mui-focused": {
+        color: "#1976d2",
+      },
+    },
+  }}
+  items={timesList}
+/>
+
+  </Box>
+  <Box
+    display="flex"
+    flexDirection="row"
+    columnGap={2}
+    sx={{
+      overflowY: "scroll",
+      "&::-webkit-scrollbar": {
+        display: "none",
+      },
+    }}
+  >
+    <CustomInput
+      name="endDate"
+      type="date"
+      value={values[""]}
+      textFieldProps={{
+        label: "End Date",
+        "aria-label": "End Date",
+        sx: {
+          width: { xs: "100%", sm: "100%" },
+          "& .MuiInputLabel-root": {
+            top: 0,
+            color: "#A2A2A2",
           },
-        }}
-      />
-        <SelectField
-        name="startTime"
-        label="Start Time"
-        inputLabelProps={{
-          id: "startTime",
-        }}
-        selectProps={{
-          label: "Start Time",
-          sx: {
-            fontSize: { xs: 14, md: 16 },
-            borderRadius: 2,
-            "& .MuiOutlinedInput-input": {
-              p: "10px !important",
-              color: "#000000",
-            },
-            "& .MuiInputBase-root": {
-              fontSize: { xs: 14, md: 14 },
-              padding: "12px",
-            },
-          },
-        }}
-        formControlProps={{
-          fullWidth: true,
-          variant: "outlined",
-          sx: {
-            width: { xs: "100%", sm: "100%" },
-            "& .MuiInputLabel-root": {
-              top: values["time"] ? 0 : isDownSm ? -4 : -3.5,
-              color: "#A2A2A2",
-            },
-            "& .Mui-focused": {
-              top: 2,
-              color: "#1976d2",
-            },
-          },
-        }}
-        items={timesList}
-      />
-        </Box>
-        <Box
-          display="flex"
-          flexDirection="row"
-          columnGap={2}
-          sx={{
-            overflowY: "scroll",
-            "&::-webkit-scrollbar": {
-              display: "none",
-            },
-          }}
-        >
-        <CustomInput
-        name="endDate"
-        type="date"
-        value={values[""]}
-        textFieldProps={{
-          label: "End Date",
-          "aria-label": "End Date",
-          InputLabelProps: {
-            shrink: true,
-          },
-          sx: {
-            width: { xs: "100%", sm: "100%" },
-            "& .MuiInputLabel-root": {
-              top: 0,
-              color: "#A2A2A2",
-            },
-          },
-        }}
-      />
-        <SelectField
-        name="endTime"
-        label="End Time"
-        inputLabelProps={{
-          id: "endTime",
-        }}
-        selectProps={{
-          label: "End Time",
-          sx: {
-            fontSize: { xs: 14, md: 16 },
-            borderRadius: 2,
-            "& .MuiOutlinedInput-input": {
-              p: "10px !important",
-              color: "#000000",
-            },
-            "& .MuiInputBase-root": {
-              fontSize: { xs: 14, md: 14 },
-              padding: "12px",
-            },
-          },
-        }}
-        formControlProps={{
-          fullWidth: true,
-          variant: "outlined",
-          sx: {
-            width: { xs: "100%", sm: "100%" },
-            "& .MuiInputLabel-root": {
-              top: values["time"] ? 0 : isDownSm ? -4 : -3.5,
-              color: "#A2A2A2",
-            },
-            "& .Mui-focused": {
-              top: 2,
-              color: "#1976d2",
-            },
-          },
-        }}
-        items={timesList}
-      />
+        },
+        InputLabelProps: {
+          shrink: true,
+          sx: { mt:  1.5, mb: 0.5 },
+        },
+      }}
+    />
+    <SelectField
+      name="endTime"
+      label="End Time"
+      inputLabelProps={{
+        id: "endTime",
+      }}
+      selectProps={{
+        label: "End Time",
+        sx: {
+      fontSize: { xs: 14, md: 16 },
+      borderRadius: 2,
+      "& .MuiOutlinedInput-input": {
+        p: "10px !important",
+        color: "#000000",
+      },
+      "& .MuiInputBase-root": {
+        fontSize: { xs: 14, md: 14 },
+        padding: "12px",
+        paddingTop: "24px", // add top padding to prevent label overlapping
+      },
+    },
+    InputLabelProps: {
+      sx: { position: "absolute", top: "12px", color: "#A2A2A2" }, // set position to absolute and add top padding
+    },
+  }}
+  formControlProps={{
+    fullWidth: true,
+    variant: "outlined",
+    sx: {
+      width: { xs: "100%", sm: "100%" },
+      "& .MuiInputLabel-root": {
+        color: "#A2A2A2",
+      },
+      "& .Mui-focused": {
+        color: "#1976d2",
+      },
+    },
+  }}
+  items={timesList}
+/>
         </Box>
           {image && (
             <Box sx={{ position: "relative" }}>
@@ -241,7 +266,6 @@ const CreateEventFormFields = ({
                   position: "absolute",
                   right: 10,
                   top: 20,
-                  // bgcolor: "white",
                   border: "1px solid black",
                   p: 0,
                 }}
@@ -265,6 +289,7 @@ const CreateEventFormFields = ({
               />
             </Box>
           )}
+        </Box>
         </Box>
         <Box
           display="flex"

@@ -186,7 +186,7 @@ const CreateEventModal = ({ isOpen, handleClose, handleModalSubmit }) => {
             innerRef={formikRef}
           >
             {({ isSubmitting }) => (
-              <Form style={{ height: "100%" }}>
+              <Form style={{ height: "100%", maxHeight: "fit-content" }}>
                 <CreateEventFormFields
                   image={image}
                   imageUrl={imageUrl}
