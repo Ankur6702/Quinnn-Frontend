@@ -6,32 +6,12 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 
+import useUserContext from "@/src/profile/context/useUserContext";
 import { Blues, neutral } from "@/src/common/config/colors";
-import CreatePost from "./CreatePost";
+import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 
 const Followers = () => {
-  const friends = [
-    {
-      name: "Olivia Smith",
-      folowers: "1.1k Followers",
-      messages: 3,
-    },
-    {
-      name: "Ethan Johnson",
-      folowers: "3.4k Followers",
-      messages: 5,
-    },
-    {
-      name: "Sophia Miller",
-      folowers: "2M Followers",
-      messages: 12,
-    },
-    {
-      name: "Liam Brown",
-      folowers: "1.6k Followers",
-      messages: 0,
-    },
-  ];
+  const { user } = useUserContext();
   return (
     <Box
       display="flex"
@@ -72,7 +52,7 @@ const Followers = () => {
       </Box>
 
       <Box display="flex" flexDirection="column" rowGap={3}>
-        {friends.map((friend, index) => (
+        {user?.following?.map((friend, index) => (
           <Box
             key={index}
             display="flex"
@@ -87,9 +67,16 @@ const Followers = () => {
                   height: 30,
                   fontSize: 15,
                 }}
-              >
-                <PersonRoundedIcon />
-              </Avatar>
+                src={
+                  friend?.profileImageURL === null ||
+                  friend?.profileImageURL === ""
+                    ? friend?.gender === "Female" ||
+                      friend?.gender === "Lesbian"
+                      ? FEMALE_AVATAR
+                      : MALE_AVATAR
+                    : friend?.profileImageURL
+                }
+              />
               <Box display="flex" flexDirection="column" rowGap={0.5}>
                 <Typography
                   variant="h4"
@@ -109,11 +96,11 @@ const Followers = () => {
                     fontSize: { xs: 12, lg: 12 },
                   }}
                 >
-                  {friend?.folowers}
+                  {`${friend?.numberOfFollowers} Followers`}
                 </Typography>
               </Box>
             </Box>
-            {friend?.messages != 0 && (
+            {/* {friend?.messages != 0 && (
               <Box
                 display="flex"
                 justifyContent="center"
@@ -127,7 +114,7 @@ const Followers = () => {
               >
                 {friend?.messages}
               </Box>
-            )}
+            )} */}
           </Box>
         ))}
       </Box>

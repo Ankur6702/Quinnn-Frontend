@@ -8,35 +8,10 @@ import Avatar from "@mui/material/Avatar";
 
 import useUserContext from "../context/useUserContext";
 import { Blues, neutral } from "@/src/common/config/colors";
+import { FEMALE_AVATAR, MALE_AVATAR } from "../utils/constants";
 
 const Friends = () => {
   const { user } = useUserContext();
-  const friends = [
-    {
-      name: "Olivia Smith",
-      username: "Olivia",
-      url: "https://firebasestorage.googleapis.com/v0/b/lgbtq-social-media.appspot.com/o/images%2Fundefined-banner?alt=media&token=d3728129-4fb7-4bfd-829e-0989bebbede8",
-      folowers: "1.1k Followers",
-    },
-    {
-      name: "Ethan Johnson",
-      folowers: "3.4k Followers",
-      username: "Ethan",
-      url: "",
-    },
-    {
-      name: "Sophia Miller",
-      folowers: "2M Followers",
-      username: "Sophia",
-      url: "",
-    },
-    {
-      name: "Liam Brown",
-      folowers: "1.6k Followers",
-      username: "Liam",
-      url: "",
-    },
-  ];
   return (
     <Box
       display="flex"
@@ -84,7 +59,7 @@ const Friends = () => {
       </Box>
       <Divider sx={{ opacity: 0.75 }} />
       <Box display="flex" flexDirection="column" rowGap={2} px={2}>
-        {friends?.map((friend, index) => (
+        {user?.following?.map((friend, index) => (
           <Link key={index} href={`/profile/${friend.username}`}>
             <Box
               display="flex"
@@ -107,7 +82,15 @@ const Friends = () => {
                     height: 35,
                     fontSize: 15,
                   }}
-                  src={(friend.url !== null || friend.url !== "") && friend.url}
+                  src={
+                    friend?.profileImageURL === null ||
+                    friend?.profileImageURL === ""
+                      ? friend?.gender === "Female" ||
+                        friend?.gender === "Lesbian"
+                        ? FEMALE_AVATAR
+                        : MALE_AVATAR
+                      : friend?.profileImageURL
+                  }
                 />
 
                 <Box display="flex" flexDirection="column" rowGap={0.5}>
@@ -129,7 +112,7 @@ const Friends = () => {
                       fontSize: { xs: 12, lg: 12 },
                     }}
                   >
-                    {friend?.folowers}
+                    {`${friend?.numberOfFollowers} Followers`}
                   </Typography>
                 </Box>
               </Box>
