@@ -10,39 +10,39 @@ import { neutral, Blues } from "@/src/common/config/colors";
 const TopEvents = () => {
   const cards = [
     {
-      name: "Assistance",
+      name: "Pride Parade",
       description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid censes in Latino fore? Egone quaeris, inquit, quid sentiam? Sed haec omittamus; Prodest, inquit, mihi eo esse animo.
+      A colorful and joyful march where LGBTQ+ individuals and allies come together to celebrate their identities and raise awareness about LGBTQ+ issues.
       `,
     },
     {
-      name: "User Guide",
+      name: "Drag Show",
       description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid censes in Latino fore? Egone quaeris, inquit, quid sentiam? Sed haec omittamus; Prodest, inquit, mihi eo esse animo.
+      An entertaining event where drag performers showcase their talents through lip-syncing, dancing, and extravagant costumes.
       `,
     },
     {
-      name: "Developers",
+      name: "Queer Film Festival",
       description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid censes in Latino fore? Egone quaeris, inquit, quid sentiam? Sed haec omittamus; Prodest, inquit, mihi eo esse animo.
+      A showcase of LGBTQ+ films that provide a platform for queer artists to share their stories and experiences.
       `,
     },
     {
-      name: "Assistance",
+      name: "Transgender Day of Remembrance",
       description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid censes in Latino fore? Egone quaeris, inquit, quid sentiam? Sed haec omittamus; Prodest, inquit, mihi eo esse animo.
+      An annual event held in November to honor the memory of transgender individuals who have lost their lives due to hate crimes and discrimination.
       `,
     },
     {
-      name: "User Guide",
+      name: "Coming Out Day",
       description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid censes in Latino fore? Egone quaeris, inquit, quid sentiam? Sed haec omittamus; Prodest, inquit, mihi eo esse animo.
+      A day to celebrate coming out as LGBTQ+ and to raise awareness about the importance of creating safe and inclusive spaces for individuals to come out in.
       `,
     },
     {
-      name: "Developers",
+      name: "Bi Visibility Day",
       description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid censes in Latino fore? Egone quaeris, inquit, quid sentiam? Sed haec omittamus; Prodest, inquit, mihi eo esse animo.
+      A day to celebrate bisexuality and raise awareness about the unique challenges that bisexual individuals face.
       `,
     },
   ];
