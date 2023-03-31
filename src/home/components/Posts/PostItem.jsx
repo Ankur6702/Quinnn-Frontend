@@ -45,6 +45,7 @@ const PostItem = ({
 }) => {
   const [showMore, setShowMore] = useState(false);
   const [share, setShare] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { user, setUser } = useUserContext();
   const [showComments, setShowComments] = useState(false);
   const [isLiked, SetIsLiked] = useState();
@@ -83,16 +84,17 @@ const PostItem = ({
   };
 
   const handleLike = async () => {
+    setIsLoading(true);
     postsService
       .likePost(postId)
       .then((response) => {
-        console.log(response);
         SetIsLiked(true);
         updateLikes(postId, true, user?._id);
-        // setUser(response?.data?.updatedUser);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setIsLoading(false);
         enqueueSnackbar("Something went wrong,Please try again", {
           variant: "error",
           autoHideDuration: 2000,
@@ -101,15 +103,16 @@ const PostItem = ({
       });
   };
   const handleUnLike = async () => {
+    setIsLoading(true);
     postsService
       .unlikePost(postId)
       .then((response) => {
-        console.log(response);
         SetIsLiked(false);
         updateLikes(postId, false, user?._id);
-        // setUser(response?.data?.updatedUser);
+        setIsLoading(false);
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log(error);
         enqueueSnackbar("Something went wrong,Please try again", {
           variant: "error",
@@ -274,7 +277,12 @@ const PostItem = ({
         <Box display="flex" px={4} width="100%" justifyContent="space-between">
           <Box display="flex" columnGap={1} alignItems="center">
             {isDownMd ? (
-              <IconButton aria-label="Like" size="medium">
+              <IconButton
+                aria-label="Like"
+                size="medium"
+                disabled={isLoading}
+                onClick={isLiked ? handleUnLike : handleLike}
+              >
                 <ThumbUpIcon
                   sx={{
                     color: isLiked ? Blues["A100"] : neutral["A200"],
@@ -285,6 +293,7 @@ const PostItem = ({
             ) : (
               <Button
                 onClick={isLiked ? handleUnLike : handleLike}
+                disabled={isLoading}
                 sx={{
                   color: isLiked ? Blues["A100"] : neutral["A200"],
                   textTransform: "none",

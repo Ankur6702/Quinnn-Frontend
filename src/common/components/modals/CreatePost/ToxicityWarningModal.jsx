@@ -6,6 +6,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
+import { Typography } from "@mui/material";
+import { Blues } from "@/src/common/config/colors";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -39,20 +41,59 @@ const ToxicityWarningModal = ({
           },
         }}
       >
-        <DialogTitle>{"Confirm Delete"}</DialogTitle>
+        <DialogTitle>{" Toxicity Detected"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            Warning: Your post may be seen as harmful or offensive by some
-            members of our community. Are you sure you want to proceed with
-            posting?
+          <DialogContentText
+            id="alert-dialog-slide-description"
+            sx={{ fontSize: { xs: 14, md: 16 } }}
+          >
+            <Typography
+              component="span"
+              sx={{
+                color: "red",
+                fontWeight: 600,
+                fontSize: { xs: 14, md: 16 },
+              }}
+            >
+              Warning:{" "}
+            </Typography>
+            Your post may be seen as harmful or offensive by some members of our
+            community. Are you sure you want to proceed with posting?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} variant="outlined" color="primary">
+          <Button
+            onClick={handleClose}
+            variant="contained"
+            color="primary"
+            sx={{
+              borderRadius: 2,
+              height: { xs: 38, sm: "auto" },
+              boxShadow: "none",
+              bgcolor: "#4E97F5",
+              textTransform: "none",
+              "&:focus": {
+                outline: "none",
+              },
+            }}
+          >
             Edit Post
           </Button>
-          <Button onClick={handleSubmit} variant="outlined" color="error">
-            Post anyway
+          <Button
+            onClick={handleSubmit}
+            variant="contained"
+            color="error"
+            sx={{
+              borderRadius: 2,
+              height: { xs: 38, sm: "auto" },
+              boxShadow: "none",
+              textTransform: "none",
+              "&:focus": {
+                outline: "none",
+              },
+            }}
+          >
+            Post Anyway
           </Button>
         </DialogActions>
       </Dialog>

@@ -48,6 +48,7 @@ const HomePostItem = ({
   const [showMore, setShowMore] = useState(false);
   const [share, setShare] = useState(false);
   const { user, setUser } = useUserContext();
+  const [isLoading, setIsLoading] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [isLiked, SetIsLiked] = useState();
   const theme = useTheme();
@@ -72,15 +73,17 @@ const HomePostItem = ({
   }, [run, userId]);
 
   const handleLike = async () => {
+    setIsLoading(true);
     postsService
       .likePost(postId)
       .then((response) => {
         console.log(response);
         SetIsLiked(true);
         updateLikes(postId, true, user?._id);
-        // setUser(response?.data?.updatedUser);
+        setIsLoading(false);
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log(error);
         enqueueSnackbar("Something went wrong,Please try again", {
           variant: "error",
@@ -90,15 +93,17 @@ const HomePostItem = ({
       });
   };
   const handleUnLike = async () => {
+    setIsLoading(true);
     postsService
       .unlikePost(postId)
       .then((response) => {
         console.log(response);
         SetIsLiked(false);
         updateLikes(postId, false, user?._id);
-        // setUser(response?.data?.updatedUser);
+        setIsLoading(false);
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log(error);
         enqueueSnackbar("Something went wrong,Please try again", {
           variant: "error",
@@ -377,7 +382,12 @@ const HomePostItem = ({
               }
             >
               {isDownMd ? (
-                <IconButton aria-label="Like" size="medium">
+                <IconButton
+                  aria-label="Like"
+                  disabled={isLoading}
+                  size="medium"
+                  onClick={isLiked ? handleUnLike : handleLike}
+                >
                   <ThumbUpIcon
                     sx={{
                       color: isLiked ? Blues["A100"] : neutral["A200"],
@@ -388,6 +398,7 @@ const HomePostItem = ({
               ) : (
                 <Button
                   onClick={isLiked ? handleUnLike : handleLike}
+                  disabled={isLoading}
                   sx={{
                     color: isLiked ? Blues["A100"] : neutral["A200"],
                     textTransform: "none",
