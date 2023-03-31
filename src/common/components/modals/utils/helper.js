@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 import { countries } from "./countries";
+import { timesOfDay } from "./timesOfDay";
 
 export const status = [
   {
@@ -15,6 +16,11 @@ export const status = [
 export const countryList = countries.map((country) => ({
   label: country,
   value: country,
+}));
+
+export const timesList = timesOfDay.map((times) => ({
+  label: times,
+  value: times,
 }));
 
 const CreatePostFormValidation = {
