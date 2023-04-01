@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useSnackbar } from "notistack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -9,11 +8,9 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Avatar from "@mui/material/Avatar";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { useMediaQuery, useTheme } from "@mui/material";
 
 import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
 import useAsync from "@/src/common/components/custom-hooks/useAsync";
-import useUserContext from "@/src/profile/context/useUserContext";
 import PostOptions from "./PostOptions";
 import ProfileService from "@/src/profile/service/ProfileService";
 import PostSkeleton from "@/src/common/components/skeletons/PostSkeleton";
@@ -52,7 +49,7 @@ const HomePostItem = ({
     <GenericResponseHandler
       status={status}
       error={error}
-      skeleton={<PostSkeleton />}
+      skeleton={<PostSkeleton items={1} />}
     >
       <Box
         display="flex"

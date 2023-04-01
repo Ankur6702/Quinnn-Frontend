@@ -6,7 +6,7 @@ import useAsync from "@/src/common/components/custom-hooks/useAsync";
 import useUserContext from "../context/useUserContext";
 import PostItem from "@/src/home/components/Posts/PostItem";
 import ProfileService from "../service/ProfileService";
-import GenericListSkeleton from "@/src/common/components/skeletons/GenericListSkeleton";
+import PostSkeleton from "@/src/common/components/skeletons/PostSkeleton";
 
 const profileService = new ProfileService();
 const ShowActivity = () => {
@@ -62,22 +62,12 @@ const ShowActivity = () => {
       status={status}
       error={error}
       skeleton={
-        <GenericListSkeleton
-          items={3}
-          gridProps={{ sx: { my: 4 } }}
+        <PostSkeleton
+          items={2}
+          gridProps={{ sx: { my: 4, rowGap: 4 } }}
           gridItemProps={{
-            rowGap: 1,
             sx: {
               borderRadius: 2,
-            },
-          }}
-          boxProps={{
-            height: 100,
-
-            sx: {
-              "& .MuiSkeleton-root": {
-                borderRadius: 1.5,
-              },
             },
           }}
         />
