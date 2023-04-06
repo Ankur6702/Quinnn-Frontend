@@ -14,6 +14,7 @@ import { SignUpFormValidationSchema } from "../utils/helper";
 import {
   FRONTEND_LOGIN_PAGE_URL,
   FRONTEND_VERIFY_EMAIL_URL,
+  FRONTEND_TERMS_AND_CONDITIONS_URL,
 } from "@/src/common/utils/constants";
 
 const accountsService = new AccountsService();
@@ -73,11 +74,37 @@ const SignUpForm = () => {
         {({ isSubmitting }) => (
           <Form>
             <SignUpFormFields />
-
+            <Typography
+              variant="h6"
+              mt={2}
+              sx={{
+                fontSize: { xs: 12, lg: 12 },
+                color: neutral["900"],
+                fontWeight: 400,
+              }}
+            >
+              By signing up, you agree to our{" "}
+              <Link
+                href={FRONTEND_TERMS_AND_CONDITIONS_URL}
+                style={{ textDecoration: "none" }}
+              >
+                <Typography
+                  variant="h6"
+                  component="span"
+                  sx={{
+                    fontSize: { xs: 12, lg: 12 },
+                    color: Blues["A100"],
+                    fontWeight: 700,
+                  }}
+                >
+                  Terms and Conditions
+                </Typography>{" "}
+              </Link>
+            </Typography>
             <Box
               display="flex"
               justifyContent="center"
-              mt={8}
+              mt={6}
               flexDirection="column"
               rowGap={2}
             >

@@ -1,10 +1,9 @@
 import React from "react";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 
 import useUserContext from "@/src/profile/context/useUserContext";
 import { Blues, neutral } from "@/src/common/config/colors";
@@ -12,6 +11,7 @@ import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 
 const Followers = () => {
   const { user } = useUserContext();
+
   return (
     <Box
       display="flex"
@@ -59,62 +59,50 @@ const Followers = () => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Box display="flex" columnGap={4} alignItems="center">
-              <Avatar
-                alt="profile-photo"
-                sx={{
-                  width: 30,
-                  height: 30,
-                  fontSize: 15,
-                }}
-                src={
-                  friend?.profileImageURL === null ||
-                  friend?.profileImageURL === ""
-                    ? friend?.gender === "Female" ||
-                      friend?.gender === "Lesbian"
-                      ? FEMALE_AVATAR
-                      : MALE_AVATAR
-                    : friend?.profileImageURL
-                }
-              />
-              <Box display="flex" flexDirection="column" rowGap={0.5}>
-                <Typography
-                  variant="h4"
+            <Link href={`/profile/${friend?.username}`}>
+              <Box display="flex" columnGap={4} alignItems="center">
+                <Avatar
+                  alt="profile-photo"
                   sx={{
-                    color: neutral["900"],
-                    fontWeight: 500,
-                    fontSize: { xs: 14, lg: 14 },
+                    width: 35,
+                    height: 35,
+                    fontSize: 15,
                   }}
-                >
-                  {friend?.name}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    color: neutral["700"],
-                    fontWeight: 400,
-                    fontSize: { xs: 12, lg: 12 },
-                  }}
-                >
-                  {`${friend?.numberOfFollowers} Followers`}
-                </Typography>
+                  src={
+                    friend?.profileImageURL === null ||
+                    friend?.profileImageURL === ""
+                      ? friend?.gender === "Female" ||
+                        friend?.gender === "Lesbian"
+                        ? FEMALE_AVATAR
+                        : MALE_AVATAR
+                      : friend?.profileImageURL
+                  }
+                />
+
+                <Box display="flex" flexDirection="column" rowGap={0.5}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      color: neutral["900"],
+                      fontWeight: 500,
+                      fontSize: { xs: 14, lg: 14 },
+                    }}
+                  >
+                    {friend?.name}
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      color: neutral["700"],
+                      fontWeight: 400,
+                      fontSize: { xs: 12, lg: 12 },
+                    }}
+                  >
+                    {`${friend?.numberOfFollowers} Followers`}
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
-            {/* {friend?.messages != 0 && (
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                bgcolor={neutral["A700"]}
-                p={1}
-                color={Blues["A100"]}
-                borderRadius="50%"
-                width={25}
-                height={25}
-              >
-                {friend?.messages}
-              </Box>
-            )} */}
+            </Link>
           </Box>
         ))}
       </Box>

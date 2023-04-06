@@ -11,7 +11,7 @@ const TermsPage = ({ children }) => {
           bgcolor: neutral["A700"],
           py: { xs: 6, md: 6 },
           minHeight: "100vh",
-          width: "100vw",
+          width: "100%",
           display: "flex",
         }}
         containerProps={{

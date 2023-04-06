@@ -1,12 +1,13 @@
 import React from "react";
+import Link from "next/link";
 import Image from "next/image";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import Section from "@/src/common/components/Layout/utils/Section";
 import { LOGO } from "@/src/accounts/utils/constants";
 import { Blues, neutral } from "@/src/common/config/colors";
 import { terms } from "../utils/helper";
+import { FRONTEND_HOME_PAGE_URL } from "@/src/common/utils/constants";
 
 const TermsConditions = () => {
   return (
@@ -34,7 +35,9 @@ const TermsConditions = () => {
           & Conditions
         </Typography>
         <Box display="flex">
-          <Image src={LOGO} alt="logo" width={55} height={55} priority />
+          <Link href={FRONTEND_HOME_PAGE_URL}>
+            <Image src={LOGO} alt="logo" width={55} height={55} priority />
+          </Link>
         </Box>
       </Box>
       <Typography

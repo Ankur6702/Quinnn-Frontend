@@ -30,7 +30,7 @@ const PublicProfile = ({
 }) => {
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const idDownMd = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -40,17 +40,28 @@ const PublicProfile = ({
       setIsLoading(true);
       const Response = await profileService.put(reqUrl);
       followUser();
-      const followerToAdd = {
-        gender: user?.gender,
-        name: user?.name,
-        numberOfFollowers: user?.followers.length,
-        profileImageURL: user?.profileImageURL,
-        userID: user?._id,
-        username: user?.username,
-      };
+      // const followerToAdd = {
+      //   gender: user?.gender,
+      //   name: user?.name,
+      //   numberOfFollowers: user?.followers.length,
+      //   profileImageURL: user?.profileImageURL,
+      //   userID: user?._id,
+      //   username: user?.username,
+      // };
+      // const followingToAdd = {
+      //   gender: profile?.gender,
+      //   name: profile?.name,
+      //   numberOfFollowers: profile?.followers.length,
+      //   profileImageURL: profile?.profileImageURL,
+      //   userID: profile?._id,
+      //   username: profile?.username,
+      // };
       const copyProfile = profile;
-      copyProfile.followers.push(followerToAdd);
+      copyProfile.followers.push(user?._id);
       updateProfile(copyProfile);
+      const copyUserProfile = user;
+      copyUserProfile.following.push(profile?._id);
+      setUser(copyUserProfile);
       enqueueSnackbar("User followed", {
         variant: "info",
         autoHideDuration: 2000,
@@ -74,11 +85,17 @@ const PublicProfile = ({
       const Response = await profileService.put(reqUrl);
       unFollowUser();
       const updatedFollowers = profile?.followers.filter(
-        (follower) => follower.userID !== user?._id
+        (follower) => follower !== user?._id
+      );
+      const updatedFollowing = user?.following.filter(
+        (following) => following !== profile?._id
       );
       const copyProfile = profile;
       copyProfile.followers = updatedFollowers;
       updateProfile(copyProfile);
+      const copyUserProfile = user;
+      copyUserProfile.following = updatedFollowing;
+      setUser(copyUserProfile);
       enqueueSnackbar("User unfollowed", {
         variant: "info",
         autoHideDuration: 2000,

@@ -104,7 +104,7 @@ const PostSkeleton = ({ items = 2, gridProps, gridItemProps }) => {
                   }}
                 >
                   <IconButton
-                    disable={true}
+                    disabled={true}
                     sx={{ p: 1 }}
                     aria-controls={open ? "account-menu" : undefined}
                     aria-haspopup="true"
