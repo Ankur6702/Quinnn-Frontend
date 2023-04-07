@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Navigation from "./Navigation";
 
-import authService from "@/src/common/service/config/AuthService";
 import useAuth from "@/src/common/context/useAuth";
 import useUserContext from "@/src/profile/context/useUserContext";
 import CircularLoaderSkeleton from "../../skeletons/CircularLoaderSkeleton";

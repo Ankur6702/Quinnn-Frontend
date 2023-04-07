@@ -3,6 +3,13 @@ import jwt_decode from "jwt-decode";
 export const sliceString = (text, length) =>
   text.length > length ? `${text.substring(0, length)}...` : text;
 
+export const smoothScroll = (section) => {
+  section?.scrollIntoView({
+    block: "start",
+    behavior: "smooth",
+  });
+};
+
 export const isTokenExpired = (token) => {
   const decodedToken = jwt_decode(token);
   const currentTime = Date.now() / 1000; // Convert current time to seconds

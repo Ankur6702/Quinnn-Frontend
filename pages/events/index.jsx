@@ -2,8 +2,12 @@ import React from "react";
 import Head from "next/head";
 
 import CreateEvent from "@/src/events/components/CreateEvent";
+import HeadSection from "@/src/events/components/list/HeadSection";
+import YourEvents from "@/src/events/components/list/YourEvents";
 import TopEvents from "@/src/events/components/topEvents";
+import UpcommingEvents from "@/src/events/components/list/UpcommingEvents";
 import { SITE_NAME, SERVER } from "@/src/common/config/seo";
+import OngoingEvents from "@/src/events/components/list/OngoingEvents";
 
 const index = () => {
   return (
@@ -24,8 +28,12 @@ const index = () => {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
       </Head>
-      <CreateEvent />
-      <TopEvents />
+      <HeadSection />
+      <YourEvents />
+      <UpcommingEvents />
+      <OngoingEvents />
+      {/* <CreateEvent />
+      <TopEvents /> */}
     </>
   );
 };
