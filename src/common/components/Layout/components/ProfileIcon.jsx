@@ -177,7 +177,7 @@ const ProfileIcon = () => {
               Account Settings
             </Typography>
           </MenuItem>
-          <MenuItem>
+          {/* <MenuItem>
             <ListItemIcon>
               <PostAddIcon fontSize="small" />
             </ListItemIcon>
@@ -191,40 +191,44 @@ const ProfileIcon = () => {
             >
               Activity Logs
             </Typography>
-          </MenuItem>
+          </MenuItem> */}
         </Box>
         <Divider sx={{ opacity: 0.75, mx: 2 }} />
         <Box py={1}>
-          <MenuItem>
-            <ListItemIcon>
-              <CommentIcon fontSize="small" />
-            </ListItemIcon>
-            <Typography
-              variant="h6"
-              sx={{
-                color: neutral["900"],
-                fontWeight: 400,
-                fontSize: { xs: 14, lg: 16 },
-              }}
-            >
-              Messages
-            </Typography>
-          </MenuItem>
-          <MenuItem>
-            <ListItemIcon>
-              <EventIcon fontSize="small" />
-            </ListItemIcon>
-            <Typography
-              variant="h6"
-              sx={{
-                color: neutral["900"],
-                fontWeight: 400,
-                fontSize: { xs: 14, lg: 16 },
-              }}
-            >
-              Events
-            </Typography>
-          </MenuItem>
+          <Link href="/blogs">
+            <MenuItem>
+              <ListItemIcon>
+                <CommentIcon fontSize="small" />
+              </ListItemIcon>
+              <Typography
+                variant="h6"
+                sx={{
+                  color: neutral["900"],
+                  fontWeight: 400,
+                  fontSize: { xs: 14, lg: 16 },
+                }}
+              >
+                Blogs
+              </Typography>
+            </MenuItem>
+          </Link>
+          <Link href="events">
+            <MenuItem>
+              <ListItemIcon>
+                <EventIcon fontSize="small" />
+              </ListItemIcon>
+              <Typography
+                variant="h6"
+                sx={{
+                  color: neutral["900"],
+                  fontWeight: 400,
+                  fontSize: { xs: 14, lg: 16 },
+                }}
+              >
+                Events
+              </Typography>
+            </MenuItem>
+          </Link>
         </Box>
         <Divider sx={{ opacity: 0.75, mx: 2 }} />
         <Box py={1}>
