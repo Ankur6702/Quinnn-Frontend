@@ -9,21 +9,21 @@ import { Blues, neutral } from "@/src/common/config/colors";
 const TopicsCard = () => {
   const cards = [
     {
-      name: "Assistance",
+      name: "LGBTQ+ News and Current Events",
       description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid censes in Latino fore? Egone quaeris, inquit, quid sentiam? Sed haec omittamus; Prodest, inquit, mihi eo esse animo.
+      Coverage of news and current events related to the LGBTQ+ community, including stories about politics, activism, and social issues affecting LGBTQ+ individuals.
       `,
     },
     {
-      name: "User Guide",
+      name: "Celebrity and Entertainment News",
       description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid censes in Latino fore? Egone quaeris, inquit, quid sentiam? Sed haec omittamus; Prodest, inquit, mihi eo esse animo.
+      Coverage of LGBTQ+ celebrities and entertainers, including interviews, reviews, and features about LGBTQ+ representation in media.
       `,
     },
     {
-      name: "Developers",
+      name: "Health and Wellness",
       description: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid censes in Latino fore? Egone quaeris, inquit, quid sentiam? Sed haec omittamus; Prodest, inquit, mihi eo esse animo.
+      Articles and resources related to LGBTQ+ health and wellness, including information on physical and mental health, as well as advice on self-care and healthy living.
       `,
     },
   ];

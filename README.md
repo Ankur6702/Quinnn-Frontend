@@ -64,8 +64,8 @@ Start the server in development mode with
 
 ### Event/Resources
 <div style="display:flex; flex-wrap:wrap;">
-  <img src="" style="width:49%;">
-  <img src="" style="width:49%;">
+  <img src="https://user-images.githubusercontent.com/74523865/229269386-c2c4991e-0c60-4258-94c5-948b256e661c.png" style="width:49%;">
+  <img src="https://user-images.githubusercontent.com/74523865/229269360-2827b57c-371f-483d-9ead-f2110e695b01.png" style="width:49%;">
 </div>
 
 ## Feedback or Support

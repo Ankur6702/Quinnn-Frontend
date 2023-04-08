@@ -143,7 +143,7 @@ const CreateEventModal = ({ isOpen, handleClose, handleModalSubmit }) => {
                 opacity: 0.6,
               }}
             >
-              Rajat Singh
+              Ankur Agarwal
             </Typography>
             <Box display="flex">
               <Typography
