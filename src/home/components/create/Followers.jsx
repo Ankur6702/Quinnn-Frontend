@@ -9,7 +9,7 @@ import useUserContext from "@/src/profile/context/useUserContext";
 import { Blues, neutral } from "@/src/common/config/colors";
 import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 
-const Followers = () => {
+const Followers = ({ followers }) => {
   const { user } = useUserContext();
 
   return (
@@ -38,73 +38,89 @@ const Followers = () => {
         >
           My Friends
         </Typography>
-        <Button
-          component="span"
-          sx={{
-            color: Blues["A100"],
-            textTransform: "none",
-            fontSize: 12,
-            fontWeight: 400,
-          }}
-        >
-          View All
-        </Button>
+        {followers?.data > 5 && (
+          <Button
+            component="span"
+            sx={{
+              color: Blues["A100"],
+              textTransform: "none",
+              fontSize: 12,
+              fontWeight: 400,
+            }}
+          >
+            View All
+          </Button>
+        )}
       </Box>
 
       <Box display="flex" flexDirection="column" rowGap={3}>
-        {user?.following?.map((friend, index) => (
-          <Box
-            key={index}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Link href={`/profile/${friend?.username}`}>
-              <Box display="flex" columnGap={4} alignItems="center">
-                <Avatar
-                  alt="profile-photo"
-                  sx={{
-                    width: 35,
-                    height: 35,
-                    fontSize: 15,
-                  }}
-                  src={
-                    friend?.profileImageURL === null ||
-                    friend?.profileImageURL === ""
-                      ? friend?.gender === "Female" ||
-                        friend?.gender === "Lesbian"
-                        ? FEMALE_AVATAR
-                        : MALE_AVATAR
-                      : friend?.profileImageURL
-                  }
-                />
+        {followers?.length > 0 ? (
+          followers?.slice(0, 5)?.map((follower, index) => (
+            <Box
+              key={index}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Link href={`/profile/${follower?.username}`}>
+                <Box display="flex" columnGap={4} alignItems="center">
+                  <Avatar
+                    alt="profile-photo"
+                    sx={{
+                      width: 35,
+                      height: 35,
+                      fontSize: 15,
+                    }}
+                    src={
+                      follower?.profileImageURL === null ||
+                      follower?.profileImageURL === ""
+                        ? follower?.gender === "Female" ||
+                          follower?.gender === "Lesbian"
+                          ? FEMALE_AVATAR
+                          : MALE_AVATAR
+                        : follower?.profileImageURL
+                    }
+                  />
 
-                <Box display="flex" flexDirection="column" rowGap={0.5}>
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      color: neutral["900"],
-                      fontWeight: 500,
-                      fontSize: { xs: 14, lg: 14 },
-                    }}
-                  >
-                    {friend?.name}
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      color: neutral["700"],
-                      fontWeight: 400,
-                      fontSize: { xs: 12, lg: 12 },
-                    }}
-                  >
-                    {`${friend?.numberOfFollowers} Followers`}
-                  </Typography>
+                  <Box display="flex" flexDirection="column" rowGap={0.5}>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        color: neutral["900"],
+                        fontWeight: 500,
+                        fontSize: { xs: 14, lg: 14 },
+                      }}
+                    >
+                      {follower?.name}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: neutral["700"],
+                        fontWeight: 400,
+                        fontSize: { xs: 12, lg: 12 },
+                      }}
+                    >
+                      {`${follower?.followers?.length} Followers`}
+                    </Typography>
+                  </Box>
                 </Box>
-              </Box>
-            </Link>
-          </Box>
-        ))}
+              </Link>
+            </Box>
+          ))
+        ) : (
+          <Typography
+            variant="h6"
+            sx={{
+              color: neutral["700"],
+              fontWeight: 400,
+              textAlign: "center",
+              fontSize: { xs: 12, lg: 14 },
+            }}
+          >
+            You are not following anyone
+          </Typography>
+        )}
       </Box>
     </Box>
   );
