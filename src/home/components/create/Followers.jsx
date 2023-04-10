@@ -1,22 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 
+import ListUsersModal from "@/src/common/components/modals/ListUsers/ListUsersModal";
 import useUserContext from "@/src/profile/context/useUserContext";
 import { Blues, neutral } from "@/src/common/config/colors";
 import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 
-const Followers = ({ followers }) => {
+const Followers = ({ following }) => {
   const { user } = useUserContext();
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Box
       display="flex"
       flexDirection="column"
-      rowGap={6}
+      rowGap={4}
       boxSizing="content-box"
       p={4}
       sx={{
@@ -38,9 +47,10 @@ const Followers = ({ followers }) => {
         >
           My Friends
         </Typography>
-        {followers?.data > 5 && (
+        {following?.length > 0 && (
           <Button
             component="span"
+            onClick={handleClick}
             sx={{
               color: Blues["A100"],
               textTransform: "none",
@@ -51,18 +61,31 @@ const Followers = ({ followers }) => {
             View All
           </Button>
         )}
+        <ListUsersModal
+          isOpen={open}
+          handleClose={handleClose}
+          modalType="following"
+        />
       </Box>
 
       <Box display="flex" flexDirection="column" rowGap={3}>
-        {followers?.length > 0 ? (
-          followers?.slice(0, 5)?.map((follower, index) => (
+        {following?.length > 0 ? (
+          following?.slice(0, 5)?.map((following, index) => (
             <Box
               key={index}
               display="flex"
               justifyContent="space-between"
               alignItems="center"
+              sx={{
+                p: 2,
+                borderRadius: 1,
+                "&:hover": {
+                  backgroundColor: "rgba(0, 0, 0, 0.04)",
+                  transition: "background-color 0.3s ease-out",
+                },
+              }}
             >
-              <Link href={`/profile/${follower?.username}`}>
+              <Link href={`/profile/${following?.username}`}>
                 <Box display="flex" columnGap={4} alignItems="center">
                   <Avatar
                     alt="profile-photo"
@@ -72,13 +95,13 @@ const Followers = ({ followers }) => {
                       fontSize: 15,
                     }}
                     src={
-                      follower?.profileImageURL === null ||
-                      follower?.profileImageURL === ""
-                        ? follower?.gender === "Female" ||
-                          follower?.gender === "Lesbian"
+                      following?.profileImageURL === null ||
+                      following?.profileImageURL === ""
+                        ? following?.gender === "Female" ||
+                          following?.gender === "Lesbian"
                           ? FEMALE_AVATAR
                           : MALE_AVATAR
-                        : follower?.profileImageURL
+                        : following?.profileImageURL
                     }
                   />
 
@@ -91,7 +114,7 @@ const Followers = ({ followers }) => {
                         fontSize: { xs: 14, lg: 14 },
                       }}
                     >
-                      {follower?.name}
+                      {following?.name}
                     </Typography>
                     <Typography
                       variant="h6"
@@ -101,7 +124,11 @@ const Followers = ({ followers }) => {
                         fontSize: { xs: 12, lg: 12 },
                       }}
                     >
-                      {`${follower?.followers?.length} Followers`}
+                      {`${following?.followers?.length} ${
+                        following?.followers?.length > 1
+                          ? "Followers"
+                          : "Follower"
+                      }`}
                     </Typography>
                   </Box>
                 </Box>

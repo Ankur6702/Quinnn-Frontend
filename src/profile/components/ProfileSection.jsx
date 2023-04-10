@@ -15,12 +15,12 @@ const profileService = new ProfileService();
 const ProfileSection = () => {
   const theme = useTheme();
   const isLargeScreen = useMediaQuery("(min-width:1350px)");
-  const { data: followers, run, status, error, setData } = useAsync();
+  const { data: following, run, status, error, setData } = useAsync();
   const { user } = useUserContext();
 
   useEffect(() => {
     const fetchUser = async () => {
-      run(profileService.fetchUserFollowers(user?._id))
+      run(profileService.fetchUserFollowing(user?._id))
         .then((response) => {
           console.log(response);
         })
@@ -80,7 +80,7 @@ const ProfileSection = () => {
                 position: "fixed",
               }}
             >
-              <Followers followers={followers?.data} />
+              <Followers following={following?.data} />
             </Box>
           </GenericResponseHandler>
         </Box>

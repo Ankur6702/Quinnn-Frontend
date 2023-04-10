@@ -66,6 +66,7 @@ const SignInFormValidation = {
     .typeError("Please add valid Email"),
   password: Yup.string()
     .min(8, "Password length should be 8 or more characters")
+    .max(15, "Password length should be 15 or less characters")
     .required("Password is required"),
 };
 

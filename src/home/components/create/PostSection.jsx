@@ -23,7 +23,7 @@ const PostSection = () => {
   const { page, setPage, setPosts, refresh, setRefresh } = usePosts();
   const [sort, setSort] = useState("popular");
   const isDownXl = useMediaQuery(theme.breakpoints.down("xl"));
-  const { data: followers, run, status, error, setData } = useAsync();
+  const { data: following, run, status, error, setData } = useAsync();
   const { user } = useUserContext();
 
   const sortPosts = (type) => {
@@ -42,7 +42,7 @@ const PostSection = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      run(profileService.fetchUserFollowers(user?._id))
+      run(profileService.fetchUserFollowing(user?._id))
         .then((response) => {
           console.log(response);
         })
@@ -115,7 +115,7 @@ const PostSection = () => {
                 position: "fixed",
               }}
             >
-              <Followers followers={followers?.data} />
+              <Followers following={following?.data} />
             </Box>
           </GenericResponseHandler>
         </Box>
