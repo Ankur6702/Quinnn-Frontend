@@ -13,7 +13,6 @@ import { neutral } from "@/src/common/config/colors";
 
 const profileService = new ProfileService();
 const ProfileSection = () => {
-  const theme = useTheme();
   const isLargeScreen = useMediaQuery("(min-width:1350px)");
   const { data: following, run, status, error, setData } = useAsync();
   const { user } = useUserContext();

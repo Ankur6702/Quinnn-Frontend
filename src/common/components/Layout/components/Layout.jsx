@@ -24,7 +24,7 @@ const Layout = ({ children }) => {
   return !isAuthenticated ? (
     <></>
   ) : !user ? (
-    <CircularLoaderSkeleton />
+    <CircularLoaderSkeleton sx={{ height: "100vh" }} />
   ) : (
     <Box>
       <Navigation />

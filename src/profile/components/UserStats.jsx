@@ -2,17 +2,31 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Avatar from "@mui/material/Avatar";
-import EditIcon from "@mui/icons-material/Edit";
-import CardMedia from "@mui/material/CardMedia";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { useTheme } from "@mui/material";
 
+import ListUsersModal from "@/src/common/components/modals/ListUsers/ListUsersModal";
 import { Blues, neutral } from "@/src/common/config/colors";
 
 const UserStats = ({ user }) => {
   const theme = useTheme();
+  const [openFollowers, setOpenFollowers] = useState(false);
+  const [openFollowing, setOpenFollowing] = useState(false);
+
+  const handleOpenFollowers = () => {
+    setOpenFollowers(true);
+  };
+  const handleCloseFollowers = () => {
+    console.log("closed");
+    setOpenFollowers(false);
+  };
+  const handleOpenFollowing = () => {
+    setOpenFollowing(true);
+  };
+  const handleCloseFollowing = () => {
+    console.log("closed");
+    setOpenFollowing(false);
+  };
+
   return (
     <Box
       display="flex"
@@ -70,7 +84,9 @@ const UserStats = ({ user }) => {
       >
         <Typography
           variant="h4"
+          onClick={handleOpenFollowers}
           sx={{
+            cursor: "pointer",
             color: neutral["700"],
             fontWeight: 500,
             opacity: 0.8,
@@ -92,6 +108,11 @@ const UserStats = ({ user }) => {
         >
           {user?.followers?.length}
         </Box>
+        <ListUsersModal
+          isOpen={openFollowers}
+          handleClose={handleCloseFollowers}
+          modalType="followers"
+        />
       </Box>
       <Divider
         orientation="vertical"
@@ -107,7 +128,9 @@ const UserStats = ({ user }) => {
       >
         <Typography
           variant="h4"
+          onClick={handleOpenFollowing}
           sx={{
+            cursor: "pointer",
             color: neutral["700"],
             opacity: 0.8,
             fontWeight: 500,
@@ -129,6 +152,11 @@ const UserStats = ({ user }) => {
         >
           {user?.following?.length}
         </Box>
+        <ListUsersModal
+          isOpen={openFollowing}
+          handleClose={handleCloseFollowing}
+          modalType="following"
+        />
       </Box>
     </Box>
   );

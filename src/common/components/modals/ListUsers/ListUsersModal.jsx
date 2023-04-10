@@ -19,6 +19,7 @@ import ProfileService from "@/src/profile/service/ProfileService";
 import useUserContext from "@/src/profile/context/useUserContext";
 import { neutral } from "../../../config/colors";
 import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
+import { SITE_NAME } from "@/src/common/config/seo";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -68,7 +69,7 @@ const ListUsersModal = ({ isOpen, handleClose, modalType }) => {
         },
       }}
     >
-      <DialogTitle sx={{ py: 3 }}>
+      <DialogTitle sx={{ py: { xs: 2, md: 3 } }}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography
             variant="h4"
@@ -96,6 +97,7 @@ const ListUsersModal = ({ isOpen, handleClose, modalType }) => {
           display: "flex",
           flexDirection: "column",
           px: { xs: 2, md: 6 },
+          my: 2,
         }}
       >
         <Box
@@ -109,62 +111,108 @@ const ListUsersModal = ({ isOpen, handleClose, modalType }) => {
         >
           <Box display="flex" flexDirection="column" rowGap={3}>
             {usersList?.data?.length > 0 ? (
-              usersList?.data.slice(0, 5)?.map((user, index) => (
-                <Box
-                  key={index}
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Link href={`/profile/${user?.username}`}>
-                    <Box display="flex" columnGap={4} alignItems="center">
-                      <Avatar
-                        alt="profile-photo"
-                        sx={{
-                          width: 35,
-                          height: 35,
-                          fontSize: 15,
-                        }}
-                        src={
-                          user?.profileImageURL === null ||
-                          user?.profileImageURL === ""
-                            ? user?.gender === "Female" ||
-                              user?.gender === "Lesbian"
-                              ? FEMALE_AVATAR
-                              : MALE_AVATAR
-                            : user?.profileImageURL
-                        }
-                      />
+              usersList?.data.slice(0, 5)?.map((usersData, index) => (
+                <Link href={`/profile/${usersData?.username}`} key={index}>
+                  <Box display="flex" columnGap={2}>
+                    <Avatar
+                      alt="profile-photo"
+                      sx={{
+                        width: 40,
+                        height: 40,
+                        fontSize: 15,
+                      }}
+                      src={
+                        usersData?.profileImageURL === null ||
+                        usersData?.profileImageURL === ""
+                          ? usersData?.gender === "Female" ||
+                            usersData?.gender === "Lesbian"
+                            ? FEMALE_AVATAR
+                            : MALE_AVATAR
+                          : usersData?.profileImageURL
+                      }
+                    />
 
-                      <Box display="flex" flexDirection="column" rowGap={0.5}>
-                        <Typography
-                          variant="h4"
-                          sx={{
-                            color: neutral["900"],
-                            fontWeight: 500,
-                            fontSize: { xs: 14, lg: 14 },
-                          }}
-                        >
-                          {user?.name}
-                        </Typography>
+                    <Box display="flex" flexDirection="column" rowGap={2}>
+                      <Box display="flex" justifyContent="space-between">
+                        <Box display="flex" flexDirection="column" rowGap={0.5}>
+                          <Typography
+                            variant="h4"
+                            sx={{
+                              color: neutral["900"],
+                              fontWeight: 500,
+                              fontSize: { xs: 14, lg: 14 },
+                            }}
+                          >
+                            {usersData?.name}
+                          </Typography>
+                          <Box display="flex" alignItems="center" columnGap={3}>
+                            <Typography
+                              variant="h6"
+                              sx={{
+                                color: neutral["700"],
+                                fontWeight: 400,
+                                fontSize: { xs: 12, lg: 12 },
+                              }}
+                            >
+                              {`@${usersData?.username}`}
+                            </Typography>
+                            {usersData?.following?.includes(user?._id) && (
+                              <Box
+                                sx={{
+                                  px: 1,
+                                  borderRadius: 1,
+                                  backgroundColor: "rgba(0, 0, 0, 0.04)",
+                                }}
+                              >
+                                <Typography
+                                  variant="h6"
+                                  sx={{
+                                    color: neutral["700"],
+                                    fontWeight: 400,
+                                    fontSize: { xs: 12, lg: 12 },
+                                  }}
+                                >
+                                  Follows you
+                                </Typography>
+                              </Box>
+                            )}
+                          </Box>
+                        </Box>
+
+                        <Box>
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              color: neutral["700"],
+                              fontWeight: 400,
+                              fontSize: { xs: 12, lg: 12 },
+                            }}
+                          >
+                            {`${usersData?.followers?.length} ${
+                              usersData?.followers?.length > 1
+                                ? "Followers"
+                                : "Follower"
+                            }`}
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <Box>
                         <Typography
                           variant="h6"
                           sx={{
-                            color: neutral["700"],
+                            color: neutral["800"],
                             fontWeight: 400,
-                            fontSize: { xs: 12, lg: 12 },
+                            fontSize: { xs: 12, lg: 14 },
                           }}
                         >
-                          {`${user?.followers?.length} ${
-                            user?.followers?.length > 1
-                              ? "Followers"
-                              : "Follower"
-                          }`}
+                          {usersData?.bio
+                            ? user?.bio
+                            : `Hey there! I'm ${usersData?.name}. I'm excited to connect with new people on ${SITE_NAME} and share my experiences with you all. Do follow for more updates from me soon!`}
                         </Typography>
                       </Box>
                     </Box>
-                  </Link>
-                </Box>
+                  </Box>
+                </Link>
               ))
             ) : (
               <Typography
