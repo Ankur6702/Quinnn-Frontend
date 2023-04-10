@@ -8,16 +8,16 @@ const index = () => {
   return (
     <>
       <Head>
-        <title>{`Home | ${SITE_NAME}`}</title>
+        <title>{`Welcome to ${SITE_NAME} | Home`}</title>
         <meta
           name="description"
-          content="Join our inclusive social media platform for the LGBTQ+ community. Connect with like-minded individuals, celebrate diversity, and express yourself freely in a safe and welcoming space. Join us today and be part of a vibrant community that supports and uplifts each other."
+          content="Join Quinn, the safe and welcoming space for the LGBTQ+ community. Connect with like-minded individuals, celebrate diversity, and express yourself freely. Sign up today and be part of a vibrant community that supports and uplifts each other."
         />
-        <meta property="og:url" content={`${SERVER}/about-us`} />
-        <meta property="og:title" content={`Home | ${SITE_NAME}`} />
+        <meta property="og:url" content={`${SERVER}/home`} />
+        <meta property="og:title" content={`Welcome to ${SITE_NAME} | Home`} />
         <meta
           property="og:description"
-          content="Join our inclusive social media platform for the LGBTQ+ community. Connect with like-minded individuals, celebrate diversity, and express yourself freely in a safe and welcoming space. Join us today and be part of a vibrant community that supports and uplifts each other."
+          content="Join Quinn, the safe and welcoming space for the LGBTQ+ community. Connect with like-minded individuals, celebrate diversity, and express yourself freely. Sign up today and be part of a vibrant community that supports and uplifts each other."
         />
         <meta property="og:image" content="/logo/logo.svg" />
         <meta property="og:image:width" content="1200" />
