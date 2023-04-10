@@ -4,8 +4,7 @@ import Box from "@mui/material/Box";
 import { useMediaQuery, useTheme } from "@mui/material";
 
 import CustomInput from "@/src/common/components/forms/CustomInput";
-import SelectField from "@/src/common/components/forms/SelectField";
-import { gender } from "../utils/helper";
+import PasswordField from "@/src/common/components/forms/PasswordField";
 
 const SignInFormFields = () => {
   const { values } = useFormikContext();
@@ -26,9 +25,8 @@ const SignInFormFields = () => {
         value={values["mail"]}
         textFieldProps={{ label: "Email", "aria-label": "Email" }}
       />
-      <CustomInput
+      <PasswordField
         name="password"
-        type="password"
         value={values["password"]}
         textFieldProps={{ label: "Password", "aria-label": "Password" }}
       />

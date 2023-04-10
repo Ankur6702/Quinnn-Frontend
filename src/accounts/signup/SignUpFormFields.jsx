@@ -5,6 +5,7 @@ import { useMediaQuery, useTheme } from "@mui/material";
 
 import CustomInput from "@/src/common/components/forms/CustomInput";
 import SelectField from "@/src/common/components/forms/SelectField";
+import PasswordField from "@/src/common/components/forms/PasswordField";
 import { gender } from "../utils/helper";
 
 const SignUpFormFields = () => {
@@ -76,9 +77,8 @@ const SignUpFormFields = () => {
         }}
         items={gender}
       />
-      <CustomInput
+      <PasswordField
         name="password"
-        type="password"
         value={values["password"]}
         textFieldProps={{ label: "Password", "aria-label": "Password" }}
       />
