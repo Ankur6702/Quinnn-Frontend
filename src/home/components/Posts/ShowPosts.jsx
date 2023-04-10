@@ -10,20 +10,24 @@ const postsService = new PostsService();
 const ShowPosts = ({ sort }) => {
   const { posts, setPosts, page, setPage, refresh } = usePosts();
   const [fetchedPosts, setFetchedPosts] = useState(null);
+  const [initialLoad, setInitalLoad] = useState(true);
   const [loading, setLoading] = useState(true);
 
   const fetchPosts = useCallback(async () => {
     postsService
       .getPosts(3, page, sort)
       .then((response) => {
+        const newPosts = response?.data?.data.filter((post) => {
+          return !posts?.some((p) => p._id === post._id);
+        });
         setFetchedPosts(response?.data?.data);
-        setPosts((prev) =>
-          prev ? [...prev, ...response?.data?.data] : response?.data?.data
-        );
+        setPosts((prev) => (prev ? [...prev, ...newPosts] : newPosts));
+        setLoading(false);
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
         setLoading(false);
       });
   }, [page, setPosts, sort]);
@@ -49,7 +53,7 @@ const ShowPosts = ({ sort }) => {
   }
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(false);
     if (fetchedPosts) {
       fetchPosts();
     } else if (!fetchedPosts) {
@@ -96,7 +100,7 @@ const ShowPosts = ({ sort }) => {
           />
         );
       })}
-      <Box my={2}>{loading && <BouncingDotsLoader />}</Box>
+      <Box my={2}>{loading && initialLoad && <BouncingDotsLoader />}</Box>
     </Box>
   );
 };
