@@ -12,8 +12,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import CloseIcon from "@mui/icons-material/Close";
 
-import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
-import GenericListSkeleton from "@/src/common/components/skeletons/GenericListSkeleton";
 import useAsync from "@/src/common/components/custom-hooks/useAsync";
 import ProfileService from "@/src/profile/service/ProfileService";
 import useUserContext from "@/src/profile/context/useUserContext";

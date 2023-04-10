@@ -14,7 +14,7 @@ const ShowPosts = ({ sort }) => {
 
   const fetchPosts = useCallback(async () => {
     postsService
-      .getPosts(2, page, sort)
+      .getPosts(3, page, sort)
       .then((response) => {
         setFetchedPosts(response?.data?.data);
         setPosts((prev) =>
@@ -49,7 +49,7 @@ const ShowPosts = ({ sort }) => {
   }
 
   useEffect(() => {
-    setLoading(false);
+    setLoading(true);
     if (fetchedPosts) {
       fetchPosts();
     } else if (!fetchedPosts) {

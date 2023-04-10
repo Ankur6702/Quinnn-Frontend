@@ -6,6 +6,9 @@ export default class PostsService extends BaseService {
       `${this.buildUrl(`/posts?limit=${limit}&page=${page}&sort=${sort}`)}`
     );
   }
+  async fetchPostData(id) {
+    return await this.get(`${this.buildUrl(`/fetchPost/${id}`)}`);
+  }
   async getUserPosts(username) {
     return await this.get(`${this.buildUrl(`/fetchPosts/${username}`)}`);
   }

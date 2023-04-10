@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
 import Box from "@mui/material/Box";
@@ -9,7 +9,6 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Avatar from "@mui/material/Avatar";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { useMediaQuery, useTheme } from "@mui/material";
 
 import useUserContext from "@/src/profile/context/useUserContext";
 import PostOptions from "./PostOptions";

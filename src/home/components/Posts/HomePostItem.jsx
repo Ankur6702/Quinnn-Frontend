@@ -31,10 +31,10 @@ const HomePostItem = ({
   time,
   link,
   updateLikes,
+  showmore = null,
 }) => {
   const { data: userData, run, status, error, setData } = useAsync();
-
-  const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore] = useState(showmore || false);
 
   useEffect(() => {
     const fetchUser = async () => {
