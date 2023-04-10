@@ -64,12 +64,12 @@ const ListUsersModal = ({ isOpen, handleClose, modalType }) => {
           px: 1,
           pb: 1,
           minWidth: { xs: "90%", md: 500 },
-          maxHeight: { xs: 400, md: 520 },
+          maxHeight: { xs: "80%", md: 520 },
           height: { xs: "100%", md: "100%" },
         },
       }}
     >
-      <DialogTitle sx={{ py: { xs: 2, md: 3 } }}>
+      <DialogTitle sx={{ py: 3 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography
             variant="h4"
@@ -82,7 +82,12 @@ const ListUsersModal = ({ isOpen, handleClose, modalType }) => {
           >
             {modalType === "followers" ? "Your Audience" : "Your Friends"}
           </Typography>
-          <IconButton aria-label="close" size="medium" onClick={handleClose}>
+          <IconButton
+            aria-label="close"
+            size="medium"
+            sx={{ p: { xs: "0px !important", md: "8px !important" } }}
+            onClick={handleClose}
+          >
             <CloseIcon
               fontSize="medium"
               sx={{ color: neutral["800"], opacity: 0.8 }}
