@@ -108,11 +108,13 @@ const UserStats = ({ user }) => {
         >
           {user?.followers?.length}
         </Box>
-        <ListUsersModal
-          isOpen={openFollowers}
-          handleClose={handleCloseFollowers}
-          modalType="followers"
-        />
+        {openFollowers && (
+          <ListUsersModal
+            isOpen={openFollowers}
+            handleClose={handleCloseFollowers}
+            modalType="followers"
+          />
+        )}
       </Box>
       <Divider
         orientation="vertical"
@@ -152,11 +154,13 @@ const UserStats = ({ user }) => {
         >
           {user?.following?.length}
         </Box>
-        <ListUsersModal
-          isOpen={openFollowing}
-          handleClose={handleCloseFollowing}
-          modalType="following"
-        />
+        {openFollowing && (
+          <ListUsersModal
+            isOpen={openFollowing}
+            handleClose={handleCloseFollowing}
+            modalType="following"
+          />
+        )}
       </Box>
     </Box>
   );

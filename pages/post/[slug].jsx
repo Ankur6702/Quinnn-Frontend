@@ -21,9 +21,7 @@ export default function () {
   useEffect(() => {
     const fetchPostData = async () => {
       run(postsService.fetchPostData(slug))
-        .then((response) => {
-          console.log(response);
-        })
+        .then((response) => {})
         .catch((error) => console.error(error));
     };
 

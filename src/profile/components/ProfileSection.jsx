@@ -20,9 +20,7 @@ const ProfileSection = () => {
   useEffect(() => {
     const fetchUser = async () => {
       run(profileService.fetchUserFollowing(user?._id))
-        .then((response) => {
-          console.log(response);
-        })
+        .then((response) => {})
         .catch((error) => console.error(error));
     };
     fetchUser();

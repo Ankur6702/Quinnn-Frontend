@@ -39,7 +39,6 @@ const PublicProfile = ({
       const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/follow/${profile._id}`;
       setIsLoading(true);
       const Response = await profileService.put(reqUrl);
-      console.log(Response);
       followUser();
       // const followerToAdd = {
       //   gender: user?.gender,
@@ -84,7 +83,6 @@ const PublicProfile = ({
       const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/unfollow/${profile._id}`;
       setIsLoading(true);
       const Response = await profileService.put(reqUrl);
-      console.log(Response);
       unFollowUser();
       const updatedFollowers = profile?.followers.filter(
         (follower) => follower !== user?._id

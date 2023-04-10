@@ -132,30 +132,28 @@ const PostOptions = ({ userId, handleDeletePost }) => {
             </Typography>
           </MenuItem>
         )}
-        {
-          <MenuItem
+        <MenuItem
+          sx={{
+            color: neutral["900"],
+            "&:hover": {
+              color: Blues["A100"],
+            },
+          }}
+        >
+          <ListItemIcon>
+            <ReportIcon fontSize="small" />
+          </ListItemIcon>
+          <Typography
+            variant="h6"
             sx={{
-              color: neutral["900"],
-              "&:hover": {
-                color: Blues["A100"],
-              },
+              color: "inherit",
+              fontWeight: 400,
+              fontSize: { xs: 14, lg: 16 },
             }}
           >
-            <ListItemIcon>
-              <ReportIcon fontSize="small" />
-            </ListItemIcon>
-            <Typography
-              variant="h6"
-              sx={{
-                color: "inherit",
-                fontWeight: 400,
-                fontSize: { xs: 14, lg: 16 },
-              }}
-            >
-              Report
-            </Typography>
-          </MenuItem>
-        }
+            Report
+          </Typography>
+        </MenuItem>
       </Menu>
     </>
   );

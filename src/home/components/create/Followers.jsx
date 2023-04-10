@@ -61,11 +61,13 @@ const Followers = ({ following }) => {
             View All
           </Button>
         )}
-        <ListUsersModal
-          isOpen={open}
-          handleClose={handleClose}
-          modalType="following"
-        />
+        {open && (
+          <ListUsersModal
+            isOpen={open}
+            handleClose={handleClose}
+            modalType="following"
+          />
+        )}
       </Box>
 
       <Box display="flex" flexDirection="column" rowGap={3}>

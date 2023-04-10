@@ -23,7 +23,6 @@ export default function () {
       const reqUrl = `${process.env.API_BASE_SERVICE}/api/user/search/${username}`;
       setIsLoading(true);
       const Response = await profileService.get(reqUrl);
-      console.log(Response?.data);
       setIsFollowing(Response?.data?.isFollowing);
       setProfile(Response?.data?.data);
     } catch (error) {
