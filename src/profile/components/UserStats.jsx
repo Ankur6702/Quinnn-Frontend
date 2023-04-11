@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
@@ -9,6 +10,7 @@ import { Blues, neutral } from "@/src/common/config/colors";
 
 const UserStats = ({ user }) => {
   const theme = useTheme();
+  const router = useRouter();
   const [openFollowers, setOpenFollowers] = useState(false);
   const [openFollowing, setOpenFollowing] = useState(false);
 
@@ -84,9 +86,9 @@ const UserStats = ({ user }) => {
       >
         <Typography
           variant="h4"
-          onClick={handleOpenFollowers}
+          onClick={router.pathname === "/profile" ? handleOpenFollowers : null}
           sx={{
-            cursor: "pointer",
+            cursor: router.pathname === "/profile" ? "pointer" : "text",
             color: neutral["700"],
             fontWeight: 500,
             opacity: 0.8,
@@ -130,9 +132,9 @@ const UserStats = ({ user }) => {
       >
         <Typography
           variant="h4"
-          onClick={handleOpenFollowing}
+          onClick={router.pathname === "/profile" ? handleOpenFollowing : null}
           sx={{
-            cursor: "pointer",
+            cursor: router.pathname === "/profile" ? "pointer" : "text",
             color: neutral["700"],
             opacity: 0.8,
             fontWeight: 500,
