@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -18,15 +19,13 @@ const ShowPosts = ({ sort }) => {
     postsService
       .getPosts(3, page, sort)
       .then((response) => {
-        setTimeout(() => {
-          const newPosts = response?.data?.data.filter((post) => {
-            return !posts?.some((p) => p._id === post._id);
-          });
-          setFetchedPosts(response?.data?.data);
-          setPosts((prev) => (prev ? [...prev, ...newPosts] : newPosts));
-          setLoading(false);
-          setPostsAreEmpty(response?.data?.data.length === 0); // Set postsAreEmpty based on whether the fetched data is empty
-        }, 5000);
+        const newPosts = response?.data?.data.filter((post) => {
+          return !posts?.some((p) => p._id === post._id);
+        });
+        setFetchedPosts(response?.data?.data);
+        setPosts((prev) => (prev ? [...prev, ...newPosts] : newPosts));
+        setLoading(false);
+        setPostsAreEmpty(response?.data?.data.length === 0); // Set postsAreEmpty based on whether the fetched data is empty
       })
       .catch((error) => {
         console.log(error);
