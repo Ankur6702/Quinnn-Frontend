@@ -13,18 +13,21 @@ const TopicsCard = () => {
       description: `
       Coverage of news and current events related to the LGBTQ+ community, including stories about politics, activism, and social issues affecting LGBTQ+ individuals.
       `,
+      link: "www.them.us"
     },
     {
       name: "Celebrity and Entertainment News",
       description: `
       Coverage of LGBTQ+ celebrities and entertainers, including interviews, reviews, and features about LGBTQ+ representation in media.
       `,
+      link: "www.out.com"
     },
     {
       name: "Health and Wellness",
       description: `
       Articles and resources related to LGBTQ+ health and wellness, including information on physical and mental health, as well as advice on self-care and healthy living.
       `,
+      link: "https://translifeline.org/"
     },
   ];
   return (
@@ -121,6 +124,7 @@ const TopicsCard = () => {
                       fontWeight: 400,
                       padding: 2,
                     }}
+                    onClick={() => window.open(`https://${cards?.link}`, '_blank')}
                   >
                     Read More
                   </Button>
@@ -185,6 +189,7 @@ const TopicsCard = () => {
                       fontWeight: 400,
                       padding: 2,
                     }}
+                    onClick={() => window.open(`https://${cards?.link}`, '_blank')}
                   >
                     Read More
                   </Button>

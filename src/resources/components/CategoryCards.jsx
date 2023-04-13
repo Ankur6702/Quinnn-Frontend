@@ -13,14 +13,17 @@ const CategoryCards = () => {
     {
       name: "Mental Health",
       description: "Resources for mental health support and counseling for LGBTQ+ individuals",
+      link: "https://www.thetrevorproject.org/"
     },
     {
       name: "Education and Awareness",
       description: "Educational resources and information to promote LGBTQ+ awareness and acceptance.",
+      link: "https://www.glsen.org/"
     },
     {
       name: "Legal Rights",
       description: "Information and resources for LGBTQ+ individuals related to legal rights and protections.",
+      link: "https://lambdalegal.org/"
     },
   ];
   return (
@@ -63,9 +66,13 @@ const CategoryCards = () => {
               borderRadius: 3,
               boxShadow:
                 " rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
+                transition: 'box-shadow .3s ease',
+                '&:hover': {
+                boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
+                }, 
             }}
           >
-            <Box display="flex" columnGap={4} alignItems="center">
+            <Box display="flex" columnGap={4} alignItems="center" onClick={() => window.open(cards?.link, '_blank')} sx={{ cursor: 'pointer',}}>
               <Box
                 display="flex"
                 flexDirection="column"
