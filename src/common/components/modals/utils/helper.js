@@ -13,6 +13,17 @@ export const status = [
   },
 ];
 
+export const typeOfEvent = [
+  {
+    label: "Online",
+    value: "Online",
+  },
+  {
+    label: "In Person",
+    value: "Offline",
+  },
+];
+
 export const countryList = countries.map((country) => ({
   label: country,
   value: country,

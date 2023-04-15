@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useFormikContext } from "formik";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Input from "@mui/material/Input";
-import Button from "@mui/material/Button";
-import CardMedia from "@mui/material/CardMedia";
-import CloseIcon from "@mui/icons-material/Close";
-import PublishIcon from "@mui/icons-material/Publish";
+import Typography from "@mui/material/Typography";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 
 import CustomInput from "../../forms/CustomInput";
 import SelectField from "../../forms/SelectField";
-import { timesList } from "../utils/helper";
+import SubmitButton from "../../forms/SubmitButton";
+import { timesList, typeOfEvent } from "../utils/helper";
 import { useMediaQuery, useTheme } from "@mui/material";
 import { neutral } from "@/src/common/config/colors";
 
@@ -19,323 +19,290 @@ const CreateEventFormFields = ({
   imageUrl,
   handleRemoveImage,
   handleImageChange,
+  isSubmitting,
 }) => {
-  const { values, setValues } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext();
   const [key, setKey] = useState(Date.now());
   const inputRef = useRef();
   const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      inputRef.current?.focus();
-    }, 100);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
+  const handleSubmit = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setFieldValue("eventImage", event.target.files[0]);
+    }
+    handleImageChange(event);
+  };
 
   const handleDeleteImage = () => {
     fileInputRef.current.value = null;
     handleRemoveImage();
   };
-
   const theme = useTheme();
   const isDownSm = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Box
-      pt={6}
+      width="100%"
+      height="100%"
       display="flex"
       flexDirection="column"
-      alignItems="center"
-      height="100%"
-      maxHeight="fit-content"
+      justifyContent="space-between"
+      rowGap={6}
     >
-      <Box
-        width="100%"
-        height="100%"
-        display="flex"
-        flexDirection="column"
-        justifyContent="space-between"
-        rowGap={6}
-        maxHeight="fit-content"
-        sx={{ position: "relative" }}
-      >
+      <input
+        id="eventImage"
+        ref={fileInputRef}
+        key={key}
+        name="eventImage"
+        type="file"
+        accept="image/*"
+        onChange={(event) => {
+          handleSubmit(event);
+          setKey(Date.now());
+        }}
+        style={{ display: "none" }}
+      />
+      <label htmlFor="eventImage">
         <Box
+          onClick={() => {}}
           display="flex"
           flexDirection="column"
-          rowGap={6}
+          justifyContent="center"
+          alignItems="center"
           sx={{
-            overflowY: "scroll",
-            "&::-webkit-scrollbar": {
-              display: "none",
-            },
+            width: "100%",
+            height: 300,
+            bgcolor: neutral["A400"],
+            cursor: "pointer",
           }}
         >
-          <CustomInput
-            name="eventName"
-            type="text"
-            value={values["eventName"]}
-            textFieldProps={{
-              label: "Event Name",
-              "aria-label": "Event Name",
-              sx: { width: { xs: "100%", sm: "100%" } },
-              InputLabelProps: {
-                shrink: true,
-                sx: { mt: 2, mb: 0.5 },
-              },
+          <AddAPhotoIcon
+            fontSize="large"
+            sx={{
+              color: neutral["800"],
+              width: 40,
+              height: 40,
+              opacity: 0.8,
+              cursor: "pointer",
             }}
           />
-          <CustomInput
-            name="eventDescription"
-            type="text"
-            value={values["eventDescription"]}
-            textFieldProps={{
-              multiline: true,
-              minRows: 2,
-              maxRows: 4,
-              label: "About the Event",
-              "aria-label": "About the Event",
-              sx: { width: { xs: "100%", sm: "100%" } },
-              InputLabelProps: {
-                shrink: true,
-                sx: { mt: 1, mb: 0.5 },
-              },
+          <Typography
+            variant="h4"
+            sx={{
+              fontSize: { xs: 14, lg: 16 },
+              color: neutral["800"],
+              fontWeight: 500,
+              opacity: 0.8,
             }}
-          />
-
-          <Box sx={{ display: "flex", flexDirection: "column", rowGap: 6 }}>
-            <Box
-              display="flex"
-              flexDirection="row"
-              columnGap={2}
-              sx={{
-                overflowY: "scroll",
-                "&::-webkit-scrollbar": {
-                  display: "none",
-                },
-              }}
-            >
-              <CustomInput
-                name="startDate"
-                type="date"
-                value={values[""]}
-                textFieldProps={{
-                  label: "Start Date",
-                  "aria-label": "Start Date",
-                  sx: {
-                    width: { xs: "100%", sm: "100%" },
-                    "& .MuiInputLabel-root": {
-                      top: 0,
-                      color: "#A2A2A2",
-                    },
-                  },
-                  InputLabelProps: {
-                    shrink: true,
-                    sx: { mt: 1.5, mb: 0.5 },
-                  },
-                }}
-              />
-              <SelectField
-                name="startTime"
-                label="Start Time"
-                inputLabelProps={{
-                  id: "startTime",
-                }}
-                selectProps={{
-                  label: "Start Time",
-                  sx: {
-                    fontSize: { xs: 14, md: 16 },
-                    borderRadius: 2,
-                    "& .MuiOutlinedInput-input": {
-                      p: "10px !important",
-                      color: "#000000",
-                    },
-                    "& .MuiInputBase-root": {
-                      fontSize: { xs: 14, md: 14 },
-                      padding: "12px",
-                      paddingTop: "24px", // add top padding to prevent label overlapping
-                    },
-                  },
-                  InputLabelProps: {
-                    sx: {
-                      mt: 3.5,
-                      mb: 0.5,
-                      fontSize: 5, // adjust as needed
-                    },
-                  },
-                }}
-                formControlProps={{
-                  fullWidth: true,
-                  variant: "outlined",
-                  sx: {
-                    width: { xs: "100%", sm: "100%" },
-                    "& .MuiInputLabel-root": {
-                      color: "#A2A2A2",
-                    },
-                    "& .Mui-focused": {
-                      color: "#1976d2",
-                    },
-                  },
-                }}
-                items={timesList}
-              />
-            </Box>
-            <Box
-              display="flex"
-              flexDirection="row"
-              columnGap={2}
-              sx={{
-                overflowY: "scroll",
-                "&::-webkit-scrollbar": {
-                  display: "none",
-                },
-              }}
-            >
-              <CustomInput
-                name="endDate"
-                type="date"
-                value={values[""]}
-                textFieldProps={{
-                  label: "End Date",
-                  "aria-label": "End Date",
-                  sx: {
-                    width: { xs: "100%", sm: "100%" },
-                    "& .MuiInputLabel-root": {
-                      top: 0,
-                      color: "#A2A2A2",
-                    },
-                  },
-                  InputLabelProps: {
-                    shrink: true,
-                    sx: { mt: 1.5, mb: 0.5 },
-                  },
-                }}
-              />
-              <SelectField
-                name="endTime"
-                label="End Time"
-                inputLabelProps={{
-                  id: "endTime",
-                }}
-                selectProps={{
-                  label: "End Time",
-                  sx: {
-                    fontSize: { xs: 14, md: 16 },
-                    borderRadius: 2,
-                    "& .MuiOutlinedInput-input": {
-                      p: "10px !important",
-                      color: "#000000",
-                    },
-                    "& .MuiInputBase-root": {
-                      fontSize: { xs: 14, md: 14 },
-                      padding: "12px",
-                      paddingTop: "24px", // add top padding to prevent label overlapping
-                    },
-                  },
-                  InputLabelProps: {
-                    sx: { position: "absolute", top: "12px", color: "#A2A2A2" }, // set position to absolute and add top padding
-                  },
-                }}
-                formControlProps={{
-                  fullWidth: true,
-                  variant: "outlined",
-                  sx: {
-                    width: { xs: "100%", sm: "100%" },
-                    "& .MuiInputLabel-root": {
-                      color: "#A2A2A2",
-                    },
-                    "& .Mui-focused": {
-                      color: "#1976d2",
-                    },
-                  },
-                }}
-                items={timesList}
-              />
-            </Box>
-            {image && (
-              <Box sx={{ position: "relative" }}>
-                <IconButton
-                  sx={{
-                    position: "absolute",
-                    right: 10,
-                    top: 20,
-                    border: "1px solid black",
-                    p: 0,
-                  }}
-                  onClick={handleDeleteImage}
-                >
-                  <CloseIcon />
-                </IconButton>
-                <CardMedia
-                  name="postImage"
-                  key={Date.now()}
-                  component="img"
-                  image={imageUrl}
-                  alt="Preview"
-                  sx={{
-                    width: "100% !important",
-                    border: 0.5,
-                    borderColor: neutral["A200"],
-                    borderRadius: { xs: 2, md: 4 },
-                    p: 2,
-                  }}
-                />
-              </Box>
-            )}
-          </Box>
+          >
+            Upload cover image
+          </Typography>
         </Box>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          sx={{ position: "relative", bottom: 0 }}
-        >
-          <Box display="flex" alignItems="center" columnGap={1}>
-            <Input
-              id="image-upload"
-              ref={fileInputRef}
-              key={key}
-              name="postImage"
-              type="file"
-              inputProps={{ accept: "image/*" }}
-              onChange={() => {
-                handleImageChange(event);
-                setKey(Date.now());
+      </label>
+      <Box display="flex" flexDirection="column" rowGap={6} px={6}>
+        <CustomInput
+          name="title"
+          type="text"
+          value={values["title"]}
+          textFieldProps={{
+            label: "Event name",
+            "aria-label": "Event name",
+            sx: { width: { xs: "100%", sm: "100%" } },
+          }}
+        />
+        <CustomInput
+          name="description"
+          type="text"
+          value={values["description"]}
+          textFieldProps={{
+            multiline: true,
+            minRows: 2,
+            maxRows: 4,
+            label: "Event Description",
+            "aria-label": "Event Description",
+            sx: { width: { xs: "100%", sm: "100%" } },
+          }}
+        />
+
+        <Box sx={{ display: "flex", flexDirection: "column", rowGap: 6 }}>
+          <Box
+            display="flex"
+            flexDirection={{ xs: "column", sm: "row" }}
+            columnGap={2}
+            rowGap={6}
+          >
+            <CustomInput
+              name="startDate"
+              type="date"
+              value={values[""]}
+              textFieldProps={{
+                label: "Start date",
+                "aria-label": "Start date",
+                InputLabelProps: {
+                  shrink: true,
+                },
+                sx: {
+                  width: { xs: "100%", sm: "100%" },
+                  "& .MuiInputLabel-root": {
+                    top: 0,
+                    color: "#A2A2A2",
+                  },
+                },
               }}
-              sx={{ display: "none" }}
             />
-            <Box>
-              <label htmlFor="image-upload">
-                <Button
-                  component="span"
-                  sx={{
-                    color: neutral["A200"],
-                    // textTransform:"none"
-                    fontSize: 14,
-                    fontWeight: 600,
-                  }}
-                  endIcon={
-                    <PublishIcon
-                      sx={{ color: neutral["A200"], fontSize: 22 }}
+            <CustomInput
+              name="startTime"
+              type="time"
+              value={values[""]}
+              textFieldProps={{
+                label: "Start time",
+                "aria-label": "Start time",
+                InputLabelProps: {
+                  shrink: true,
+                },
+                sx: {
+                  width: { xs: "100%", sm: "100%" },
+                  "& .MuiInputLabel-root": {
+                    top: 0,
+                    color: "#A2A2A2",
+                  },
+                },
+              }}
+            />
+          </Box>
+          <Box
+            display="flex"
+            flexDirection={{ xs: "column", sm: "row" }}
+            columnGap={2}
+            rowGap={6}
+          >
+            <CustomInput
+              name="endDate"
+              type="date"
+              value={values[""]}
+              textFieldProps={{
+                label: "End date",
+                "aria-label": "End date",
+                InputLabelProps: {
+                  shrink: true,
+                },
+                sx: {
+                  width: { xs: "100%", sm: "100%" },
+                  "& .MuiInputLabel-root": {
+                    top: 0,
+                    color: "#A2A2A2",
+                  },
+                },
+              }}
+            />
+            <CustomInput
+              name="endTime"
+              type="time"
+              value={values[""]}
+              textFieldProps={{
+                label: "End time",
+                "aria-label": "End time",
+                InputLabelProps: {
+                  shrink: true,
+                },
+                sx: {
+                  width: { xs: "100%", sm: "100%" },
+                  "& .MuiInputLabel-root": {
+                    top: 0,
+                    color: "#A2A2A2",
+                  },
+                },
+              }}
+            />
+          </Box>
+          <Box display="flex" flexDirection="column">
+            <Typography
+              variant="h6"
+              sx={{
+                fontSize: { xs: 14, lg: 16 },
+                color: neutral["600"],
+                fontWeight: 500,
+                opacity: 0.8,
+              }}
+            >
+              Event Type
+            </Typography>
+            <RadioGroup
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="isOnline"
+              value={values["isOnline"]}
+              onChange={(event) =>
+                setFieldValue("isOnline", event.target.value)
+              }
+              sx={{ display: "flex", flexDirection: "row", columnGap: 3 }}
+            >
+              {typeOfEvent.map((type, index) => (
+                <FormControlLabel
+                  key={index}
+                  value={type.value}
+                  control={
+                    <Radio
+                      sx={{
+                        "& .MuiSvgIcon-root": {
+                          fontSize: 20,
+                        },
+                      }}
                     />
                   }
-                >
-                  Upload Images
-                </Button>
-              </label>
+                  label={
+                    <Typography
+                      variant="h6"
+                      fontWeight={400}
+                      color={neutral["600"]}
+                      fontSize={16}
+                    >
+                      {type.label}
+                    </Typography>
+                  }
+                />
+              ))}
+            </RadioGroup>
+            <Box mt={3}>
+              {values.isOnline == "Offline" ? (
+                <CustomInput
+                  name="location"
+                  type="text"
+                  value={values["location"] || ""}
+                  textFieldProps={{
+                    label: "Location",
+                    "aria-label": "Location",
+                    sx: { width: { xs: "100%", sm: "100%" } },
+                  }}
+                />
+              ) : (
+                <CustomInput
+                  name="meetingLink"
+                  type="text"
+                  value={values["meetingLink"] || ""}
+                  textFieldProps={{
+                    label: "Meeting Link",
+                    "aria-label": "Meeting Link",
+                    sx: { width: { xs: "100%", sm: "100%" } },
+                  }}
+                />
+              )}
             </Box>
           </Box>
-          <Box>
-            <Button
-              type="submit"
-              variant="contained"
-              disabled={!values["eventName"]}
-              sx={{ py: 1 }}
-            >
-              Add
-            </Button>
-          </Box>
         </Box>
+      </Box>
+      <Box
+        display="flex"
+        justifyContent="flex-end"
+        sx={{ position: "relative", bottom: 0, px: 6 }}
+      >
+        <SubmitButton
+          type="submit"
+          disabled={isSubmitting}
+          variant="contained"
+          buttonProps={{ sx: { borderRadius: 1, py: 1 } }}
+        >
+          Create
+        </SubmitButton>
       </Box>
     </Box>
   );

@@ -3,11 +3,11 @@ import Box from "@mui/material/Box";
 
 import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
 import useAsync from "@/src/common/components/custom-hooks/useAsync";
-import GenericListSkeleton from "@/src/common/components/skeletons/GenericListSkeleton";
-import Navbar from "../Navbar";
 import useUserContext from "../../context/useUserContext";
 import PostItem from "@/src/home/components/Posts/PostItem";
 import PostsService from "@/src/home/service/PostsService";
+import PostSkeleton from "@/src/common/components/skeletons/PostSkeleton";
+import Navbar from "../Navbar";
 
 const postsService = new PostsService();
 const PublicProfileActivity = ({ profile }) => {
@@ -68,22 +68,12 @@ const PublicProfileActivity = ({ profile }) => {
           status={status}
           error={error}
           skeleton={
-            <GenericListSkeleton
-              items={3}
-              gridProps={{ sx: { my: 4 } }}
+            <PostSkeleton
+              items={2}
+              gridProps={{ sx: { my: 4, rowGap: 4 } }}
               gridItemProps={{
-                rowGap: 1,
                 sx: {
                   borderRadius: 2,
-                },
-              }}
-              boxProps={{
-                height: 100,
-                px: 0,
-                sx: {
-                  "& .MuiSkeleton-root": {
-                    borderRadius: 1.5,
-                  },
                 },
               }}
             />

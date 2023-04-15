@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSnackbar } from "notistack";
 import Image from "next/image";
 import Box from "@mui/material/Box";
@@ -40,22 +40,6 @@ const PublicProfile = ({
       setIsLoading(true);
       const Response = await profileService.put(reqUrl);
       followUser();
-      // const followerToAdd = {
-      //   gender: user?.gender,
-      //   name: user?.name,
-      //   numberOfFollowers: user?.followers.length,
-      //   profileImageURL: user?.profileImageURL,
-      //   userID: user?._id,
-      //   username: user?.username,
-      // };
-      // const followingToAdd = {
-      //   gender: profile?.gender,
-      //   name: profile?.name,
-      //   numberOfFollowers: profile?.followers.length,
-      //   profileImageURL: profile?.profileImageURL,
-      //   userID: profile?._id,
-      //   username: profile?.username,
-      // };
       const copyProfile = profile;
       copyProfile.followers.push(user?._id);
       updateProfile(copyProfile);

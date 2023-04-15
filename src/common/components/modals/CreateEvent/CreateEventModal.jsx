@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Form, Formik } from "formik";
-
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -14,7 +13,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import CloseIcon from "@mui/icons-material/Close";
 
-import Viewership from "./Viewership";
 import CreateEventFormFields from "./CreateEventFormFields";
 // import { CreateEventFormValidationSchema } from "../utils/helper";
 import { Blues, Green, neutral } from "../../../config/colors";
@@ -26,23 +24,20 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const CreateEventModal = ({ isOpen, handleClose, handleModalSubmit }) => {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
-  const [status, setStatus] = useState("Anyone");
-  const [anchorEl, setAnchorEl] = useState(null);
+
   const formikRef = useRef();
 
   const initialState = {
-    postText: "",
-  };
-
-  // viewership dropdown
-  const openViewership = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const closeViewership = () => {
-    setAnchorEl(null);
-  };
-  const handleViewershipChange = (e) => {
-    setStatus(e);
+    title: "",
+    description: "",
+    isOnline: "Online",
+    location: "",
+    meetingLink: "",
+    startDate: "",
+    startTime: "",
+    endDate: "",
+    endTime: "",
+    eventImage: "",
   };
 
   // Handle posted image
@@ -59,15 +54,26 @@ const CreateEventModal = ({ isOpen, handleClose, handleModalSubmit }) => {
 
   // Handle form submit
   const handlePostSubmit = (data, actions) => {
-    const { postText } = data;
+    const {
+      title,
+      description,
+      isOnline,
+      location,
+      meetingLink,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      eventImage,
+    } = data;
+    console.log(data);
     setImage(null);
     setImageUrl(null);
-    actions.resetForm();
+    // actions.resetForm();
   };
 
   const handleModalClose = () => {
     setImage(null);
-    setStatus("Anyone");
     setImageUrl(null);
     formikRef.current.resetForm();
     handleClose();
@@ -85,7 +91,7 @@ const CreateEventModal = ({ isOpen, handleClose, handleModalSubmit }) => {
         },
         "& .MuiPaper-root": {
           borderRadius: 3,
-          px: 1,
+          px: 0,
           pb: 1,
           minWidth: { xs: "90%", md: 580 },
           maxHeight: { xs: 400, md: 450 },
@@ -119,64 +125,18 @@ const CreateEventModal = ({ isOpen, handleClose, handleModalSubmit }) => {
         </Box>
       </DialogTitle>
       <Divider sx={{ opacity: 0.75, mx: 2 }} />
-      <DialogContent sx={{ py: 3, display: "flex", flexDirection: "column" }}>
-        <Box display="flex" columnGap={3} alignItems="center">
-          <Avatar
-            alt="profile-photo"
-            sx={{
-              width: 50,
-              height: 50,
-              fontSize: 15,
-              cursor: "pointer",
-              position: "relative",
-            }}
-          >
-            <PersonRoundedIcon sx={{ fontSize: 32, color: neutral["A500"] }} />
-          </Avatar>
-          <Box display="flex" flexDirection="column" rowGap={2}>
-            <Typography
-              variant="h4"
-              sx={{
-                fontSize: { xs: 14, lg: 16 },
-                color: neutral["900"],
-                fontWeight: 500,
-                opacity: 0.6,
-              }}
-            >
-              Ankur Agarwal
-            </Typography>
-            <Box display="flex">
-              <Typography
-                variant="h4"
-                display="flex"
-                alignItems="center"
-                columnGap={1}
-                component="button"
-                onClick={openViewership}
-                sx={{
-                  fontSize: { xs: 12, lg: 14 },
-                  color: status == "Anyone" ? Blues["A100"] : Green["A100"],
-                  fontWeight: 500,
-                  opacity: 0.6,
-                  px: 2,
-                  py: 0,
-                  borderRadius: 4,
-                  cursor: "pointer",
-                  border: 1,
-                }}
-              >
-                {status}
-                <KeyboardArrowDownIcon />
-              </Typography>
-              <Viewership
-                anchorEl={anchorEl}
-                handleMenuClose={closeViewership}
-                handleStatusChange={handleViewershipChange}
-              />
-            </Box>
-          </Box>
-        </Box>
-        <Box height="100%">
+      <DialogContent
+        sx={{ py: 3, px: 0, display: "flex", flexDirection: "column" }}
+      >
+        <Box
+          height="100%"
+          sx={{
+            overflowY: "scroll",
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          }}
+        >
           <Formik
             initialValues={initialState}
             // validationSchema={CreateEventFormValidationSchema}
@@ -184,10 +144,11 @@ const CreateEventModal = ({ isOpen, handleClose, handleModalSubmit }) => {
             innerRef={formikRef}
           >
             {({ isSubmitting }) => (
-              <Form style={{ height: "100%", maxHeight: "fit-content" }}>
+              <Form>
                 <CreateEventFormFields
                   image={image}
                   imageUrl={imageUrl}
+                  isSubmitting={isSubmitting}
                   handleImageChange={handleImageChange}
                   handleRemoveImage={handleRemoveImage}
                 />
