@@ -1,38 +1,54 @@
 import React, { useEffect, useRef, useState } from "react";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { initializeApp } from "firebase/app";
+import { useSnackbar } from "notistack";
+import MarkdownIt from "markdown-it";
 import { Form, Formik } from "formik";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Dialog from "@mui/material/Dialog";
 import Divider from "@mui/material/Divider";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DialogContent from "@mui/material/DialogContent";
-import Avatar from "@mui/material/Avatar";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import CloseIcon from "@mui/icons-material/Close";
 
+import EventsService from "@/src/events/services/EventsService";
+import { firebaseConfig } from "@/src/common/config/firebaseConfig";
 import CreateEventFormFields from "./CreateEventFormFields";
-// import { CreateEventFormValidationSchema } from "../utils/helper";
-import { Blues, Green, neutral } from "../../../config/colors";
+import { CreateEventValidationSchema } from "../utils/helper";
+import { neutral } from "../../../config/colors";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CreateEventModal = ({ isOpen, handleClose, handleModalSubmit }) => {
-  const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
+const md = new MarkdownIt({
+  breaks: true,
+});
 
+const eventsService = new EventsService();
+const CreateEventModal = ({ isOpen, handleClose }) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [imageUrl, setImageUrl] = useState(null);
+  const storageRef = ref(storage, "images/");
   const formikRef = useRef();
 
   const initialState = {
     title: "",
     description: "",
     isOnline: "Online",
-    location: "",
-    meetingLink: "",
+    link: "",
     startDate: "",
     startTime: "",
     endDate: "",
@@ -40,36 +56,97 @@ const CreateEventModal = ({ isOpen, handleClose, handleModalSubmit }) => {
     eventImage: "",
   };
 
-  // Handle posted image
+  // Handle event's banner image
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files.length > 0) {
       setImage(event.target.files[0]);
       setImageUrl(URL.createObjectURL(event.target.files[0]));
     }
   };
-  const handleRemoveImage = () => {
-    setImage(null);
-    setImageUrl(null);
-  };
 
   // Handle form submit
-  const handlePostSubmit = (data, actions) => {
+  const handleEventSubmit = async (data, actions) => {
     const {
       title,
       description,
       isOnline,
-      location,
-      meetingLink,
+      link,
       startDate,
       startTime,
       endDate,
       endTime,
-      eventImage,
     } = data;
-    console.log(data);
-    setImage(null);
-    setImageUrl(null);
-    // actions.resetForm();
+    try {
+      const markdownText = md.render(description);
+      if (image) {
+        const reqUrl = `${process.env.API_BASE_SERVICE}/api/event/create`;
+        const timestamp = Date.now().toString(36);
+        const randomString = Math.random().toString(36).substring(2, 8);
+        const imageName = timestamp + randomString;
+        setUploading(true);
+        const uploadTask = uploadBytesResumable(
+          ref(storage, `images/event_${imageName}`),
+          image
+        );
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Handle progress
+          },
+          (error) => {
+            console.log(error);
+          },
+          async () => {
+            // Get the download URL of the uploaded image
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            setImageUrl(downloadURL);
+            const requestData = {
+              title,
+              description: markdownText,
+              isOnline: isOnline == "Online" ? true : false,
+              startDate,
+              startTime,
+              endDate,
+              endTime,
+              imageURL: downloadURL,
+              ...(isOnline == "Online"
+                ? { meetingLink: link }
+                : {
+                    location: link,
+                  }),
+            };
+            console.log("requestData:", requestData);
+            const Response = await eventsService.post(reqUrl, requestData);
+            // setUser(Response?.data?.data);
+            enqueueSnackbar("Event Created successfully", {
+              variant: "info",
+              autoHideDuration: 2000,
+              anchorOrigin: { horizontal: "right", vertical: "top" },
+            });
+            setUploading(false);
+            setImage(null);
+            setImageUrl(null);
+            handleClose();
+          }
+        );
+      } else {
+        setImage(null);
+        setImageUrl(null);
+        handleClose();
+        setUploading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setUploading(false);
+      enqueueSnackbar("Something went wrong, Please try again", {
+        variant: "error",
+        autoHideDuration: 2000,
+        anchorOrigin: { horizontal: "right", vertical: "top" },
+      });
+      setImage(null);
+      setImageUrl(null);
+      handleClose();
+    }
   };
 
   const handleModalClose = () => {
@@ -139,21 +216,21 @@ const CreateEventModal = ({ isOpen, handleClose, handleModalSubmit }) => {
         >
           <Formik
             initialValues={initialState}
-            // validationSchema={CreateEventFormValidationSchema}
-            onSubmit={handlePostSubmit}
+            validationSchema={CreateEventValidationSchema}
+            onSubmit={handleEventSubmit}
             innerRef={formikRef}
           >
-            {({ isSubmitting }) => (
-              <Form>
-                <CreateEventFormFields
-                  image={image}
-                  imageUrl={imageUrl}
-                  isSubmitting={isSubmitting}
-                  handleImageChange={handleImageChange}
-                  handleRemoveImage={handleRemoveImage}
-                />
-              </Form>
-            )}
+            {({ isSubmitting, errors }) => {
+              return (
+                <Form>
+                  <CreateEventFormFields
+                    isSubmitting={uploading}
+                    imageUrl={imageUrl}
+                    handleImageChange={handleImageChange}
+                  />
+                </Form>
+              );
+            }}
           </Formik>
         </Box>
       </DialogContent>

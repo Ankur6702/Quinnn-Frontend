@@ -2,26 +2,27 @@ import React, { useEffect, useRef, useState } from "react";
 import { useFormikContext } from "formik";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import CardMedia from "@mui/material/CardMedia";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
 
 import CustomInput from "../../forms/CustomInput";
 import SelectField from "../../forms/SelectField";
 import SubmitButton from "../../forms/SubmitButton";
 import { timesList, typeOfEvent } from "../utils/helper";
 import { useMediaQuery, useTheme } from "@mui/material";
-import { neutral } from "@/src/common/config/colors";
+import { Blues, neutral } from "@/src/common/config/colors";
 
 const CreateEventFormFields = ({
-  image,
   imageUrl,
-  handleRemoveImage,
   handleImageChange,
   isSubmitting,
 }) => {
-  const { values, setFieldValue } = useFormikContext();
+  const { values, setFieldValue, errors, touched } = useFormikContext();
   const [key, setKey] = useState(Date.now());
   const inputRef = useRef();
   const fileInputRef = useRef(null);
@@ -33,10 +34,6 @@ const CreateEventFormFields = ({
     handleImageChange(event);
   };
 
-  const handleDeleteImage = () => {
-    fileInputRef.current.value = null;
-    handleRemoveImage();
-  };
   const theme = useTheme();
   const isDownSm = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -62,44 +59,95 @@ const CreateEventFormFields = ({
         }}
         style={{ display: "none" }}
       />
-      <label htmlFor="eventImage">
-        <Box
-          onClick={() => {}}
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          sx={{
-            width: "100%",
-            height: 300,
-            bgcolor: neutral["A400"],
-            cursor: "pointer",
-          }}
-        >
-          <AddAPhotoIcon
-            fontSize="large"
+
+      {imageUrl ? (
+        <Box sx={{ position: "relative" }}>
+          <CardMedia
+            key={Date.now()}
+            component="img"
+            image={imageUrl}
+            alt="Preview"
             sx={{
-              color: neutral["800"],
-              width: 40,
-              height: 40,
-              opacity: 0.8,
-              cursor: "pointer",
+              width: "100%",
+              height: { xs: 200, md: 300 },
             }}
           />
-          <Typography
-            variant="h4"
+          <label
+            htmlFor="eventImage"
+            style={{ position: "absolute", right: 10, top: 10 }}
+          >
+            <IconButton
+              component="span"
+              onClick={handleSubmit}
+              sx={{
+                bgcolor: neutral["A500"],
+                p: 1,
+              }}
+            >
+              <EditIcon
+                sx={{ fontSize: { xs: 14, md: 20 }, color: Blues["A100"] }}
+              />
+            </IconButton>
+          </label>
+        </Box>
+      ) : (
+        <label htmlFor="eventImage">
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
             sx={{
-              fontSize: { xs: 14, lg: 16 },
-              color: neutral["800"],
-              fontWeight: 500,
-              opacity: 0.8,
+              width: "100%",
+              height: { xs: 200, md: 300 },
+              bgcolor: neutral["A400"],
+              cursor: "pointer",
             }}
           >
-            Upload cover image
-          </Typography>
-        </Box>
-      </label>
-      <Box display="flex" flexDirection="column" rowGap={6} px={6}>
+            <AddAPhotoIcon
+              fontSize="large"
+              sx={{
+                color: neutral["800"],
+                width: 40,
+                height: 40,
+                opacity: 0.8,
+                cursor: "pointer",
+              }}
+            />
+            <Typography
+              variant="h4"
+              sx={{
+                fontSize: { xs: 14, lg: 16 },
+                color: neutral["800"],
+                fontWeight: 500,
+                opacity: 0.8,
+              }}
+            >
+              Upload cover image
+            </Typography>
+            {errors.eventImage && touched.eventImage && (
+              <Typography
+                variant="h6"
+                sx={{
+                  width: "auto",
+                  color: "#D32F2F",
+                  fontWeight: 400,
+                  fontSize: { xs: 12, lg: 12 },
+                }}
+              >
+                {errors.eventImage}
+              </Typography>
+            )}
+          </Box>
+        </label>
+      )}
+
+      <Box
+        display="flex"
+        flexDirection="column"
+        rowGap={6}
+        px={{ xs: 3, md: 6 }}
+      >
         <CustomInput
           name="title"
           type="text"
@@ -231,9 +279,13 @@ const CreateEventFormFields = ({
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="isOnline"
               value={values["isOnline"]}
-              onChange={(event) =>
-                setFieldValue("isOnline", event.target.value)
-              }
+              onChange={() => {
+                setFieldValue(
+                  "isOnline",
+                  values["isOnline"] == "Online" ? "Offline" : "Online"
+                );
+                setFieldValue("link", "");
+              }}
               sx={{ display: "flex", flexDirection: "row", columnGap: 3 }}
             >
               {typeOfEvent.map((type, index) => (
@@ -254,7 +306,7 @@ const CreateEventFormFields = ({
                       variant="h6"
                       fontWeight={400}
                       color={neutral["600"]}
-                      fontSize={16}
+                      fontSize={{ xs: 14, md: 16 }}
                     >
                       {type.label}
                     </Typography>
@@ -263,29 +315,22 @@ const CreateEventFormFields = ({
               ))}
             </RadioGroup>
             <Box mt={3}>
-              {values.isOnline == "Offline" ? (
-                <CustomInput
-                  name="location"
-                  type="text"
-                  value={values["location"] || ""}
-                  textFieldProps={{
-                    label: "Location",
-                    "aria-label": "Location",
-                    sx: { width: { xs: "100%", sm: "100%" } },
-                  }}
-                />
-              ) : (
-                <CustomInput
-                  name="meetingLink"
-                  type="text"
-                  value={values["meetingLink"] || ""}
-                  textFieldProps={{
-                    label: "Meeting Link",
-                    "aria-label": "Meeting Link",
-                    sx: { width: { xs: "100%", sm: "100%" } },
-                  }}
-                />
-              )}
+              <CustomInput
+                name="link"
+                type="text"
+                value={values["link"] || ""}
+                textFieldProps={{
+                  label:
+                    values["isOnline"] == "Offline"
+                      ? "Location"
+                      : "Meeting link",
+                  "aria-label":
+                    values["isOnline"] == "Offline"
+                      ? "Location"
+                      : "Meeting link",
+                  sx: { width: { xs: "100%", sm: "100%" } },
+                }}
+              />
             </Box>
           </Box>
         </Box>
@@ -293,7 +338,7 @@ const CreateEventFormFields = ({
       <Box
         display="flex"
         justifyContent="flex-end"
-        sx={{ position: "relative", bottom: 0, px: 6 }}
+        sx={{ position: "relative", bottom: 0, px: { xs: 3, md: 6 } }}
       >
         <SubmitButton
           type="submit"

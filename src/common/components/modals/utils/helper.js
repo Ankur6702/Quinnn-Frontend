@@ -101,3 +101,58 @@ const EditProfileValidation = {
 };
 
 export const EditProfileValidationSchema = Yup.object(EditProfileValidation);
+
+const CreateEventValidation = {
+  title: Yup.string()
+    .typeError("Please add valid name")
+    .required("Event name is required")
+    .min(3, "Event name is too short")
+    .max(50, "Event name is too long"),
+  description: Yup.string()
+    .required("Event description is required")
+    .min(20, "Description is too short")
+    .max(3000, "Event description is too long"),
+  eventImage: Yup.mixed()
+    .required("Event cover image is required")
+    .test("fileSize", "File size too large. Maximum size is 5MB", (value) => {
+      if (!value) return true;
+      return value.size <= MAX_FILE_SIZE;
+    }),
+  startDate: Yup.date()
+    .min(
+      new Date(new Date().setHours(0, 0, 0, 0)),
+      "Start date must be greater than or equal to today"
+    )
+    .required("Start date is required"),
+  startTime: Yup.string()
+    .test("is-time", "Invalid start time format", (value) => {
+      console.log;
+      // Regular expression to validate time in the format "HH:MM"
+      const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+      return timeRegex.test(value);
+    })
+    .required("Start time is required"),
+  endDate: Yup.date()
+    .when("startDate", (startDate, schema) => {
+      return startDate && startDate[0]
+        ? schema.min(
+            startDate[0],
+            "End date must be greater than or equal to start date"
+          )
+        : schema;
+    })
+    .required("End date is required"),
+  endTime: Yup.string()
+    .test("is-time", "Invalid start time format", (value) => {
+      console.log;
+      // Regular expression to validate time in the format "HH:MM"
+      const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+      return timeRegex.test(value);
+    })
+
+    .required("End time is required"),
+  isOnline: Yup.string().required("Please select an event type"),
+  link: Yup.string().required("This field is required"),
+};
+
+export const CreateEventValidationSchema = Yup.object(CreateEventValidation);

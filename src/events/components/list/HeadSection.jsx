@@ -46,6 +46,7 @@ const HeadSection = () => {
             fontSize: { xs: 16, md: 16 },
             fontWeight: 500,
             borderRadius: 2,
+            visibility: open ? "hidden" : "visible",
           }}
           startIcon={<AddIcon />}
         >
