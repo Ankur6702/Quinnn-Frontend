@@ -32,7 +32,7 @@ const PublicProfile = ({
   const { enqueueSnackbar } = useSnackbar();
   const { user, setUser } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
-  const idDownMd = useMediaQuery(theme.breakpoints.down("md"));
+  const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleFollow = async () => {
     try {
@@ -223,8 +223,8 @@ const PublicProfile = ({
           <Image
             src={USER_NOT_FOUND}
             alt="user not found"
-            width={idDownMd ? 250 : 300}
-            height={idDownMd ? 250 : 320}
+            width={isDownMd ? 250 : 300}
+            height={isDownMd ? 250 : 320}
           />
           <Typography
             variant="h4"

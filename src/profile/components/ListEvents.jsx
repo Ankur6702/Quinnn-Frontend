@@ -12,7 +12,6 @@ import EventCardSmall from "@/src/events/common/EventCardSmall";
 const profileService = new ProfileService();
 const ListEvents = () => {
   const { data: myEvents, run, status, error, setData } = useAsync();
-
   const theme = useTheme();
   const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
 
