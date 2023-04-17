@@ -7,11 +7,10 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import EventIcon from "@mui/icons-material/Event";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import CardMedia from "@mui/material/CardMedia";
 
 import { formatDate, sliceString } from "@/src/common/utils/utils";
 import { Blues, neutral } from "@/src/common/config/colors";
-import { LOGO } from "@/src/accounts/utils/constants";
-import { BANNER_IMAGE } from "@/src/profile/utils/constants";
 
 const EventCard = ({ event }) => {
   return (
@@ -30,13 +29,14 @@ const EventCard = ({ event }) => {
       rowGap={1}
     >
       <Box>
-        <Link href="#">
-          <Image
-            src={BANNER_IMAGE}
-            alt="logo"
-            width={350}
-            height={180}
-            style={{
+        <Link href={`/events/${event?._id}`} style={{ width: "100%" }}>
+          <CardMedia
+            component="img"
+            image={event?.imageURL}
+            alt="Preview"
+            sx={{
+              width: 350,
+              height: 180,
               borderTopRightRadius: "12px",
               borderTopLeftRadius: "12px",
             }}
@@ -79,7 +79,7 @@ const EventCard = ({ event }) => {
             borderRadius: "50%",
             width: "10px !important",
             height: "10px !important",
-            bgcolor: event?.venue == "Online" ? "green" : "red",
+            bgcolor: event?.isOnline === "Online" ? "green" : "red",
           }}
         ></Box>
         <Typography
@@ -91,12 +91,12 @@ const EventCard = ({ event }) => {
             fontSize: { xs: 14, lg: 16 },
           }}
         >
-          {event?.venue}
+          {event?.isOnline ? "Online" : "Offline"}
         </Typography>
       </Box>
       <Box px={4} my={3}>
         <Box display="flex" flexDirection="column" rowGap={2}>
-          <Link href="#">
+          <Link href={`/events/${event?._id}`} style={{ width: "100%" }}>
             <Typography
               variant="h6"
               sx={{
@@ -105,9 +105,9 @@ const EventCard = ({ event }) => {
                 fontSize: { xs: 14, lg: 16 },
               }}
             >
-              {sliceString(event?.name, 60)}
+              {sliceString(event?.title, 60)}
             </Typography>
-          </Link>{" "}
+          </Link>
           <Box>
             <Box display="flex" flexDirection="column" rowGap={2}>
               <Box display="flex" justifyContent="space-between">
@@ -129,20 +129,25 @@ const EventCard = ({ event }) => {
                     fontSize: { xs: 12, lg: 14 },
                   }}
                 >
-                  {`${event?.attendees} attendees`}
+                  {`${event?.attendees.length} attendees`}
                 </Typography>
               </Box>
-              <Button
-                variant="outlined"
-                sx={{
-                  textTransform: "none",
-                  fontSize: { xs: 16, md: 16 },
-                  fontWeight: 500,
-                  borderRadius: 3,
-                }}
-              >
-                View
-              </Button>
+              <Box display="flex">
+                <Link href={`/events/${event?._id}`} style={{ width: "100%" }}>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      textTransform: "none",
+                      fontSize: { xs: 16, md: 16 },
+                      fontWeight: 500,
+                      borderRadius: 3,
+                      width: "100%",
+                    }}
+                  >
+                    View
+                  </Button>
+                </Link>
+              </Box>
             </Box>
           </Box>
         </Box>

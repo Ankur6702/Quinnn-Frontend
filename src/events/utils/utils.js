@@ -1,6 +1,6 @@
 export const events = [
   {
-    name: "Learn How To Become a TEDx or Paid Speaker",
+    title: "Learn How To Become a TEDx or Paid Speaker",
     organiser: "Evan Miller",
     description:
       "The world of TEDx and Paid Speaking can be quite a mystery for many people. One thing that is not a mystery is that ALL sought-after experts, industry leaders and those that impact SPEAK.Join me and the fabulous moderators @Dawn J. Fraser, @Pablo Murillo, @Dara Connolly, @Bilyana Georgieva, @🧞‍♀️Genie Snyder Chamberlin, Ed.D., @Michelle Williams and @Emem Washington, JD, LL.M where this week we will discuss why positioning is paramount. Understanding your target audience, niching, messaging, speaker topics and so much more.Come with your questions so that we can move you forward in sharing your ideas, stories and messages with the world.",
@@ -8,12 +8,12 @@ export const events = [
     endDate: "2023-04-19T00:00:00.000Z",
     startTime: "",
     startTime: "",
-    venue: "Online",
+    venue: true,
     location: "",
-    attendees: "45",
+    attendees: ["45", "423", "dfa"],
   },
   {
-    name: "Learn How To Become a TEDx or Paid Speaker",
+    title: "Learn How To Become a TEDx or Paid Speaker",
     organiser: "Evan Miller",
     description:
       "The world of TEDx and Paid Speaking can be quite a mystery for many people. One thing that is not a mystery is that ALL sought-after experts, industry leaders and those that impact SPEAK.Join me and the fabulous moderators @Dawn J. Fraser, @Pablo Murillo, @Dara Connolly, @Bilyana Georgieva, @🧞‍♀️Genie Snyder Chamberlin, Ed.D., @Michelle Williams and @Emem Washington, JD, LL.M where this week we will discuss why positioning is paramount. Understanding your target audience, niching, messaging, speaker topics and so much more.Come with your questions so that we can move you forward in sharing your ideas, stories and messages with the world.",
@@ -21,12 +21,12 @@ export const events = [
     endDate: "2023-04-19T00:00:00.000Z",
     startTime: "",
     startTime: "",
-    venue: "Online",
+    venue: true,
     location: "",
-    attendees: "45",
+    attendees: ["45", "423", "dfa"],
   },
   {
-    name: "Learn How To Become a TEDx or Paid Speaker",
+    title: "Learn How To Become a TEDx or Paid Speaker",
     organiser: "Evan Miller",
     description:
       "The world of TEDx and Paid Speaking can be quite a mystery for many people. One thing that is not a mystery is that ALL sought-after experts, industry leaders and those that impact SPEAK.Join me and the fabulous moderators @Dawn J. Fraser, @Pablo Murillo, @Dara Connolly, @Bilyana Georgieva, @🧞‍♀️Genie Snyder Chamberlin, Ed.D., @Michelle Williams and @Emem Washington, JD, LL.M where this week we will discuss why positioning is paramount. Understanding your target audience, niching, messaging, speaker topics and so much more.Come with your questions so that we can move you forward in sharing your ideas, stories and messages with the world.",
@@ -34,12 +34,12 @@ export const events = [
     endDate: "2023-04-19T00:00:00.000Z",
     startTime: "",
     startTime: "",
-    venue: "Online",
+    venue: true,
     location: "",
-    attendees: "45",
+    attendees: ["46", "423", "dfa"],
   },
   {
-    name: "Learn How To Become a TEDx or Paid Speaker",
+    title: "Learn How To Become a TEDx or Paid Speaker",
     organiser: "Evan Miller",
     description:
       "The world of TEDx and Paid Speaking can be quite a mystery for many people. One thing that is not a mystery is that ALL sought-after experts, industry leaders and those that impact SPEAK.Join me and the fabulous moderators @Dawn J. Fraser, @Pablo Murillo, @Dara Connolly, @Bilyana Georgieva, @🧞‍♀️Genie Snyder Chamberlin, Ed.D., @Michelle Williams and @Emem Washington, JD, LL.M where this week we will discuss why positioning is paramount. Understanding your target audience, niching, messaging, speaker topics and so much more.Come with your questions so that we can move you forward in sharing your ideas, stories and messages with the world.",
@@ -47,12 +47,12 @@ export const events = [
     endDate: "2023-04-19T00:00:00.000Z",
     startTime: "",
     startTime: "",
-    venue: "Online",
+    venue: true,
     location: "",
-    attendees: "45",
+    attendees: ["45", "423", "dfa"],
   },
   {
-    name: "Learn How To Become a TEDx or Paid Speaker",
+    title: "Learn How To Become a TEDx or Paid Speaker",
     organiser: "Evan Miller",
     description:
       "The world of TEDx and Paid Speaking can be quite a mystery for many people. One thing that is not a mystery is that ALL sought-after experts, industry leaders and those that impact SPEAK.Join me and the fabulous moderators @Dawn J. Fraser, @Pablo Murillo, @Dara Connolly, @Bilyana Georgieva, @🧞‍♀️Genie Snyder Chamberlin, Ed.D., @Michelle Williams and @Emem Washington, JD, LL.M where this week we will discuss why positioning is paramount. Understanding your target audience, niching, messaging, speaker topics and so much more.Come with your questions so that we can move you forward in sharing your ideas, stories and messages with the world.",
@@ -60,8 +60,8 @@ export const events = [
     endDate: "2023-04-19T00:00:00.000Z",
     startTime: "",
     startTime: "",
-    venue: "Online",
+    venue: true,
     location: "",
-    attendees: "45",
+    attendees: ["45", "423", "dfa"],
   },
 ];

@@ -11,9 +11,8 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 
 import CustomInput from "../../forms/CustomInput";
-import SelectField from "../../forms/SelectField";
 import SubmitButton from "../../forms/SubmitButton";
-import { timesList, typeOfEvent } from "../utils/helper";
+import { typeOfEvent } from "../utils/helper";
 import { useMediaQuery, useTheme } from "@mui/material";
 import { Blues, neutral } from "@/src/common/config/colors";
 

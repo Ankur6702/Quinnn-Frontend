@@ -22,4 +22,7 @@ export default class ProfileService extends BaseService {
   async fetchUserFollowing(id) {
     return await this.get(`${this.buildUrl(`/fetchFollowing/${id}`)}`);
   }
+  async fetchUserEvents(id) {
+    return await this.get(`${this.buildUrl(`/event/myevents`)}`);
+  }
 }

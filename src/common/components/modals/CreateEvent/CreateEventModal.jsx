@@ -238,8 +238,3 @@ const CreateEventModal = ({ isOpen, handleClose }) => {
   );
 };
 export default CreateEventModal;
-{
-  /* <form onSubmit={handleSubmit}>
-         
-        </form> */
-}

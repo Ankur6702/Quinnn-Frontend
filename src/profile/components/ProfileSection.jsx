@@ -74,7 +74,6 @@ const ProfileSection = () => {
                 maxWidth: 320,
                 width: "100%",
                 bgcolor: neutral["A500"],
-                position: "fixed",
               }}
             >
               <Followers following={following?.data} />

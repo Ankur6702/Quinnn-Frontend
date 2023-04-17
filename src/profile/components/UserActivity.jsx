@@ -14,11 +14,11 @@ const UserActivity = () => {
         label: "Posts",
         onClick: () => setTabIndex(0),
       },
-      // {
-      //   route: `/profile`,
-      //   label: "Blogs",
-      //   onClick: () => setTabIndex(1),
-      // },
+      {
+        route: `/profile`,
+        label: "Events",
+        onClick: () => setTabIndex(1),
+      },
     ];
     return tabsList;
   }, []);
