@@ -4,8 +4,6 @@ import { useMediaQuery, useTheme } from "@mui/material";
 
 import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
 import useAsync from "@/src/common/components/custom-hooks/useAsync";
-import useUserContext from "../context/useUserContext";
-import PostItem from "@/src/home/components/Posts/PostItem";
 import ProfileService from "../service/ProfileService";
 import PostSkeleton from "@/src/common/components/skeletons/PostSkeleton";
 import EventCard from "@/src/events/common/EventCard";
@@ -14,7 +12,7 @@ import EventCardSmall from "@/src/events/common/EventCardSmall";
 const profileService = new ProfileService();
 const ListEvents = () => {
   const { data: myEvents, run, status, error, setData } = useAsync();
-  const { user } = useUserContext();
+
   const theme = useTheme();
   const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
 

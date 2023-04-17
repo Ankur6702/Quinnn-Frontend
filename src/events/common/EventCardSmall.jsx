@@ -9,12 +9,14 @@ import EventIcon from "@mui/icons-material/Event";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import CardMedia from "@mui/material/CardMedia";
 
+import useUserContext from "@/src/profile/context/useUserContext";
 import { formatDate, sliceString } from "@/src/common/utils/utils";
 import { Blues, neutral } from "@/src/common/config/colors";
 import { LOGO } from "@/src/accounts/utils/constants";
 import { BANNER_IMAGE } from "@/src/profile/utils/constants";
 
 const EventCardSmall = ({ event }) => {
+  const { user } = useUserContext();
   return (
     <Box
       maxWidth="100%"
@@ -120,16 +122,19 @@ const EventCardSmall = ({ event }) => {
           </Box>
         </Box>
         <Box display="flex" columnGap={2} alignItems="center">
-          <Typography
-            variant="h6"
-            sx={{
-              color: neutral["600"],
-              fontWeight: 400,
-              fontSize: { xs: 12, lg: 14 },
-            }}
-          >
-            Organiser_name
-          </Typography>
+          {" "}
+          <Link href={`/profile/${user?.username}`}>
+            <Typography
+              variant="h6"
+              sx={{
+                color: neutral["600"],
+                fontWeight: 400,
+                fontSize: { xs: 12, lg: 14 },
+              }}
+            >
+              {user?.name}
+            </Typography>
+          </Link>
           .
           <Typography
             variant="h6"

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import EventIcon from "@mui/icons-material/Event";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import CardMedia from "@mui/material/CardMedia";
+import useUserContext from "@/src/profile/context/useUserContext";
 
 import { formatDate, sliceString } from "@/src/common/utils/utils";
 import { Blues, neutral } from "@/src/common/config/colors";
 import { BANNER_IMAGE } from "@/src/profile/utils/constants";
 
 const EventCard = ({ event }) => {
+  const { user } = useUserContext();
   return (
     <Box
       maxWidth={350}
@@ -112,16 +112,18 @@ const EventCard = ({ event }) => {
           <Box>
             <Box display="flex" flexDirection="column" rowGap={2}>
               <Box display="flex" justifyContent="space-between">
-                <Typography
-                  variant="h6"
-                  sx={{
-                    color: neutral["600"],
-                    fontWeight: 400,
-                    fontSize: { xs: 12, lg: 14 },
-                  }}
-                >
-                  {event?.organiser}
-                </Typography>
+                <Link href={`/profile/${user?.username}`}>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      color: neutral["600"],
+                      fontWeight: 400,
+                      fontSize: { xs: 12, lg: 14 },
+                    }}
+                  >
+                    {user?.name}
+                  </Typography>
+                </Link>
                 <Typography
                   variant="h6"
                   sx={{
