@@ -46,7 +46,9 @@ export default function () {
       {isLoading && slug ? (
         <CircularLoaderSkeleton />
       ) : (
-        <EventDetails event={eventData} eventCreator={eventCreator} />
+        eventData && (
+          <EventDetails event={eventData} eventCreator={eventCreator} />
+        )
       )}
     </>
   );

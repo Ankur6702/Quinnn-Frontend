@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import Box from "@mui/material/Box";
@@ -8,12 +8,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import ShareIcon from "@mui/icons-material/Share";
 import EventIcon from "@mui/icons-material/Event";
-import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import { useMediaQuery, useTheme } from "@mui/material";
 
 import ShareModal from "@/src/common/components/share/ShareModal";
+import EventOptions from "./EventOptions";
+import { formatEventDate } from "@/src/common/utils/utils";
 import { USER_NOT_FOUND } from "@/src/profile/utils/constants";
-import { Blues, neutral } from "@/src/common/config/colors";
+import { neutral } from "@/src/common/config/colors";
 
 const EventDetails = ({ event, eventCreator }) => {
   const theme = useTheme();
@@ -39,7 +40,7 @@ const EventDetails = ({ event, eventCreator }) => {
               pb: 6,
             }}
           >
-            <Box height={{ xs: 230, md: 400 }} width={{ xs: "100%", md: 800 }}>
+            <Box height={{ xs: 230, md: 400 }} width="100%">
               <img
                 src={event?.imageURL}
                 alt="My Image"
@@ -57,16 +58,24 @@ const EventDetails = ({ event, eventCreator }) => {
               flexDirection="column"
               rowGap={2}
             >
-              <Typography
-                variant="h3"
-                sx={{
-                  color: neutral["800"],
-                  fontWeight: 600,
-                  fontSize: { xs: 14, lg: 22 },
-                }}
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="flex-start"
               >
-                {event?.title}
-              </Typography>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    color: neutral["800"],
+                    fontWeight: 600,
+                    fontSize: { xs: 14, lg: 22 },
+                    maxWidth: 550,
+                  }}
+                >
+                  {event?.title}
+                </Typography>
+                <EventOptions event={event} />
+              </Box>
               <Link href={`/profile/${eventCreator?.username}`}>
                 <Typography
                   variant="h3"
@@ -90,7 +99,11 @@ const EventDetails = ({ event, eventCreator }) => {
                       fontSize: { xs: 12, lg: 14 },
                     }}
                   >
-                    Fri, Apr 7, 2023, 9:30 PM - 10:30 PM
+                    {formatEventDate(
+                      event?.startDate,
+                      event?.startTime,
+                      event?.endTime
+                    )}
                   </Typography>
                 </Box>
               </Box>
@@ -289,7 +302,7 @@ const EventDetails = ({ event, eventCreator }) => {
               fontSize: { xs: 16, lg: 22 },
             }}
           >
-            Whoops! User not found
+            Whoops! Event not found
           </Typography>
         </Box>
       )}

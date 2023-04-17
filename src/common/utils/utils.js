@@ -31,6 +31,31 @@ export function formatDate(dateString) {
   return `${day}${suffix} ${month} ${year}`;
 }
 
+export function formatEventDate(startdate, startTime, endTime) {
+  const dateObj = new Date(startdate);
+  const date = dateObj.toLocaleString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  // format the start and end times
+  const startHour = parseInt(startTime.split(":")[0]);
+  const endHour = parseInt(endTime.split(":")[0]);
+  const startMin = startTime.split(":")[1];
+  const endMin = endTime.split(":")[1];
+  const startAmPm = startHour >= 12 ? "PM" : "AM";
+  const endAmPm = endHour >= 12 ? "PM" : "AM";
+  const formattedStartTime =
+    (startHour % 12) + ":" + startMin + " " + startAmPm;
+  const formattedEndTime = (endHour % 12) + ":" + endMin + " " + endAmPm;
+
+  // display the formatted date and time
+  const formattedDate = `${date}, ${formattedStartTime} - ${formattedEndTime}`;
+  return formattedDate;
+}
+
 function getOrdinalSuffix(day) {
   const j = day % 10;
   const k = day % 100;
