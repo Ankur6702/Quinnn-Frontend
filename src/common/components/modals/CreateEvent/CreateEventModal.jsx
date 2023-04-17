@@ -171,7 +171,7 @@ const CreateEventModal = ({ isOpen, handleClose }) => {
           px: 0,
           pb: 1,
           minWidth: { xs: "90%", md: 580 },
-          maxHeight: { xs: 400, md: 450 },
+          maxHeight: { xs: "80%", md: 450 },
           height: { xs: "100%", md: "100%" },
         },
       }}

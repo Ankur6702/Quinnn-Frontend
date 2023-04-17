@@ -11,6 +11,7 @@ import CardMedia from "@mui/material/CardMedia";
 
 import { formatDate, sliceString } from "@/src/common/utils/utils";
 import { Blues, neutral } from "@/src/common/config/colors";
+import { BANNER_IMAGE } from "@/src/profile/utils/constants";
 
 const EventCard = ({ event }) => {
   return (
@@ -32,7 +33,7 @@ const EventCard = ({ event }) => {
         <Link href={`/events/${event?._id}`} style={{ width: "100%" }}>
           <CardMedia
             component="img"
-            image={event?.imageURL}
+            image={event?.imageURL || BANNER_IMAGE}
             alt="Preview"
             sx={{
               width: 350,
