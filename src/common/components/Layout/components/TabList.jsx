@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import HomeIcon from "@mui/icons-material/Home";
-import GroupsIcon from "@mui/icons-material/Groups";
+import ArticleIcon from "@mui/icons-material/Article";
 import EventIcon from "@mui/icons-material/Event";
 import FeedSharpIcon from "@mui/icons-material/FeedSharp";
 import PersonIcon from "@mui/icons-material/Person";
@@ -57,7 +57,7 @@ const TabList = ({ handleClick }) => {
         name: "Blogs",
         route: `${FRONTEND_BLOGS_PAGE_URL}`,
         Icon: (
-          <GroupsIcon
+          <ArticleIcon
             sx={{ color: iconColor(FRONTEND_BLOGS_PAGE_URL), fontSize: 24 }}
           />
         ),

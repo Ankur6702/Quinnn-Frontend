@@ -1,0 +1,264 @@
+/* eslint-disable @next/next/no-img-element */
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import Avatar from "@mui/material/Avatar";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+
+import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
+import useAsync from "@/src/common/components/custom-hooks/useAsync";
+import { sliceString, formatTimeAgo } from "@/src/common/utils/utils";
+import { useMediaQuery, useTheme } from "@mui/material";
+
+import ProfileService from "@/src/profile/service/ProfileService";
+import { neutral } from "@/src/common/config/colors";
+import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
+import {
+  calculateReadTime,
+  wrapPreWithScrollableBox,
+} from "../../utils/helper";
+import CircularLoaderSkeleton from "@/src/common/components/skeletons/CircularLoaderSkeleton";
+
+const profileService = new ProfileService();
+const BlogDetailsItem = ({
+  userId,
+  blogId,
+  text,
+  imageUrl,
+  time,
+  upvotes,
+  downvotes,
+  title,
+  link,
+}) => {
+  const { data: userData, run, status, error, setData } = useAsync();
+  const theme = useTheme();
+  const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      run(profileService.fetchUserData(userId))
+        .then((response) => {})
+        .catch((error) => console.error(error));
+    };
+    fetchUser();
+  }, [run, userId]);
+
+  return (
+    <GenericResponseHandler
+      status={status}
+      error={error}
+      skeleton={<CircularLoaderSkeleton />}
+    >
+      <Box display="flex" flexDirection="column" rowGap={4}>
+        <Box display="flex" flexDirection="column" rowGap={4}>
+          <Typography
+            variant="h1"
+            sx={{
+              color: neutral["800"],
+              opacity: 0.9,
+              fontSize: { xs: 24, md: 36 },
+            }}
+          >
+            {title}
+          </Typography>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box
+              display="flex"
+              // justifyContent="center"
+              alignItems="center"
+              columnGap={2}
+            >
+              <Link href={`/profile/${userData?.data?.username}`}>
+                <Avatar
+                  alt="profile-photo"
+                  sx={{
+                    width: 40,
+                    height: 40,
+                    fontSize: 15,
+                    cursor: "pointer",
+                    position: "relative",
+                  }}
+                  src={
+                    userData?.data?.profileImageURL === null ||
+                    userData?.data?.profileImageURL === ""
+                      ? userData?.data?.gender === "Female" ||
+                        userData?.data?.gender === "Lesbian"
+                        ? FEMALE_AVATAR
+                        : MALE_AVATAR
+                      : userData?.data?.profileImageURL
+                  }
+                />
+              </Link>
+              <Box display="flex" flexDirection="column" rowGap={0.5}>
+                <Link href={`/profile/${userData?.data?.username}`}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontSize: { xs: 14, lg: 16 },
+                      color: neutral["900"],
+                      fontWeight: 500,
+                      opacity: 0.9,
+                    }}
+                  >
+                    {userData?.data?.name}
+                  </Typography>
+                </Link>
+                <Box display="flex" columnGap={2}>
+                  <Box display="flex" alignItems="center" columnGap={0.5}>
+                    <AccessTimeIcon
+                      sx={{ fontSize: 14, color: neutral["700"] }}
+                    />
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontSize: { xs: 12, lg: 14 },
+                        color: neutral["700"],
+                        fontWeight: 400,
+                        opacity: 0.8,
+                        display: "flex",
+                        alignItems: "center",
+                        columnGap: 1,
+                        pt: 0.25,
+                      }}
+                    >
+                      {formatTimeAgo(time)}
+                    </Typography>
+                  </Box>
+                  .
+                  <Box display="flex" alignItems="center" columnGap={0.5}>
+                    <HourglassBottomIcon
+                      sx={{ fontSize: 14, color: neutral["700"] }}
+                    />
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontSize: { xs: 12, lg: 14 },
+                        color: neutral["700"],
+                        fontWeight: 400,
+                        opacity: 0.8,
+                        display: "flex",
+                        alignItems: "center",
+                        columnGap: 1,
+                        pt: 0.25,
+                      }}
+                    >
+                      {calculateReadTime(time)}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+            <Box display="flex" columnGap={4}>
+              <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                rowGap={0.5}
+              >
+                <IconButton
+                  aria-label="Like"
+                  // disabled={isLoading}
+                  size="medium"
+                  sx={{ p: 0 }}
+                  // onClick={isLiked ? handleUnLike : handleLike}
+                >
+                  <ThumbUpIcon
+                    sx={{
+                      // color: isLiked ? Blues["A100"] : neutral["A200"],
+                      color: neutral["A200"],
+                      fontSize: 22,
+                    }}
+                  />
+                </IconButton>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontSize: { xs: 12, lg: 14 },
+                    color: neutral["700"],
+                    fontWeight: 400,
+                    opacity: 0.8,
+                    display: "flex",
+                    alignItems: "center",
+                    columnGap: 1,
+                    pt: 0.25,
+                  }}
+                >
+                  {upvotes.length}
+                </Typography>
+              </Box>
+              <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                rowGap={0}
+              >
+                <IconButton
+                  aria-label="Like"
+                  // disabled={isLoading}
+                  sx={{ p: 0 }}
+                  size="medium"
+                  // onClick={isLiked ? handleUnLike : handleLike}
+                >
+                  <ThumbDownIcon
+                    sx={{
+                      // color: isLiked ? Blues["A100"] : neutral["A200"],
+                      color: neutral["A200"],
+                      fontSize: 22,
+                    }}
+                  />
+                </IconButton>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontSize: { xs: 12, lg: 14 },
+                    color: neutral["700"],
+                    fontWeight: 400,
+                    opacity: 0.8,
+                    display: "flex",
+                    alignItems: "center",
+                    columnGap: 1,
+                    pt: 0.25,
+                  }}
+                >
+                  {upvotes.length}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+        <Divider sx={{ opacity: 0.75 }} />
+        <Box display="flex" justifyContent="start">
+          <img
+            src={imageUrl}
+            alt="blogImage"
+            width={!isDownMd ? "75%" : "100%"}
+          />
+        </Box>
+        <Box display="flex" width="100%" sx={{ textAlign: "inherit" }}>
+          <Typography
+            variant="body1"
+            component="div"
+            dangerouslySetInnerHTML={{
+              __html: wrapPreWithScrollableBox(text),
+            }}
+          />
+        </Box>
+      </Box>
+    </GenericResponseHandler>
+  );
+};
+
+export default BlogDetailsItem;

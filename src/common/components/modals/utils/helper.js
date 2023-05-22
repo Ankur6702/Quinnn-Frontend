@@ -77,6 +77,24 @@ const AvatarValidation = {
 
 export const AvatarValidationSchema = Yup.object(AvatarValidation);
 
+const CreateBlogFormValidation = {
+  title: Yup.string()
+    .required("Title is required")
+    .max(120, "Title is too long"),
+  coverImage: Yup.mixed().test(
+    "fileSize",
+    "File size too large. Maximum size is 5MB",
+    (value) => {
+      if (!value) return true;
+      return value.size <= MAX_FILE_SIZE;
+    }
+  ),
+};
+
+export const CreateBlogFormValidationSchema = Yup.object(
+  CreateBlogFormValidation
+);
+
 const EditProfileValidation = {
   name: Yup.string()
     .typeError("Please add valid name")
