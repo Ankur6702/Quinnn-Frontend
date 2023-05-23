@@ -18,14 +18,12 @@ const UserStats = ({ user }) => {
     setOpenFollowers(true);
   };
   const handleCloseFollowers = () => {
-    console.log("closed");
     setOpenFollowers(false);
   };
   const handleOpenFollowing = () => {
     setOpenFollowing(true);
   };
   const handleCloseFollowing = () => {
-    console.log("closed");
     setOpenFollowing(false);
   };
 

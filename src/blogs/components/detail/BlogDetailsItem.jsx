@@ -42,16 +42,16 @@ const BlogDetailsItem = ({
 
   useEffect(() => {
     const fetchUser = async () => {
-      run(profileService.fetchUserData(userId))
-        .then((response) => {})
-        .catch((error) => console.error(error));
+      run(profileService.fetchUserData(userId)).catch((error) =>
+        console.error(error)
+      );
     };
     fetchUser();
   }, [run, userId]);
 
   return (
     <GenericResponseHandler
-      status={"pending"}
+      status={status}
       error={error}
       skeleton={
         <BlogDetailSkeleton

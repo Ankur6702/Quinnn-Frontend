@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import BlogDetailsItem from "./BlogDetailsItem";
 
 const BlogDetails = ({ blogData }) => {
-  console.log(blogData);
   return (
     <Box width="100%">
       <BlogDetailsItem

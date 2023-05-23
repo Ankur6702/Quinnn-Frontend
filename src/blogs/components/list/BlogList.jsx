@@ -18,7 +18,6 @@ const BlogList = () => {
     };
     fetchPosts();
   }, [run]);
-  console.log(blogs);
   const removePost = (id) => {
     const indexToRemove = blogs?.blogs.findIndex((blog) => {
       return blog?._id === id;

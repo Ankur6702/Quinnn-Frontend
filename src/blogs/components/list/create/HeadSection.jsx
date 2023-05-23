@@ -77,9 +77,7 @@ const HeadSection = () => {
               content: text,
               imageURL: downloadURL,
             };
-            console.log(requestData);
             const Response = await blogService.post(reqUrl, requestData);
-            console.log(Response);
             enqueueSnackbar("Published successfully", {
               variant: "info",
               autoHideDuration: 2000,
@@ -98,9 +96,7 @@ const HeadSection = () => {
           content: text,
           imageURL: null,
         };
-        console.log(requestData);
         const Response = await blogService.post(reqUrl, requestData);
-        console.log(Response);
         enqueueSnackbar("Published successfully", {
           variant: "info",
           autoHideDuration: 2000,

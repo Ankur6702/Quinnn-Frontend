@@ -18,9 +18,7 @@ const ListEvents = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       run(profileService.fetchUserEvents())
-        .then((response) => {
-          console.log(response);
-        })
+        .then((response) => {})
         .catch((error) => console.error(error));
     };
     fetchEvents();

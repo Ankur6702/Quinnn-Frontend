@@ -15,7 +15,6 @@ const UserProvider = ({ children }) => {
           authService
             .user()
             .then((response) => {
-              console.log(response);
               setUser(!!response.data.data ? response.data.data : null);
               setIsLoaded(true);
             })

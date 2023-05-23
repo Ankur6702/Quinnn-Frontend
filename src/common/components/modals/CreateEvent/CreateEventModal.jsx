@@ -115,7 +115,7 @@ const CreateEventModal = ({ isOpen, handleClose }) => {
                     location: link,
                   }),
             };
-            console.log("requestData:", requestData);
+
             const Response = await eventsService.post(reqUrl, requestData);
             // setUser(Response?.data?.data);
             enqueueSnackbar("Event Created successfully", {

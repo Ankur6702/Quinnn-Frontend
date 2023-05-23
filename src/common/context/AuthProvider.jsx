@@ -17,7 +17,6 @@ const AuthProvider = ({ children }) => {
     } else {
       setIsAuthenticated(authService.isAuthenticated);
     }
-    console.log("Authenticated");
   }, []);
   return (
     <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>

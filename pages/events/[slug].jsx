@@ -21,12 +21,10 @@ export default function () {
       const reqUrl = `${process.env.API_BASE_SERVICE}/api/event/fetch/${slug}`;
       setIsLoading(true);
       const Response = await eventsService.get(reqUrl);
-      console.log(Response);
       setEventData(Response?.data?.event);
       if (Response?.data?.event) {
         const reqUserUrl = `${process.env.API_BASE_SERVICE}/api/fetchUser/${Response?.data?.event?.creator}`;
         const res = await eventsService.get(reqUserUrl);
-        console.log(res);
         setEventCreator(res?.data?.data);
       }
       setIsLoading(false);

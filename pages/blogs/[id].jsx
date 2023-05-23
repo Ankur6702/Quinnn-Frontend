@@ -20,11 +20,7 @@ export default function () {
 
   useEffect(() => {
     const fetchBlogData = async () => {
-      run(blogService.fetchBlogData(id))
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => console.error(error));
+      run(blogService.fetchBlogData(id)).catch((error) => console.error(error));
     };
 
     id && fetchBlogData();

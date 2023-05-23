@@ -81,14 +81,12 @@ const CreateBlogFormValidation = {
   title: Yup.string()
     .required("Title is required")
     .max(120, "Title is too long"),
-  coverImage: Yup.mixed().test(
-    "fileSize",
-    "File size too large. Maximum size is 5MB",
-    (value) => {
+  coverImage: Yup.mixed()
+    .test("fileSize", "File size too large. Maximum size is 5MB", (value) => {
       if (!value) return true;
       return value.size <= MAX_FILE_SIZE;
-    }
-  ),
+    })
+    .required("Image is required"),
 };
 
 export const CreateBlogFormValidationSchema = Yup.object(
