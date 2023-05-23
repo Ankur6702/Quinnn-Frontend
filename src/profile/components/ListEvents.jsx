@@ -5,9 +5,9 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
 import useAsync from "@/src/common/components/custom-hooks/useAsync";
 import ProfileService from "../service/ProfileService";
-import PostSkeleton from "@/src/common/components/skeletons/PostSkeleton";
 import EventCard from "@/src/events/common/EventCard";
 import EventCardSmall from "@/src/events/common/EventCardSmall";
+import GenericListSkeleton from "@/src/common/components/skeletons/GenericListSkeleton";
 
 const profileService = new ProfileService();
 const ListEvents = () => {
@@ -29,13 +29,21 @@ const ListEvents = () => {
       status={status}
       error={error}
       skeleton={
-        <PostSkeleton
+        <GenericListSkeleton
           items={2}
-          gridProps={{ sx: { my: 4, rowGap: 4 } }}
+          gridProps={{
+            display: "flex",
+            flexDirection: "row",
+            rowGap: 3,
+            my: 4,
+          }}
           gridItemProps={{
-            sx: {
-              borderRadius: 2,
-            },
+            xs: 12,
+          }}
+          boxProps={{
+            p: 0,
+            width: "100%",
+            height: { xs: 100, lg: 149 },
           }}
         />
       }

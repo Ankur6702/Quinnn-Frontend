@@ -18,14 +18,6 @@ const BlogList = () => {
     };
     fetchPosts();
   }, [run]);
-  const removePost = (id) => {
-    const indexToRemove = blogs?.blogs.findIndex((blog) => {
-      return blog?._id === id;
-    });
-    const temp = blogs;
-    temp?.data.splice(indexToRemove, 1);
-    setData(temp);
-  };
 
   return (
     <GenericResponseHandler
@@ -57,7 +49,6 @@ const BlogList = () => {
               blogId={blog?._id}
               text={blog?.content}
               title={blog?.title}
-              removePost={removePost}
               imageUrl={blog?.imageURL}
               time={blog?.creationDate}
               upvotes={blog?.upvotes}

@@ -19,6 +19,11 @@ const UserActivity = () => {
         label: "Events",
         onClick: () => setTabIndex(1),
       },
+      {
+        route: `/profile`,
+        label: "Blogs",
+        onClick: () => setTabIndex(2),
+      },
     ];
     return tabsList;
   }, []);

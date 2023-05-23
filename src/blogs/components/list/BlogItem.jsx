@@ -28,11 +28,12 @@ const BlogItem = ({
   blogId,
   text,
   title,
-  removePost,
+  removeBlog,
   imageUrl,
   time,
   upvotes,
   downvotes,
+  boxProps,
   link,
 }) => {
   const { data: userData, run, status, error, setData } = useAsync();
@@ -66,6 +67,9 @@ const BlogItem = ({
         justifyContent="space-between"
         alignItems="center"
         width={isDownMd ? "100%" : "90%"}
+        sx={{
+          ...(boxProps?.sx || {}),
+        }}
       >
         <Box display="flex" flexDirection="column" rowGap={3} width="70%">
           <Box display="flex" alignItems="center" columnGap={2}>
