@@ -116,19 +116,21 @@ const BlogItem = ({
               {formatBlogDate(time)}
             </Typography>
           </Box>
-          <Box>
-            <Typography
-              variant="h3"
-              sx={{
-                color: neutral["800"],
-                opacity: 0.9,
-                fontSize: { xs: 16, md: 20 },
-                fontWeight: 600,
-              }}
-            >
-              {sliceString(title, isDownMd ? 30 : 50)}
-            </Typography>
-          </Box>
+          <Link href={link}>
+            <Box>
+              <Typography
+                variant="h3"
+                sx={{
+                  color: neutral["800"],
+                  opacity: 0.9,
+                  fontSize: { xs: 16, md: 20 },
+                  fontWeight: 600,
+                }}
+              >
+                {sliceString(title, isDownMd ? 30 : 50)}
+              </Typography>
+            </Box>
+          </Link>
 
           {!isDownMd && (
             <Box display="flex" width="100%" sx={{ textAlign: "inherit" }}>
@@ -192,12 +194,14 @@ const BlogItem = ({
             </Box>
           </Box>
         </Box>
-        <img
-          src={imageUrl}
-          alt="cover image"
-          width={isDownMd ? 100 : 230}
-          height={isDownMd ? 70 : 150}
-        />
+        <Link href={link}>
+          <img
+            src={imageUrl}
+            alt="cover image"
+            width={isDownMd ? 100 : 230}
+            height={isDownMd ? 70 : 150}
+          />
+        </Link>
       </Box>
       <Divider sx={{ width: { xs: "100%", md: "90%" }, opacity: 0.9, my: 2 }} />
     </GenericResponseHandler>

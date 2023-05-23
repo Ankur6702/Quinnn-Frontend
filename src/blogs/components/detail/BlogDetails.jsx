@@ -6,7 +6,7 @@ import BlogDetailsItem from "./BlogDetailsItem";
 const BlogDetails = ({ blogData }) => {
   console.log(blogData);
   return (
-    <Box>
+    <Box width="100%">
       <BlogDetailsItem
         userId={blogData?.author}
         blogId={blogData?._id}

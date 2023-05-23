@@ -14,15 +14,15 @@ import { useMediaQuery, useTheme } from "@mui/material";
 
 import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
 import useAsync from "@/src/common/components/custom-hooks/useAsync";
-import { formatTimeAgo } from "@/src/common/utils/utils";
+import BlogDetailSkeleton from "@/src/common/components/skeletons/BlogDetailSkeleton";
 import ProfileService from "@/src/profile/service/ProfileService";
+import { formatTimeAgo } from "@/src/common/utils/utils";
 import { neutral } from "@/src/common/config/colors";
 import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 import {
   calculateReadTime,
   wrapPreWithScrollableBox,
 } from "../../utils/helper";
-import CircularLoaderSkeleton from "@/src/common/components/skeletons/CircularLoaderSkeleton";
 
 const profileService = new ProfileService();
 const BlogDetailsItem = ({
@@ -51,9 +51,19 @@ const BlogDetailsItem = ({
 
   return (
     <GenericResponseHandler
-      status={status}
+      status={"pending"}
       error={error}
-      skeleton={<CircularLoaderSkeleton />}
+      skeleton={
+        <BlogDetailSkeleton
+          items={1}
+          gridProps={{ sx: { rowGap: 4 } }}
+          gridItemProps={{
+            sx: {
+              borderRadius: 2,
+            },
+          }}
+        />
+      }
     >
       <Box display="flex" flexDirection="column" rowGap={4}>
         <Box display="flex" flexDirection="column" rowGap={4}>
