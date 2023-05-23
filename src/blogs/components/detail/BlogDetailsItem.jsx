@@ -1,9 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -12,12 +10,11 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import Avatar from "@mui/material/Avatar";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
 import useAsync from "@/src/common/components/custom-hooks/useAsync";
-import { sliceString, formatTimeAgo } from "@/src/common/utils/utils";
-import { useMediaQuery, useTheme } from "@mui/material";
-
+import { formatTimeAgo } from "@/src/common/utils/utils";
 import ProfileService from "@/src/profile/service/ProfileService";
 import { neutral } from "@/src/common/config/colors";
 import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
@@ -203,13 +200,13 @@ const BlogDetailsItem = ({
                 display="flex"
                 flexDirection="column"
                 alignItems="center"
-                rowGap={0}
+                rowGap={0.5}
               >
                 <IconButton
                   aria-label="Like"
                   // disabled={isLoading}
-                  sx={{ p: 0 }}
                   size="medium"
+                  sx={{ p: 0 }}
                   // onClick={isLiked ? handleUnLike : handleLike}
                 >
                   <ThumbDownIcon
@@ -233,7 +230,7 @@ const BlogDetailsItem = ({
                     pt: 0.25,
                   }}
                 >
-                  {upvotes.length}
+                  {downvotes.length}
                 </Typography>
               </Box>
             </Box>

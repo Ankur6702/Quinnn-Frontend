@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import CreateIcon from "@mui/icons-material/Create";
@@ -46,6 +47,9 @@ const HeadSection = () => {
           </Button>
         </Link>
       </Box>
+      <Divider
+        sx={{ bgcolor: neutral["900"], width: "100%", opacity: 0.2, my: 4 }}
+      />
     </>
   );
 };

@@ -22,16 +22,23 @@ export const getDayjsDate = (props) => {
   return formattedDate;
 };
 
-export function formatDate(dateString) {
+export const formatDate = (dateString) => {
   const date = new Date(dateString);
   const day = date.toLocaleString("en-US", { day: "numeric" });
   const suffix = getOrdinalSuffix(day);
   const month = date.toLocaleString("default", { month: "short" });
   const year = date.getFullYear();
   return `${day}${suffix} ${month} ${year}`;
-}
+};
 
-export function formatEventDate(startdate, startTime, endTime) {
+export const formatBlogDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { day: "numeric", month: "long", year: "numeric" };
+  const formattedDate = date.toLocaleDateString("en-GB", options);
+  return formattedDate;
+};
+
+export const formatEventDate = (startdate, startTime, endTime) => {
   const dateObj = new Date(startdate);
   const date = dateObj.toLocaleString("en-US", {
     weekday: "short",
@@ -54,7 +61,7 @@ export function formatEventDate(startdate, startTime, endTime) {
   // display the formatted date and time
   const formattedDate = `${date}, ${formattedStartTime} - ${formattedEndTime}`;
   return formattedDate;
-}
+};
 
 function getOrdinalSuffix(day) {
   const j = day % 10;
