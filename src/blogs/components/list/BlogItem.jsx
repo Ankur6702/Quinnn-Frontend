@@ -172,7 +172,7 @@ const BlogItem = ({
                   fontSize: { xs: 12, lg: 14 },
                   fontWeight: 500,
                   height: "100%",
-                  py: 0.75,
+                  py: 0.95,
                   borderRadius: 1,
                 }}
               >

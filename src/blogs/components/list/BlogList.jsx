@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import Avatar from "@mui/material/Avatar";
 
 import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
 import useAsync from "@/src/common/components/custom-hooks/useAsync";
 import BlogService from "../../services/BlogService";
+import BlogsItemsSkeleton from "@/src/common/components/skeletons/BlogsItemsSkeleton";
 import CircularLoaderSkeleton from "@/src/common/components/skeletons/CircularLoaderSkeleton";
 import BlogItem from "./BlogItem";
 
@@ -39,7 +32,17 @@ const BlogList = () => {
     <GenericResponseHandler
       status={status}
       error={error}
-      skeleton={<CircularLoaderSkeleton />}
+      skeleton={
+        <BlogsItemsSkeleton
+          items={2}
+          gridProps={{ sx: { my: 6, rowGap: { xs: 8, md: 12 } } }}
+          gridItemProps={{
+            sx: {
+              borderRadius: 2,
+            },
+          }}
+        />
+      }
     >
       <Box
         display="flex"
