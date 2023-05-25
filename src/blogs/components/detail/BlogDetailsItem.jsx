@@ -162,7 +162,7 @@ const BlogDetailsItem = ({
                         pt: 0.25,
                       }}
                     >
-                      {calculateReadTime(time)}
+                      {calculateReadTime(text)}
                     </Typography>
                   </Box>
                 </Box>

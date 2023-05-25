@@ -20,7 +20,7 @@ import { neutral } from "@/src/common/config/colors";
 import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 import { calculateReadTime } from "../../utils/helper";
 import { sliceString } from "@/src/common/utils/utils";
-import CircularLoaderSkeleton from "@/src/common/components/skeletons/CircularLoaderSkeleton";
+import BlogsItemsSkeleton from "@/src/common/components/skeletons/BlogsItemsSkeleton";
 
 const profileService = new ProfileService();
 const BlogItem = ({
@@ -44,9 +44,9 @@ const BlogItem = ({
 
   useEffect(() => {
     const fetchUser = async () => {
-      run(profileService.fetchUserData(userId))
-        .then((response) => {})
-        .catch((error) => console.error(error));
+      run(profileService.fetchUserData(userId)).catch((error) =>
+        console.error(error)
+      );
     };
     fetchUser();
   }, [run, userId]);
@@ -60,7 +60,17 @@ const BlogItem = ({
     <GenericResponseHandler
       status={status}
       error={error}
-      skeleton={<CircularLoaderSkeleton />}
+      skeleton={
+        <BlogsItemsSkeleton
+          items={2}
+          gridProps={{ sx: { my: 6, rowGap: { xs: 8, md: 12 } } }}
+          gridItemProps={{
+            sx: {
+              borderRadius: 2,
+            },
+          }}
+        />
+      }
     >
       <Box
         display="flex"
@@ -165,7 +175,7 @@ const BlogItem = ({
                   pt: 0.25,
                 }}
               >
-                {calculateReadTime(time)}
+                {calculateReadTime(text)}
               </Typography>
             </Box>
             <Box height="100%">

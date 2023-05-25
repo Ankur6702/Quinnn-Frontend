@@ -18,7 +18,7 @@ const ListBlogs = () => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      run(blogService.fetchBlogs()).catch((error) => console.error(error));
+      run(blogService.fetchUsersBlogs()).catch((error) => console.error(error));
     };
     fetchEvents();
   }, [run]);
