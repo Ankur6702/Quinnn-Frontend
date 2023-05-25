@@ -9,8 +9,10 @@ export default class BlogService extends BaseService {
       `${this.buildUrl(`/blogs?limit=${limit}&page=${page}&sort=${sort}`)}`
     );
   }
-
   async fetchBlogData(id) {
     return await this.get(`${this.buildUrl(`/blog/fetch/${id}`)}`);
+  }
+  async deleteBlog(blogId) {
+    return await this.delete(`${this.buildUrl(`/blog/delete/${blogId}`)}`);
   }
 }

@@ -20,7 +20,6 @@ const BlogList = () => {
     blogService
       .fetchAllBlogs(3, page, "popular")
       .then((response) => {
-        console.log(response);
         const newBlogs = response?.data?.data.filter((blog) => {
           return !blogs?.some((p) => p._id === blog._id);
         });

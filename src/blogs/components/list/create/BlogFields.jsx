@@ -169,11 +169,11 @@ const BlogFields = ({
         <RichTextEditor saveBlog={saveBlog} />
       </Box>
       <Box>
-        {!values["title"] ? (
+        {!values["title"] || !image ? (
           <Button
             type="submit"
             variant="contained"
-            disabled={!values["title"]}
+            disabled={true}
             sx={{ py: 1 }}
           >
             Publish

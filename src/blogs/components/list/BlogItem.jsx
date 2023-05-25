@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 import Link from "next/link";
-import Image from "next/image";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
@@ -16,13 +16,16 @@ import useAsync from "@/src/common/components/custom-hooks/useAsync";
 import { formatBlogDate } from "@/src/common/utils/utils";
 import ShareModal from "@/src/common/components/share/ShareModal";
 import ProfileService from "@/src/profile/service/ProfileService";
+import BlogService from "../../services/BlogService";
 import { neutral } from "@/src/common/config/colors";
 import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
-import { calculateReadTime } from "../../utils/helper";
+import { calculateReadTime, removeHTMLTags } from "../../utils/helper";
 import { sliceString } from "@/src/common/utils/utils";
 import BlogsItemsSkeleton from "@/src/common/components/skeletons/BlogsItemsSkeleton";
+import BlogOptions from "./BlogOptions";
 
 const profileService = new ProfileService();
+const blogService = new BlogService();
 const BlogItem = ({
   userId,
   blogId,
@@ -39,6 +42,8 @@ const BlogItem = ({
   const { data: userData, run, status, error, setData } = useAsync();
   const theme = useTheme();
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
   const [share, setShare] = useState(false);
   const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -51,9 +56,25 @@ const BlogItem = ({
     fetchUser();
   }, [run, userId]);
 
-  const removeHTMLTags = (text) => {
-    const regex = /(<([^>]+)>)/gi;
-    return text.replace(regex, "");
+  const handleDeleteBlog = () => {
+    blogService
+      .deleteBlog(blogId)
+      .then((response) => {
+        removeBlog(blogId);
+        enqueueSnackbar("Blog deleted successfully", {
+          variant: "info",
+          autoHideDuration: 2000,
+          anchorOrigin: { horizontal: "right", vertical: "top" },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        enqueueSnackbar("Something went wrong,Please try again", {
+          variant: "error",
+          autoHideDuration: 2000,
+          anchorOrigin: { horizontal: "right", vertical: "top" },
+        });
+      });
   };
 
   return (
@@ -208,14 +229,23 @@ const BlogItem = ({
             </Box>
           </Box>
         </Box>
-        <Link href={link}>
-          <img
-            src={imageUrl}
-            alt="cover image"
-            width={isDownMd ? 100 : 230}
-            height={isDownMd ? 70 : 150}
-          />
-        </Link>
+        <Box
+          display="flex"
+          flexDirection="column"
+          sx={{ position: "relative" }}
+        >
+          <Link href={link}>
+            <img
+              src={imageUrl}
+              alt="cover image"
+              width={isDownMd ? 100 : 230}
+              height={isDownMd ? 70 : 150}
+            />
+          </Link>
+          <Box sx={{ position: "absolute", bottom: -40, right: 0 }}>
+            <BlogOptions userId={userId} handleDeleteBlog={handleDeleteBlog} />
+          </Box>
+        </Box>
       </Box>
       <Divider sx={{ width: { xs: "100%", md: "90%" }, opacity: 0.9, my: 2 }} />
     </GenericResponseHandler>

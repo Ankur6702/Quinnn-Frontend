@@ -28,8 +28,11 @@ const ListBlogs = () => {
       return blog?._id === id;
     });
     const temp = myBlogs;
-    temp?.data.splice(indexToRemove, 1);
-    setData(temp);
+    console.log(myBlogs.blogs);
+    temp?.blogs.splice(indexToRemove, 1);
+
+    setData({ blogs: myBlogs.blogs });
+    console.log(myBlogs.blogs);
   };
 
   return (

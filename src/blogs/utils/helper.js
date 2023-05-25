@@ -23,3 +23,8 @@ export const wrapPreWithScrollableBox = (text) => {
 
   return updatedText;
 };
+
+export const removeHTMLTags = (text) => {
+  const regex = /(<([^>]+)>)/gi;
+  return text.replace(regex, "");
+};
