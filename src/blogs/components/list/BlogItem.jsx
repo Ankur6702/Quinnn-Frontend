@@ -43,7 +43,6 @@ const BlogItem = ({
   const theme = useTheme();
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-
   const [share, setShare] = useState(false);
   const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
 
