@@ -16,6 +16,7 @@ import GenericResponseHandler from "@/src/common/components/skeletons/GenericRes
 import useAsync from "@/src/common/components/custom-hooks/useAsync";
 import BlogDetailSkeleton from "@/src/common/components/skeletons/BlogDetailSkeleton";
 import ProfileService from "@/src/profile/service/ProfileService";
+import BlogOptions from "./BlogOptions";
 import { formatTimeAgo } from "@/src/common/utils/utils";
 import { neutral } from "@/src/common/config/colors";
 import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
@@ -31,6 +32,8 @@ const BlogDetailsItem = ({
   text,
   imageUrl,
   time,
+  updateDownvotes,
+  updateUpvotes,
   upvotes,
   downvotes,
   title,
@@ -168,82 +171,14 @@ const BlogDetailsItem = ({
                 </Box>
               </Box>
             </Box>
-            <Box display="flex" columnGap={4}>
-              <Box
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                rowGap={0.5}
-              >
-                <IconButton
-                  aria-label="Like"
-                  // disabled={isLoading}
-                  size="medium"
-                  sx={{ p: 0 }}
-                  // onClick={isLiked ? handleUnLike : handleLike}
-                >
-                  <ThumbUpIcon
-                    sx={{
-                      // color: isLiked ? Blues["A100"] : neutral["A200"],
-                      color: neutral["A200"],
-                      fontSize: 22,
-                    }}
-                  />
-                </IconButton>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontSize: { xs: 12, lg: 14 },
-                    color: neutral["700"],
-                    fontWeight: 400,
-                    opacity: 0.8,
-                    display: "flex",
-                    alignItems: "center",
-                    columnGap: 1,
-                    pt: 0.25,
-                  }}
-                >
-                  {upvotes.length}
-                </Typography>
-              </Box>
-              <Box
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                rowGap={0.5}
-              >
-                <IconButton
-                  aria-label="Like"
-                  // disabled={isLoading}
-                  size="medium"
-                  sx={{ p: 0 }}
-                  // onClick={isLiked ? handleUnLike : handleLike}
-                >
-                  <ThumbDownIcon
-                    sx={{
-                      // color: isLiked ? Blues["A100"] : neutral["A200"],
-                      color: neutral["A200"],
-                      fontSize: 22,
-                    }}
-                  />
-                </IconButton>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontSize: { xs: 12, lg: 14 },
-                    color: neutral["700"],
-                    fontWeight: 400,
-                    opacity: 0.8,
-                    display: "flex",
-                    alignItems: "center",
-                    columnGap: 1,
-                    pt: 0.25,
-                  }}
-                >
-                  {downvotes.length}
-                </Typography>
-              </Box>
-            </Box>
+            <BlogOptions
+              updateDownvotes={updateDownvotes}
+              updateUpvotes={updateUpvotes}
+              blogId={blogId}
+              upvotes={upvotes}
+              downvotes={downvotes}
+              link={link}
+            />
           </Box>
         </Box>
         <Divider sx={{ opacity: 0.75 }} />

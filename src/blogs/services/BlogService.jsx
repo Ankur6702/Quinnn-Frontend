@@ -15,4 +15,10 @@ export default class BlogService extends BaseService {
   async deleteBlog(blogId) {
     return await this.delete(`${this.buildUrl(`/blog/delete/${blogId}`)}`);
   }
+  async upvoteBlog(blogId) {
+    return await this.put(`${this.buildUrl(`/blog/upvote/${blogId}`)}`);
+  }
+  async downvoteBlog(blogId) {
+    return await this.put(`${this.buildUrl(`/blog/downvote/${blogId}`)}`);
+  }
 }
