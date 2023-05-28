@@ -34,29 +34,29 @@ const Routes = ({ Component, pageProps }) => {
             </TermsPage>
           </Route>
           <UserProvider>
-            <Route path="/home">
-              <PostsProvider>
+            <PostsProvider>
+              <Route path="/home">
                 <Layout>
                   <HomePage>
                     <Component {...pageProps} />
                   </HomePage>
                 </Layout>
-              </PostsProvider>
-            </Route>
-            <Route path="/profile">
-              <Layout>
-                <ProfilePage Component={Component} pageProps={pageProps} />
-              </Layout>
-            </Route>
-            {!["accounts", "home", "profile", "terms-&-conditions"].includes(
-              router.asPath.split("/")[1]
-            ) && (
-              <Route path="/" isBaseRoute>
+              </Route>
+              <Route path="/profile">
                 <Layout>
-                  <Component {...pageProps} />
+                  <ProfilePage Component={Component} pageProps={pageProps} />
                 </Layout>
               </Route>
-            )}
+              {!["accounts", "home", "profile", "terms-&-conditions"].includes(
+                router.asPath.split("/")[1]
+              ) && (
+                <Route path="/" isBaseRoute>
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </Route>
+              )}{" "}
+            </PostsProvider>
           </UserProvider>
         </>
       )}

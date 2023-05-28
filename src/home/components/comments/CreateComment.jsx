@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { Form, Formik } from "formik";
 import Box from "@mui/material/Box";
@@ -16,7 +17,8 @@ import { neutral } from "@/src/common/config/colors";
 const postsService = new PostsService();
 const CreateComment = ({ handleCreateComment, postId, updateComments }) => {
   const { user } = useUserContext();
-  //   const { posts, setPosts } = usePosts();
+  const router = useRouter();
+  const { posts, setPosts } = usePosts();
   const { enqueueSnackbar } = useSnackbar();
   const [uploading, setUploading] = useState(false);
 
@@ -33,7 +35,22 @@ const CreateComment = ({ handleCreateComment, postId, updateComments }) => {
         text,
       };
       const Response = await postsService.post(reqUrl, requestData);
-      updateComments();
+      {
+        router.asPath === "/home"
+          ? setPosts((prevState) => {
+              const updatedPosts = posts.map((post) => {
+                if (post?._id === postId) {
+                  return {
+                    ...post,
+                    comments: [...post.comments, user?._id],
+                  };
+                }
+                return post;
+              });
+              return updatedPosts;
+            })
+          : updateComments();
+      }
       const newComment = {
         _id: "6473045b32d51335f8d64bda",
         text: text,

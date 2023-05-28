@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -20,6 +21,7 @@ import { useEffect } from "react";
 
 const postsService = new PostsService();
 const PostActions = ({ postId, updateLikes, comments, likes, link }) => {
+  const router = useRouter();
   const [share, setShare] = useState(false);
   const [commentSize, setCommentSize] = useState(comments.length);
   const { user } = useUserContext();
@@ -187,7 +189,7 @@ const PostActions = ({ postId, updateLikes, comments, likes, link }) => {
               fontWeight: 400,
             }}
           >
-            {commentSize}
+            {router.asPath === "/home" ? comments.length : commentSize}
           </Typography>
         </Box>
         <Box>
