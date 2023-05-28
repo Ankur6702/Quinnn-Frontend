@@ -21,6 +21,7 @@ import { useEffect } from "react";
 const postsService = new PostsService();
 const PostActions = ({ postId, updateLikes, comments, likes, link }) => {
   const [share, setShare] = useState(false);
+  const [commentSize, setCommentSize] = useState(comments.length);
   const { user } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const [isLiked, SetIsLiked] = useState();
@@ -28,6 +29,10 @@ const PostActions = ({ postId, updateLikes, comments, likes, link }) => {
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
   const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
+
+  const updateComments = () => {
+    setCommentSize((pre) => pre + 1);
+  };
 
   useEffect(() => {
     if (likes.includes(user?._id)) {
@@ -182,7 +187,7 @@ const PostActions = ({ postId, updateLikes, comments, likes, link }) => {
               fontWeight: 400,
             }}
           >
-            {comments.length}
+            {commentSize}
           </Typography>
         </Box>
         <Box>
@@ -227,7 +232,7 @@ const PostActions = ({ postId, updateLikes, comments, likes, link }) => {
       {showComments && (
         <Box display="flex" flexDirection="column" rowGap={3}>
           <Divider sx={{ opacity: 0.75, mx: 2 }} />
-          <CommentsSection />
+          <CommentsSection postId={postId} updateComments={updateComments} />
         </Box>
       )}
     </>

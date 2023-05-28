@@ -1,54 +1,69 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import IconButton from "@mui/material/IconButton";
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import EventRoundedIcon from "@mui/icons-material/EventRounded";
 
+import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
+import CircularLoaderSkeleton from "@/src/common/components/skeletons/CircularLoaderSkeleton";
+import useAsync from "@/src/common/components/custom-hooks/useAsync";
+import PostsService from "../../service/PostsService";
+import ShowComments from "./ShowComments";
+import CreateComment from "./CreateComment";
 import { neutral } from "@/src/common/config/colors";
 
-const CommentsSection = () => {
+const postsService = new PostsService();
+const CommentsSection = ({ postId, updateComments }) => {
+  const { data: comments, run, status, error, setData } = useAsync();
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      run(postsService.fetchcommments(postId)).catch((error) =>
+        console.error(error)
+      );
+    };
+    fetchComments();
+  }, [postId, run]);
+
+  console.log(comments);
+  const handleCreateComment = (newComment) => {
+    setData((prev) => {
+      return { comments: [newComment, ...prev?.comments] };
+    });
+  };
   return (
-    <Box display="flex" columnGap={4} px={4} py={1} alignItems="center">
-      <Avatar
-        alt="profile-photo"
-        sx={{
-          width: 30,
-          height: 30,
-          fontSize: 15,
-          cursor: "pointer",
-          position: "relative",
-        }}
+    <Box>
+      <GenericResponseHandler
+        status={status}
+        error={error}
+        skeleton={<CircularLoaderSkeleton sx={{ height: 100 }} />}
       >
-        <PersonRoundedIcon />
-      </Avatar>
-      <Box
-        display="flex"
-        component="button"
-        p={3}
-        width="100%"
-        border="none"
-        alignItems="center"
-        bgcolor={neutral["A700"]}
-        borderRadius={{ xs: 2, lg: 10 }}
-        sx={{ cursor: "text" }}
-      >
-        <Typography
-          variant="h4"
-          sx={{
-            fontSize: { xs: 12, lg: 14 },
-            color: neutral["A200"],
-            fontWeight: 500,
-            opacity: 0.8,
-          }}
-        >
-          {`What's on your mind?`}
-        </Typography>
-      </Box>
+        <CreateComment
+          handleCreateComment={handleCreateComment}
+          postId={postId}
+          updateComments={updateComments}
+        />
+
+        <Box my={4} display="flex" flexDirection="column" rowGap={1.5}>
+          {comments?.comments?.length != 0 ? (
+            comments?.comments?.map((comment, index) => (
+              <ShowComments comment={comment} key={index} />
+            ))
+          ) : (
+            <Box display="flex" justifyContent="center" my={3}>
+              <Typography
+                variant="h4"
+                sx={{
+                  fontSize: { xs: 12, lg: 14 },
+                  color: neutral["A200"],
+                  fontWeight: 500,
+                  opacity: 0.8,
+                }}
+              >
+                No commments yet
+              </Typography>
+            </Box>
+          )}
+        </Box>
+      </GenericResponseHandler>
     </Box>
   );
 };

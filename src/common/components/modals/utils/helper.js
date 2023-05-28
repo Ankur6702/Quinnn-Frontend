@@ -50,6 +50,14 @@ export const CreatePostFormValidationSchema = Yup.object(
   CreatePostFormValidation
 );
 
+const CreateCommentsFormValidation = {
+  text: Yup.string(),
+};
+
+export const CreateCommentsFormValidationSchema = Yup.object(
+  CreateCommentsFormValidation
+);
+
 const MAX_FILE_SIZE = 5000000; // 5MB in bytes
 
 const BannerValidation = {
