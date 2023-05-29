@@ -13,11 +13,11 @@ import { Blues, neutral } from "@/src/common/config/colors";
 
 const postsService = new PostsService();
 const CommentActions = ({
-  blogId,
+  commentID,
   likes,
   dislikes,
-  updateUpvotes,
-  updateDownvotes,
+  updateLikes,
+  updateDislikes,
   link,
 }) => {
   const { user } = useUserContext();
@@ -28,113 +28,121 @@ const CommentActions = ({
   const { enqueueSnackbar } = useSnackbar();
   const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
 
-  //   useEffect(() => {
-  //     if (upvotes.includes(user?._id)) {
-  //       SetIsUpvoted(true);
-  //     } else {
-  //       SetIsUpvoted(false);
-  //     }
-  //     if (downvotes.includes(user?._id)) {
-  //       SetIsDownvoted(true);
-  //     } else {
-  //       SetIsDownvoted(false);
-  //     }
-  //   }, [downvotes, upvotes, user?._id]);
+  useEffect(() => {
+    if (likes.includes(user?._id)) {
+      setIsLiked(true);
+    } else {
+      setIsLiked(false);
+    }
+    if (dislikes.includes(user?._id)) {
+      setIsDisliked(true);
+    } else {
+      setIsDisliked(false);
+    }
+  }, [dislikes, likes, user?._id]);
 
-  //   const handleUpvote = async () => {
-  //     setIsLoading(true);
-  //     if (isUpvoted) {
-  //       SetIsUpvoted(!isUpvoted);
-  //       blogService
-  //         .upvoteBlog(blogId)
-  //         .then((response) => {
-  //           updateUpvotes(blogId, false, isDownvoted, user?._id);
-  //           setIsLoading(false);
-  //         })
-  //         .catch((error) => {
-  //           setIsLoading(false);
-  //           console.log(error);
-  //           enqueueSnackbar("Something went wrong,Please try again", {
-  //             variant: "error",
-  //             autoHideDuration: 2000,
-  //             anchorOrigin: { horizontal: "right", vertical: "top" },
-  //           });
-  //         });
-  //     } else {
-  //       blogService
-  //         .upvoteBlog(blogId)
-  //         .then((response) => {
-  //           SetIsUpvoted(!isUpvoted);
-  //           updateUpvotes(blogId, true, isDownvoted, user?._id);
-  //           if (isDownvoted) {
-  //             SetIsDownvoted(false);
-  //           }
-  //           setIsLoading(false);
-  //         })
-  //         .catch((error) => {
-  //           setIsLoading(false);
-  //           console.log(error);
-  //           enqueueSnackbar("Something went wrong,Please try again", {
-  //             variant: "error",
-  //             autoHideDuration: 2000,
-  //             anchorOrigin: { horizontal: "right", vertical: "top" },
-  //           });
-  //         });
-  //     }
-  //     setIsLoading(false);
-  //   };
-  //   const handleDownvote = async () => {
-  //     setIsLoading(true);
-  //     if (isDownvoted) {
-  //       SetIsDownvoted(!isDownvoted);
-  //       blogService
-  //         .downvoteBlog(blogId)
-  //         .then((response) => {
-  //           updateDownvotes(blogId, false, isUpvoted, user?._id);
-  //           setIsLoading(false);
-  //         })
-  //         .catch((error) => {
-  //           setIsLoading(false);
-  //           console.log(error);
-  //           enqueueSnackbar("Something went wrong,Please try again", {
-  //             variant: "error",
-  //             autoHideDuration: 2000,
-  //             anchorOrigin: { horizontal: "right", vertical: "top" },
-  //           });
-  //         });
-  //     } else {
-  //       blogService
-  //         .downvoteBlog(blogId)
-  //         .then((response) => {
-  //           SetIsDownvoted(!isDownvoted);
-  //           updateDownvotes(blogId, true, isUpvoted, user?._id);
-  //           if (isUpvoted) {
-  //             SetIsUpvoted(false);
-  //           }
-  //           setIsLoading(false);
-  //         })
-  //         .catch((error) => {
-  //           setIsLoading(false);
-  //           console.log(error);
-  //           enqueueSnackbar("Something went wrong,Please try again", {
-  //             variant: "error",
-  //             autoHideDuration: 2000,
-  //             anchorOrigin: { horizontal: "right", vertical: "top" },
-  //           });
-  //         });
-  //     }
-  //     setIsLoading(false);
-  //   };
+  const handleLike = async () => {
+    setIsLoading(true);
+    if (isLiked) {
+      postsService
+        .unlikeComment(commentID)
+        .then((response) => {
+          updateLikes(commentID, false, isDisliked, user?._id);
+          setIsLiked(false); // Update isLiked state to false
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.log(error);
+          enqueueSnackbar("Something went wrong,Please try again", {
+            variant: "error",
+            autoHideDuration: 2000,
+            anchorOrigin: { horizontal: "right", vertical: "top" },
+          });
+        });
+    } else {
+      postsService
+        .likeComment(commentID)
+        .then((response) => {
+          updateLikes(commentID, true, isDisliked, user?._id);
+          setIsLiked(true); // Update isLiked state to true
+          if (isDisliked) {
+            setIsDisliked(false);
+            postsService.undislikeComment(commentID).catch((error) => {
+              setIsLoading(false);
+              console.log(error);
+              enqueueSnackbar("Something went wrong,Please try again", {
+                variant: "error",
+                autoHideDuration: 2000,
+                anchorOrigin: { horizontal: "right", vertical: "top" },
+              });
+            });
+          }
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.log(error);
+          enqueueSnackbar("Something went wrong,Please try again", {
+            variant: "error",
+            autoHideDuration: 2000,
+            anchorOrigin: { horizontal: "right", vertical: "top" },
+          });
+        });
+    }
+  };
+
+  const handleDislike = async () => {
+    setIsLoading(true);
+    if (isDisliked) {
+      postsService
+        .undislikeComment(commentID)
+        .then((response) => {
+          updateDislikes(commentID, isLiked, false, user?._id);
+          setIsDisliked(false); // Update isDisliked state to false
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.log(error);
+          enqueueSnackbar("Something went wrong,Please try again", {
+            variant: "error",
+            autoHideDuration: 2000,
+            anchorOrigin: { horizontal: "right", vertical: "top" },
+          });
+        });
+    } else {
+      postsService
+        .dislikeComment(commentID)
+        .then((response) => {
+          updateDislikes(commentID, isLiked, true, user?._id);
+          setIsDisliked(true); // Update isDisliked state to true
+          if (isLiked) {
+            setIsLiked(false);
+          }
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.log(error);
+          enqueueSnackbar("Something went wrong,Please try again", {
+            variant: "error",
+            autoHideDuration: 2000,
+            anchorOrigin: { horizontal: "right", vertical: "top" },
+          });
+        });
+    }
+  };
 
   return (
     <Box display="flex" columnGap={4}>
       <Box display="flex" alignItems="center" columnGap={1}>
         <IconButton
           aria-label="Like"
-          //   disabled={isLoading || isUpvoted}
+          disabled={isLoading}
           size="medium"
           sx={{ p: 0 }}
-          //   onClick={handleUpvote}
+          onClick={handleLike}
         >
           <ThumbUpIcon
             sx={{
@@ -158,10 +166,10 @@ const CommentActions = ({
       <Box display="flex" alignItems="center" columnGap={1}>
         <IconButton
           aria-label="Like"
-          //   disabled={isLoading || isDownvoted}
+          disabled={isLoading}
           size="medium"
           sx={{ p: 0 }}
-          //   onClick={handleDownvote}
+          onClick={handleDislike}
         >
           <ThumbDownIcon
             sx={{

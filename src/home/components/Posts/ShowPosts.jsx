@@ -81,7 +81,6 @@ const ShowPosts = ({ sort }) => {
     return () => window.removeEventListener("scroll", handelInfiniteScroll);
   }, [handelInfiniteScroll]);
 
-  console.log(posts);
   return (
     <Box display="flex" flexDirection="column" rowGap={4}>
       {posts?.map((post, index) => {

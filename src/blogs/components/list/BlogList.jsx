@@ -34,26 +34,6 @@ const BlogList = () => {
       });
   }, [blogs, page]);
 
-  // function updateLikes(id, isLiked, userId) {
-  //   const objIndex = posts?.findIndex((obj) => obj._id === id);
-  //   if (objIndex === -1) {
-  //     console.log("Post not found");
-  //     return;
-  //   }
-  //   const obj = posts?.[objIndex];
-
-  //   if (isLiked) {
-  //     obj.likes.push(userId);
-  //   } else {
-  //     const likeIndex = obj?.likes.findIndex((like) => like === userId);
-  //     if (likeIndex === -1) {
-  //       console.log("user not found");
-  //       return;
-  //     }
-  //     obj.likes.splice(likeIndex, 1);
-  //   }
-  // }
-
   useEffect(() => {
     setLoading(true);
     if (fetchedBlogs) {

@@ -23,7 +23,6 @@ const CommentsSection = ({ postId, updateComments }) => {
     fetchComments();
   }, [postId, run]);
 
-  console.log(comments);
   const handleCreateComment = (newComment) => {
     setData((prev) => {
       return { comments: [newComment, ...prev?.comments] };

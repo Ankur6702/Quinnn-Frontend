@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 
-import GenericListSkeleton from "@/src/common/components/skeletons/GenericListSkeleton";
 import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
 import ProfileService from "@/src/profile/service/ProfileService";
 import CommentActions from "./CommentActions";
@@ -17,7 +16,6 @@ import CommentSkeleton from "@/src/common/components/skeletons/CommentSkeleton";
 const profileService = new ProfileService();
 const ShowComments = ({ comment }) => {
   const { data: userData, run, status, error, setData } = useAsync();
-
   useEffect(() => {
     const fetchUser = async () => {
       run(profileService.fetchUserData(comment?.userID)).catch((error) =>
@@ -26,6 +24,54 @@ const ShowComments = ({ comment }) => {
     };
     fetchUser();
   }, [comment?.userID, run]);
+
+  const updateLikes = (id, isLiked, isDisliked, userId) => {
+    const obj = comment;
+    if (isLiked) {
+      if (isDisliked) {
+        const dislikedIndex = obj?.dislikes.findIndex(
+          (dislike) => dislike === userId
+        );
+        if (dislikedIndex === -1) {
+          console.log("user not found");
+          return;
+        }
+        obj.dislikes.splice(dislikedIndex, 1);
+      }
+      obj.likes.push(userId);
+    } else {
+      const likedIndex = obj?.likes.findIndex((like) => like === userId);
+      if (likedIndex === -1) {
+        console.log("user not found");
+        return;
+      }
+      obj.likes.splice(likedIndex, 1);
+    }
+  };
+
+  const updateDislikes = (id, isLiked, isDisliked, userId) => {
+    const obj = comment;
+    if (isDisliked) {
+      if (isLiked) {
+        const likedIndex = obj?.likes.findIndex((like) => like === userId);
+        if (likedIndex === -1) {
+          console.log("user not found");
+          return;
+        }
+        obj.likes.splice(likedIndex, 1);
+      }
+      obj.dislikes.push(userId);
+    } else {
+      const dislikedIndex = obj?.dislikes.findIndex(
+        (dislike) => dislike === userId
+      );
+      if (dislikedIndex === -1) {
+        console.log("user not found");
+        return;
+      }
+      obj.dislikes.splice(dislikedIndex, 1);
+    }
+  };
 
   return (
     <GenericResponseHandler
@@ -96,6 +142,9 @@ const ShowComments = ({ comment }) => {
               <CommentActions
                 likes={comment?.likes}
                 dislikes={comment?.dislikes}
+                commentID={comment?._id}
+                updateLikes={updateLikes}
+                updateDislikes={updateDislikes}
               />
             </Box>
           </Box>

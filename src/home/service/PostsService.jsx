@@ -32,4 +32,16 @@ export default class PostsService extends BaseService {
       `${this.buildUrl(`/comment/delete/${commentId}`)}`
     );
   }
+  async likeComment(id) {
+    return await this.put(`${this.buildUrl(`/comment/like/${id}`)}`);
+  }
+  async dislikeComment(id) {
+    return await this.put(`${this.buildUrl(`/comment/dislike/${id}`)}`);
+  }
+  async unlikeComment(id) {
+    return await this.put(`${this.buildUrl(`/comment/unlike/${id}`)}`);
+  }
+  async undislikeComment(id) {
+    return await this.put(`${this.buildUrl(`/comment/undislike/${id}`)}`);
+  }
 }

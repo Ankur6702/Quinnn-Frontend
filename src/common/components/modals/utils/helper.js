@@ -150,7 +150,6 @@ const CreateEventValidation = {
     .required("Start date is required"),
   startTime: Yup.string()
     .test("is-time", "Invalid start time format", (value) => {
-      console.log;
       // Regular expression to validate time in the format "HH:MM"
       const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
       return timeRegex.test(value);
@@ -168,7 +167,6 @@ const CreateEventValidation = {
     .required("End date is required"),
   endTime: Yup.string()
     .test("is-time", "Invalid start time format", (value) => {
-      console.log;
       // Regular expression to validate time in the format "HH:MM"
       const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
       return timeRegex.test(value);
