@@ -160,7 +160,6 @@ const CreatePostModal = ({ isOpen, handleClose }) => {
           imageURL: null,
         };
         const Response = await postsService.post(reqUrl, requestData);
-        console.log(Response);
         setUser({
           ...user,
           posts: [...user.posts, Response?.data?.data],

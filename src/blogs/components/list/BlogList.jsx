@@ -1,10 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 
-import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
-import BlogsItemsSkeleton from "@/src/common/components/skeletons/BlogsItemsSkeleton";
 import BouncingDotsLoader from "@/src/common/components/skeletons/BouncingDotsLoader";
-import useAsync from "@/src/common/components/custom-hooks/useAsync";
 import BlogService from "../../services/BlogService";
 import BlogItem from "./BlogItem";
 

@@ -52,7 +52,7 @@ const CreateComment = ({ handleCreateComment, postId, updateComments }) => {
           : updateComments();
       }
       const newComment = {
-        _id: "6473045b32d51335f8d64bda",
+        _id: Response?.data?.commentId,
         text: text,
         userID: user?._id,
         postID: postId,

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,19 +8,45 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import ShareIcon from "@mui/icons-material/Share";
 import EventIcon from "@mui/icons-material/Event";
-import { useMediaQuery, useTheme } from "@mui/material";
 
+import { useMediaQuery, useTheme } from "@mui/material";
 import ShareModal from "@/src/common/components/share/ShareModal";
+import useUserContext from "@/src/profile/context/useUserContext";
+import EventsService from "../../services/EventsService";
+import SubmitButton from "@/src/common/components/forms/SubmitButton";
+
 import EventOptions from "./EventOptions";
 import { formatEventDate } from "@/src/common/utils/utils";
 import { USER_NOT_FOUND } from "@/src/profile/utils/constants";
 import { neutral } from "@/src/common/config/colors";
 
+const eventsService = new EventsService();
 const EventDetails = ({ event, eventCreator }) => {
   const theme = useTheme();
   const router = useRouter();
+  const { user } = useUserContext();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [noOfAttendess, setNoOfAttendess] = useState(event?.attendees?.length);
   const [share, setShare] = useState(false);
   const isDownMd = useMediaQuery(theme.breakpoints.down("md"));
+
+  useEffect(() => {
+    if (event?.attendees.includes(user?._id)) {
+      setIsRegistered(true);
+    } else {
+      setIsRegistered(false);
+    }
+  }, [event?.attendees, user?._id]);
+
+  const handleRegister = async () => {
+    const reqUrl = `${process.env.API_BASE_SERVICE}/api/event/register/${event?._id}`;
+    setIsLoading(true);
+    const Response = await eventsService.put(reqUrl);
+    setIsRegistered(true);
+    setNoOfAttendess((prev) => prev + 1);
+    setIsLoading(false);
+  };
 
   return (
     <>
@@ -191,22 +217,38 @@ const EventDetails = ({ event, eventCreator }) => {
                   fontSize: { xs: 12, lg: 14 },
                 }}
               >
-                {`${event?.attendees?.length} attendees`}
+                {`${noOfAttendess} attendees`}
               </Typography>
             </Box>
             <Box display="flex" columnGap={4} px={6}>
-              <Button
-                variant="contained"
-                sx={{
-                  textTransform: "none",
-                  fontSize: { xs: 12, md: 16 },
-                  fontWeight: 500,
-                  borderRadius: 2,
-                  boxShadow: "none",
-                }}
-              >
-                Attend
-              </Button>
+              {isRegistered ? (
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={true}
+                  sx={{ py: 1 }}
+                >
+                  Registered
+                </Button>
+              ) : (
+                <SubmitButton
+                  onClick={handleRegister}
+                  disabled={isLoading}
+                  variant="contained"
+                  buttonProps={{
+                    sx: {
+                      textTransform: "none",
+                      fontSize: { xs: 12, md: 16 },
+                      fontWeight: 500,
+                      borderRadius: 2,
+                      boxShadow: "none",
+                    },
+                  }}
+                >
+                  Attend
+                </SubmitButton>
+              )}
+
               <Button
                 variant="outlined"
                 onClick={() => setShare(true)}

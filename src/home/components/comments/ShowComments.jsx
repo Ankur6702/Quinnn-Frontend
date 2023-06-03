@@ -79,7 +79,6 @@ const ShowComments = ({ comment, handleRemoveComment }) => {
     postsService
       .deleteComment(comment?._id)
       .then((response) => {
-        console.log(response);
         handleRemoveComment(comment?._id);
       })
       .catch((error) => {

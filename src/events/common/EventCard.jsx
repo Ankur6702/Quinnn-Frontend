@@ -8,7 +8,7 @@ import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import CardMedia from "@mui/material/CardMedia";
 import useUserContext from "@/src/profile/context/useUserContext";
 
-import { formatDate, sliceString } from "@/src/common/utils/utils";
+import { formatDate, formatTime, sliceString } from "@/src/common/utils/utils";
 import { Blues, neutral } from "@/src/common/config/colors";
 import { BANNER_IMAGE } from "@/src/profile/utils/constants";
 
@@ -69,7 +69,7 @@ const EventCard = ({ event }) => {
                 fontSize: { xs: 12, lg: 14 },
               }}
             >
-              6:30 PM(IST)
+              {`${formatTime(event?.startTime)}(IST)`}
             </Typography>
           </Box>
         </Box>
@@ -80,7 +80,7 @@ const EventCard = ({ event }) => {
             borderRadius: "50%",
             width: "10px !important",
             height: "10px !important",
-            bgcolor: event?.isOnline === "Online" ? "green" : "red",
+            bgcolor: event?.isOnline ? "green" : "red",
           }}
         ></Box>
         <Typography
@@ -95,7 +95,7 @@ const EventCard = ({ event }) => {
           {event?.isOnline ? "Online" : "Offline"}
         </Typography>
       </Box>
-      <Box px={4} my={3}>
+      <Box px={4} my={3} height="100%">
         <Box display="flex" flexDirection="column" rowGap={2}>
           <Link href={`/events/${event?._id}`} style={{ width: "100%" }}>
             <Typography
@@ -109,7 +109,7 @@ const EventCard = ({ event }) => {
               {sliceString(event?.title, 60)}
             </Typography>
           </Link>
-          <Box>
+          <Box sx={{ position: "relative", bottom: 0 }}>
             <Box display="flex" flexDirection="column" rowGap={2}>
               <Box display="flex" justifyContent="space-between">
                 <Link href={`/profile/${user?.username}`}>

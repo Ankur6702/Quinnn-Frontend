@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 import {
   getStorage,
   ref,
@@ -38,6 +39,7 @@ const md = new MarkdownIt({
 const eventsService = new EventsService();
 const CreateEventModal = ({ isOpen, handleClose }) => {
   const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
@@ -117,7 +119,6 @@ const CreateEventModal = ({ isOpen, handleClose }) => {
             };
 
             const Response = await eventsService.post(reqUrl, requestData);
-            // setUser(Response?.data?.data);
             enqueueSnackbar("Event Created successfully", {
               variant: "info",
               autoHideDuration: 2000,
@@ -127,6 +128,7 @@ const CreateEventModal = ({ isOpen, handleClose }) => {
             setImage(null);
             setImageUrl(null);
             handleClose();
+            router.push(`/events/${Response?.data?.event?._id}`);
           }
         );
       } else {

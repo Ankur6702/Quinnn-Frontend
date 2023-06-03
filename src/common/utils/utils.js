@@ -30,6 +30,16 @@ export const formatDate = (dateString) => {
   const year = date.getFullYear();
   return `${day}${suffix} ${month} ${year}`;
 };
+export const formatTime = (time) => {
+  const [hours, minutes] = time.split(":");
+  let convertedHours = parseInt(hours, 10) % 12;
+  if (convertedHours === 0) {
+    convertedHours = 12;
+  }
+  const period = parseInt(hours, 10) < 12 ? "AM" : "PM";
+  const convertedTime = `${convertedHours}:${minutes} ${period}`;
+  return convertedTime;
+};
 
 export const formatBlogDate = (dateString) => {
   const date = new Date(dateString);

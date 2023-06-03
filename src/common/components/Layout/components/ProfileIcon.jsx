@@ -161,23 +161,24 @@ const ProfileIcon = () => {
           </MenuItem>
         </Link>
         <Divider sx={{ opacity: 0.75, mx: 2 }} />
-        <Box py={1}>
-          <MenuItem>
-            <ListItemIcon>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            <Typography
-              variant="h6"
-              sx={{
-                color: neutral["900"],
-                fontWeight: 400,
-                fontSize: { xs: 14, lg: 16 },
-              }}
-            >
-              Account Settings
-            </Typography>
-          </MenuItem>
-          {/* <MenuItem>
+        <Link href={"/settings"}>
+          <Box py={1}>
+            <MenuItem>
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
+              <Typography
+                variant="h6"
+                sx={{
+                  color: neutral["900"],
+                  fontWeight: 400,
+                  fontSize: { xs: 14, lg: 16 },
+                }}
+              >
+                Account Settings
+              </Typography>
+            </MenuItem>
+            {/* <MenuItem>
             <ListItemIcon>
               <PostAddIcon fontSize="small" />
             </ListItemIcon>
@@ -192,7 +193,8 @@ const ProfileIcon = () => {
               Activity Logs
             </Typography>
           </MenuItem> */}
-        </Box>
+          </Box>
+        </Link>
         <Divider sx={{ opacity: 0.75, mx: 2 }} />
         <Box py={1}>
           <Link href="/blogs">
