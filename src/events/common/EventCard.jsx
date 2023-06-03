@@ -98,7 +98,7 @@ const EventCard = ({ event }) => {
             borderRadius: "50%",
             width: "10px !important",
             height: "10px !important",
-            bgcolor: event?.isOnline ? "green" : "red",
+            bgcolor: event?.isOnline ? "green" : "#002222",
           }}
         ></Box>
         <Typography

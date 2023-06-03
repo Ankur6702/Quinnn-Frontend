@@ -191,7 +191,7 @@ const EventDetails = ({ event, eventCreator }) => {
                           borderRadius: "50%",
                           width: "10px !important",
                           height: "10px !important",
-                          bgcolor: "red",
+                          bgcolor: "#002222",
                         }}
                       ></Box>
                     </Box>
