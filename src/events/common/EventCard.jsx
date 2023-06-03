@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -8,12 +8,30 @@ import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import CardMedia from "@mui/material/CardMedia";
 import useUserContext from "@/src/profile/context/useUserContext";
 
+import EventsService from "../services/EventsService";
 import { formatDate, formatTime, sliceString } from "@/src/common/utils/utils";
 import { Blues, neutral } from "@/src/common/config/colors";
 import { BANNER_IMAGE } from "@/src/profile/utils/constants";
 
+const eventsService = new EventsService();
 const EventCard = ({ event }) => {
+  const [eventCreator, setEventCreator] = useState(null);
   const { user } = useUserContext();
+
+  const fetchUserData = useCallback(async () => {
+    try {
+      const reqUserUrl = `${process.env.API_BASE_SERVICE}/api/fetchUser/${event?.creator}`;
+      const res = await eventsService.get(reqUserUrl);
+      setEventCreator(res?.data?.data?.username);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [event?.creator]);
+
+  useEffect(() => {
+    fetchUserData();
+  }, [fetchUserData]);
+
   return (
     <Box
       maxWidth={350}
@@ -121,7 +139,7 @@ const EventCard = ({ event }) => {
                       fontSize: { xs: 12, lg: 14 },
                     }}
                   >
-                    {user?.name}
+                    {eventCreator}
                   </Typography>
                 </Link>
                 <Typography
