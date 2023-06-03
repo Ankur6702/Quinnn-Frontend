@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 
 import GenericResponseHandler from "@/src/common/components/skeletons/GenericResponseHandler";
 import ProfileService from "@/src/profile/service/ProfileService";
+import PostsService from "../../service/PostsService";
 import CommentActions from "./CommentActions";
 import CommentOptions from "./CommentOptions";
 import useAsync from "@/src/common/components/custom-hooks/useAsync";
@@ -14,7 +15,8 @@ import { MALE_AVATAR, FEMALE_AVATAR } from "@/src/profile/utils/constants";
 import CommentSkeleton from "@/src/common/components/skeletons/CommentSkeleton";
 
 const profileService = new ProfileService();
-const ShowComments = ({ comment }) => {
+const postsService = new PostsService();
+const ShowComments = ({ comment, handleRemoveComment }) => {
   const { data: userData, run, status, error, setData } = useAsync();
   useEffect(() => {
     const fetchUser = async () => {
@@ -71,6 +73,23 @@ const ShowComments = ({ comment }) => {
       }
       obj.dislikes.splice(dislikedIndex, 1);
     }
+  };
+
+  const handleDeleteComment = () => {
+    postsService
+      .deleteComment(comment?._id)
+      .then((response) => {
+        console.log(response);
+        handleRemoveComment(comment?._id);
+      })
+      .catch((error) => {
+        console.log(error);
+        enqueueSnackbar("Something went wrong,Please try again", {
+          variant: "error",
+          autoHideDuration: 2000,
+          anchorOrigin: { horizontal: "right", vertical: "top" },
+        });
+      });
   };
 
   return (
@@ -150,7 +169,10 @@ const ShowComments = ({ comment }) => {
           </Box>
         </Box>
         <Box my={0.5}>
-          <CommentOptions userId={comment?.userID} />
+          <CommentOptions
+            userId={comment?.userID}
+            handleDeleteComment={handleDeleteComment}
+          />
         </Box>
       </Box>
     </GenericResponseHandler>

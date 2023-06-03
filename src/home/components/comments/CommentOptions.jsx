@@ -69,7 +69,7 @@ const CommentOptions = ({ userId, handleDeleteComment }) => {
       >
         {user?._id === userId && (
           <MenuItem
-            onClick={handleDeleteComment}
+            // onClick={handleDeleteComment}
             sx={{
               color: neutral["900"],
               "&:hover": {

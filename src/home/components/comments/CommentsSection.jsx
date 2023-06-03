@@ -28,6 +28,16 @@ const CommentsSection = ({ postId, updateComments }) => {
       return { comments: [newComment, ...prev?.comments] };
     });
   };
+
+  const handleRemoveComment = (id) => {
+    const indexToRemove = comments?.comments.findIndex((comment) => {
+      return comment?._id === id;
+    });
+    const temp = comments;
+    temp?.comments.splice(indexToRemove, 1);
+    setData(temp);
+  };
+
   return (
     <Box>
       <GenericResponseHandler
@@ -44,7 +54,11 @@ const CommentsSection = ({ postId, updateComments }) => {
         <Box my={4} display="flex" flexDirection="column" rowGap={1.5}>
           {comments?.comments?.length != 0 ? (
             comments?.comments?.map((comment, index) => (
-              <ShowComments comment={comment} key={index} />
+              <ShowComments
+                comment={comment}
+                key={index}
+                handleRemoveComment={handleRemoveComment}
+              />
             ))
           ) : (
             <Box display="flex" justifyContent="center" my={3}>
