@@ -1,4 +1,4 @@
-export const calculateReadTime = (text, readingSpeed = 60) => {
+export const calculateReadTime = (text, readingSpeed = 150) => {
   // Split the text into words
   const words = text.trim().split(/\s+/);
 
