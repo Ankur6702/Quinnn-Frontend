@@ -15,7 +15,7 @@ const BlogList = () => {
 
   const fetchBlogs = useCallback(async () => {
     blogService
-      .fetchAllBlogs(3, page, "popular")
+      .fetchAllBlogs(3, page, "recent")
       .then((response) => {
         const newBlogs = response?.data?.data.filter((blog) => {
           return !blogs?.some((p) => p._id === blog._id);
