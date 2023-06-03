@@ -1,29 +1,36 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import Image from "next/image";
+
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import NetflixLogo from "./netflix-logo.png";
+import RedditLogo from "./Reddit-logo.jpg";
+import GoodreadsLogo from "./goodreads.jpg";
 
 import { neutral } from "@/src/common/config/colors";
 
 const AnswerCard = () => {
   const cards = [
     {
-      question: "How can I setup my user profile?",
-      description: `
-      You can set it up by signing up for quinn. Once you're done with verifying your email, you can start setting up your profile. You can edit your profile anytime by clicking on the profile icon on the top right corner of the page. You can also change your password by clicking on the "Change Password" button on the profile page.
-      `,
+      question: "Netflix Series: 'Queer Eye'",
+      description: "Discover the heartwarming reality show where a group of experts helps individuals transform their lives and boost their confidence.",
+      link: "https://www.netflix.com/title/80160037",
+      logo: NetflixLogo,
     },
     {
-      question: "Can I have only selected people see my posts?",
-      description: `
-      Yes you can. You can set your privacy settings by clicking on the "Privacy Settings" button on the profile page. Once made private, only your followers will be able to see your posts. You can also make your posts visible to only your followers by clicking on the "Make Private" button on the post.
-      `,
+      question: "Reddit Discussion: LGBTQ+ Mental Health Support",
+      description: "Join the active Reddit community discussing mental health support and sharing experiences within the LGBTQ+ community.",
+      link: "https://www.reddit.com/r/lgbt/comments/13wz76o/happy_pride_month_leave_a_message_in_the_rlgbt/",
+      logo: RedditLogo,
     },
     {
-      question: "Can I create events?",
-      description: `
-      Absolutely! You can create events by clicking on the "Create Event" button on the home page. You can also edit your events by clicking on the "Edit Event" button on the event page. You can also delete your events by clicking on the "Delete Event" button on the event page. You can also delete your events by clicking on the "Delete Event" button on the event page.
-      `,
-    },
+      question: "Book Recommendation: 'Red, White & Royal Blue' by Casey McQuiston",
+      description: "Explore this popular LGBTQ+ romance novel about a fictional romance between the First Son of the United States and a British prince.",
+      link: "https://www.goodreads.com/book/show/41150487-red-white-royal-blue",
+      logo: GoodreadsLogo,
+    }
   ];
   return (
     <Box
@@ -48,7 +55,7 @@ const AnswerCard = () => {
             fontSize: { xs: 14, lg: 16 },
           }}
         >
-          Quick Answers
+          Trending over the past week<TrendingUpIcon/>
         </Typography>
       </Box>
 
@@ -65,16 +72,21 @@ const AnswerCard = () => {
               borderRadius: 3,
               boxShadow:
                 " rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
+                transition: 'box-shadow .3s ease',
+                '&:hover': {
+                boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
+                }, 
             }}
           >
-            <Box display="flex" columnGap={4} alignItems="center">
+            <Box display="flex" columnGap={4} alignItems="center" onClick={() => window.open(cards?.link, '_blank')} sx={{ cursor: 'pointer',}}>
               <Box
                 display="flex"
                 flexDirection="row"
                 columnGap={4}
                 alignItems="center"
               >
-                <Typography
+              <Image src={cards.logo} alt="logo" height={40} />              
+              <Typography
                   variant="h4"
                   sx={{
                     color: neutral["900"],
