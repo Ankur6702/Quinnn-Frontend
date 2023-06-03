@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
@@ -14,6 +15,7 @@ import { neutral } from "@/src/common/config/colors";
 import { FEMALE_AVATAR, MALE_AVATAR } from "@/src/profile/utils/constants";
 
 const CreatePost = () => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const { user } = useUserContext();
 
@@ -107,7 +109,7 @@ const CreatePost = () => {
           </Tooltip> */}
 
               <Tooltip title="Add a event">
-                <IconButton size="small">
+                <IconButton size="small" onClick={() => router.push("/events")}>
                   <EventRoundedIcon
                     sx={{ color: neutral["700"], fontSize: 20 }}
                   />

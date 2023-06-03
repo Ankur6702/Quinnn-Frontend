@@ -47,7 +47,7 @@ const YourEvents = () => {
       width="100%"
       ref={sectionRef}
     >
-      <Box>
+      <Box id="myevents">
         <Typography
           variant="h3"
           sx={{

@@ -49,7 +49,7 @@ const UpcommingEvents = () => {
       width="100%"
       ref={sectionRef}
     >
-      <Box>
+      <Box id="upcomingEvents">
         <Typography
           variant="h3"
           sx={{

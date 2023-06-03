@@ -30,6 +30,16 @@ export const formatDate = (dateString) => {
   const year = date.getFullYear();
   return `${day}${suffix} ${month} ${year}`;
 };
+export const getDateAndMonth = (dateString) => {
+  const date = new Date(dateString);
+  const dayOfMonth = date.getDate();
+  const month = date.toLocaleString("default", { month: "short" });
+  return {
+    dayOfMonth,
+    month,
+  };
+};
+
 export const formatTime = (time) => {
   const [hours, minutes] = time.split(":");
   let convertedHours = parseInt(hours, 10) % 12;
