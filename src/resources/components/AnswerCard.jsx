@@ -33,88 +33,88 @@ const AnswerCard = () => {
     }
   ];
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      columnGap={6}
-      boxSizing="content-box"
-      p={4}
-      padding={15}
-      alignItems="center"
-      margin="auto"
-    >
-      <Box display="flex" alignItems="center" flexDirection="row" rowGap={6}>
-        <Typography
-          variant="h4"
-          component="span"
-          padding={10}
+  <Box
+    display="flex"
+    flexDirection="column"
+    columnGap={6}
+    boxSizing="content-box"
+    p={4}
+    padding={15}
+    alignItems="center"
+    margin="auto"
+  >
+    <Box display="flex" alignItems="center" flexDirection="row" rowGap={6}>
+      <Typography
+        variant="h4"
+        component="span"
+        padding={10}
+        alignItems="center"
+        sx={{
+          color: neutral["800"],
+          fontWeight: 500,
+          fontSize: { xs: 14, lg: 16 },
+        }}
+      >
+        Trending over the past week<TrendingUpIcon />
+      </Typography>
+    </Box>
+
+    <Box display="flex" flexDirection="column" rowGap={8} width="100%">
+      {cards.map((card, index) => (
+        <Box
+          key={index}
+          display="flex"
+          justifyContent="space-between"
           alignItems="center"
+          padding={10}
           sx={{
-            color: neutral["800"],
-            fontWeight: 500,
-            fontSize: { xs: 14, lg: 16 },
+            bgcolor: neutral["A500"],
+            borderRadius: 3,
+            boxShadow:
+              " rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
+            transition: "box-shadow .3s ease",
+            "&:hover": {
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
+            },
           }}
         >
-          Trending over the past week<TrendingUpIcon/>
-        </Typography>
-      </Box>
-
-      <Box display="flex" flexDirection="column" rowGap={8}>
-        {cards.map((cards, index) => (
           <Box
-            key={index}
             display="flex"
-            justifyContent="space-between"
+            columnGap={4}
             alignItems="center"
-            padding={10}
-            sx={{
-              bgcolor: neutral["A500"],
-              borderRadius: 3,
-              boxShadow:
-                " rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
-                transition: 'box-shadow .3s ease',
-                '&:hover': {
-                boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-                }, 
-            }}
+            onClick={() => window.open(card.link, "_blank")}
+            sx={{ cursor: "pointer" }}
           >
-            <Box display="flex" columnGap={4} alignItems="center" onClick={() => window.open(cards?.link, '_blank')} sx={{ cursor: 'pointer',}}>
-              <Box
-                display="flex"
-                flexDirection="row"
-                columnGap={4}
-                alignItems="center"
-              >
-              <Image src={cards.logo} alt="logo" height={40} />              
+            <Box display="flex" flexDirection="row" columnGap={4} alignItems="center">
+            <Image src={card.logo} alt="logo" height={'25'} /> 
               <Typography
-                  variant="h4"
-                  sx={{
-                    color: neutral["900"],
-                    fontWeight: 500,
-                    fontSize: { xs: 14, lg: 14 },
-                    padding: 2,
-                  }}
-                >
-                  {cards?.question}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    color: neutral["700"],
-                    fontWeight: 400,
-                    fontSize: { xs: 12, lg: 12 },
-                    padding: 2,
-                  }}
-                >
-                  {cards?.description}
-                </Typography>
-              </Box>
+                variant="h4"
+                sx={{
+                  color: neutral["900"],
+                  fontWeight: 500,
+                  fontSize: { xs: 14, lg: 14 },
+                  padding: 2,
+                }}
+              >
+                {card.name}
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{
+                  color: neutral["700"],
+                  fontWeight: 400,
+                  fontSize: { xs: 12, lg: 12 },
+                  padding: 2,
+                }}
+              >
+                {card.description}
+              </Typography>
             </Box>
           </Box>
-        ))}
-      </Box>
+        </Box>
+      ))}
     </Box>
-  );
+  </Box>
+);
 };
-
 export default AnswerCard;

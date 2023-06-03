@@ -23,7 +23,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+.pnpmgit config pull.rebase false-debug.log*
 
 # local env files
 .env*.local

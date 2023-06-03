@@ -31,13 +31,10 @@ const CategoryCards = () => {
       width="100%"
       display="flex"
       flexDirection="column"
-      columnGap={6}
-      p={4}
-      padding={10}
       alignItems="center"
       margin="auto"
     >
-      <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="center" mb={4}>
         <Typography
           variant="h4"
           component="span"
@@ -52,81 +49,84 @@ const CategoryCards = () => {
           Browse categories
         </Typography>
       </Box>
-
-      <Box display="flex" flexDirection="row" columnGap={5}>
-        {cards.map((cards, index) => (
+  
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="center"
+        alignItems="stretch"
+        gap={4}
+      >
+        {cards.map((card, index) => (
           <Box
             key={index}
+            flex="1 1 300px"
             display="flex"
-            justifyContent="space-between"
+            flexDirection="column"
+            justifyContent="center"
             alignItems="center"
-            padding={10}
+            p={3}
             sx={{
               bgcolor: neutral["A500"],
               borderRadius: 3,
               boxShadow:
-                " rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
-                transition: 'box-shadow .3s ease',
-                '&:hover': {
-                boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-                }, 
+                "rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
+              transition: "box-shadow .3s ease",
+              "&:hover": {
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
+              },
             }}
           >
-            <Box display="flex" columnGap={4} alignItems="center" onClick={() => window.open(cards?.link, '_blank')} sx={{ cursor: 'pointer',}}>
-              <Box
-                display="flex"
-                flexDirection="column"
-                columnGap={4}
-                alignItems="center"
-              >
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              onClick={() => window.open(card?.link, '_blank')}
+              sx={{ cursor: 'pointer' }}
+            >
+              {card?.name === "Assistance" && (
                 <IconButton>
-                  {cards?.name == "Assistance" ? (
-                    <AssistantIcon
-                      sx={{ fontSize: 35, color: Blues["A100"] }}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                  {cards?.name == "User Guide" ? (
-                    <MenuBookIcon sx={{ fontSize: 35, color: Blues["A100"] }} />
-                  ) : (
-                    <></>
-                  )}
-                  {cards?.name == "Developers" ? (
-                    <CodeIcon sx={{ fontSize: 35, color: Blues["A100"] }} />
-                  ) : (
-                    <></>
-                  )}
+                  <AssistantIcon sx={{ fontSize: 35, color: Blues["A100"] }} />
                 </IconButton>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    color: neutral["900"],
-                    fontWeight: 500,
-                    fontSize: { xs: 14, lg: 14 },
-                    padding: 2,
-                  }}
-                >
-                  {cards?.name}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    color: neutral["700"],
-                    fontWeight: 400,
-                    fontSize: { xs: 12, lg: 12 },
-                    padding: 2,
-                  }}
-                >
-                  {cards?.description}
-                </Typography>
-              </Box>
+              )}
+              {card?.name === "User Guide" && (
+                <IconButton>
+                  <MenuBookIcon sx={{ fontSize: 35, color: Blues["A100"] }} />
+                </IconButton>
+              )}
+              {card?.name === "Developers" && (
+                <IconButton>
+                  <CodeIcon sx={{ fontSize: 35, color: Blues["A100"] }} />
+                </IconButton>
+              )}
+              <Typography
+                variant="h4"
+                sx={{
+                  color: neutral["900"],
+                  fontWeight: 500,
+                  fontSize: { xs: 14, lg: 14 },
+                  padding: 2,
+                }}
+              >
+                {card?.name}
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{
+                  color: neutral["700"],
+                  fontWeight: 400,
+                  fontSize: { xs: 12, lg: 12 },
+                  padding: 2,
+                }}
+              >
+                {card?.description}
+              </Typography>
             </Box>
           </Box>
         ))}
       </Box>
     </Box>
   );
-};
+};  
 
 export default CategoryCards;
