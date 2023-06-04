@@ -58,14 +58,25 @@ Start the server in development mode with
 
 ### Profile/dashboard
 <div style="display:flex; flex-wrap:wrap;">
-  <img src="https://user-images.githubusercontent.com/74523865/229116253-8e1e0185-9b1c-479f-b849-9b4092f3728c.png" style="width:49%;">
-  <img src="https://user-images.githubusercontent.com/74523865/229116515-4ed6c312-7a83-4fc5-b8e8-28fcc8a86d8f.png" style="width:49%;">
+  <img src="https://github.com/Ankur6702/Quinnn-Frontend/assets/74523865/1eb409cf-42f5-4001-836f-bc45893d7697" style="width:49%;">
+  <img src="https://github.com/Ankur6702/Quinnn-Frontend/assets/74523865/8f8470f9-0772-4c3d-81b3-34342980b580" style="width:49%;">
 </div>
 
-### Event/Resources
+### Blogs
 <div style="display:flex; flex-wrap:wrap;">
-  <img src="https://user-images.githubusercontent.com/74523865/229269386-c2c4991e-0c60-4258-94c5-948b256e661c.png" style="width:49%;">
-  <img src="https://user-images.githubusercontent.com/74523865/229269360-2827b57c-371f-483d-9ead-f2110e695b01.png" style="width:49%;">
+  <img src="https://github.com/Ankur6702/Quinnn-Frontend/assets/74523865/beb3a825-0a43-4468-ad5e-5f2154092307" style="width:49%;">
+  <img src="https://github.com/Ankur6702/Quinnn-Frontend/assets/74523865/5f1c2835-f9ed-444a-8761-b8dfc54a9107" style="width:49%;">
+</div>
+
+### Events & Resources
+<div style="display:flex; flex-wrap:wrap;">
+  <img src="https://github.com/Ankur6702/Quinnn-Frontend/assets/74523865/37b2f863-88fd-40d7-a6ec-fb408cd51247" style="width:49%;">
+  <img src="https://github.com/Ankur6702/Quinnn-Frontend/assets/74523865/80cc96c1-705b-4b74-968e-7e78dfe68097" style="width:49%;">
+</div>
+
+<div style="display:flex; flex-wrap:wrap;">
+  <img src="https://github.com/Ankur6702/Quinnn-Frontend/assets/74523865/35148ab7-d8a8-45a0-8d61-ce3c10fceae2" style="width:49%;">
+  <img src="https://github.com/Ankur6702/Quinnn-Frontend/assets/74523865/d0cb2f76-b578-4520-b763-1751cf9e76f8" style="width:49%;">
 </div>
 
 ## Feedback or Support
